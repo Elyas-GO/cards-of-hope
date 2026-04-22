@@ -3,14 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>54 Cards of Hope | Vintage Prophecy Deck</title>
+<title>54 Cards of Hope · Prophecy & Fulfillment</title>
 
-<!-- Tailwind CSS + Google Fonts -->
+<!-- Tailwind + Fonts -->
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-    /* reset & base */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body { 
@@ -28,45 +27,26 @@
         background-repeat: no-repeat;
         background-attachment: fixed;
     }
-
     @media (max-width: 768px) {
-        .hero-bg {
-            background-attachment: scroll;
-            background-position: center 20%;
-        }
+        .hero-bg { background-attachment: scroll; background-position: center 20%; }
     }
 
-    /* ===== VINTAGE TYPEWRITER FONT FOR ALL CARD TEXT ===== */
-    /* Using 'Special Elite' + 'Courier Prime' as vintage typewriter feel */
+    /* ===== VINTAGE TYPEWRITER ===== */
     .typewriter, 
     .card-front, 
     .card-front *,
     .gold,
-    .card-back::after,
     .card .card-face .text-center,
     .card .card-face div,
     .card span,
     .card div:not(.flex):not(.card-inner):not(.card-face) {
         font-family: 'Special Elite', 'Courier Prime', monospace !important;
     }
-    
-    /* ensure all card text uses typewriter styling */
-    .card-front .gold {
-        font-family: 'Special Elite', 'Courier Prime', monospace !important;
-        letter-spacing: 0.8px;
-    }
-    
-    .card-front {
-        font-family: 'Special Elite', 'Courier Prime', monospace !important;
-    }
+    .card-front .gold { font-family: 'Special Elite', 'Courier Prime', monospace !important; letter-spacing: 0.8px; }
+    .card-front { font-family: 'Special Elite', 'Courier Prime', monospace !important; }
+    .typewriter { font-family: 'Special Elite', 'Courier Prime', monospace; letter-spacing: 0.5px; }
 
-    /* typewriter class reinforcement */
-    .typewriter { 
-        font-family: 'Special Elite', 'Courier Prime', monospace; 
-        letter-spacing: 0.5px; 
-    }
-
-    /* ===== CARD 3D SYSTEM ===== */
+    /* ===== CARD 3D ===== */
     .card { 
         perspective: 1500px; 
         aspect-ratio: 5 / 7; 
@@ -75,145 +55,118 @@
     }
     .card:hover { transform: translateY(-6px); }
     .card-inner { 
-        width: 100%; 
-        height: 100%; 
+        width: 100%; height: 100%; 
         transition: transform 0.65s cubic-bezier(0.23, 1, 0.32, 1); 
-        transform-style: preserve-3d; 
-        position: relative; 
+        transform-style: preserve-3d; position: relative; 
         border-radius: 24px;
         box-shadow: 0 20px 30px -12px rgba(0,0,0,0.5);
     }
     .card.flipped .card-inner { transform: rotateY(180deg); }
-    
     .card-face { 
-        position: absolute; 
-        width: 100%; 
-        height: 100%; 
-        border-radius: 24px; 
-        backface-visibility: hidden; 
-        overflow: hidden;
+        position: absolute; width: 100%; height: 100%; border-radius: 24px; 
+        backface-visibility: hidden; overflow: hidden;
         box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
     
-    /* Front design: vintage parchment + noise texture */
+    /* Front — parchment */
     .card-front {
         background: linear-gradient(145deg, #1e1a14 0%, #2c241c 100%);
-        padding: 18px 14px;
+        padding: 14px 10px;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        position: relative;
         border: 1px solid rgba(250, 204, 21, 0.35);
     }
-
     .card-front::after {
+        content: "";
+        position: absolute; inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.12'/%3E%3C/svg%3E");
+        pointer-events: none; opacity: 0.5; border-radius: 24px;
+    }
+
+    .gold { 
+        background: linear-gradient(135deg, #f5e6b0, #e4c580, #f5e6b0);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+        text-shadow: 0 0 3px rgba(0,0,0,0.3); font-weight: 700; letter-spacing: 0.8px;
+    }
+    
+    /* Back — using card-back.jpg */
+    .card-back { 
+        transform: rotateY(180deg); 
+        background-image: url('card-back.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        position: relative;
+    }
+    
+    /* Fallback gradient if image fails to load */
+    .card-back::before {
         content: "";
         position: absolute;
         inset: 0;
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.12'/%3E%3C/svg%3E");
-        background-repeat: repeat;
-        pointer-events: none;
-        opacity: 0.5;
-        border-radius: 24px;
-    }
-
-    /* Gold gradient text - vintage feel */
-    .gold { 
-        background: linear-gradient(135deg, #f5e6b0, #e4c580, #f5e6b0);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        text-shadow: 0 0 3px rgba(0,0,0,0.3);
-        font-weight: 700;
-        letter-spacing: 0.8px;
-    }
-    
-    /* Card Back: ancient seal & cross motif with typewriter */
-    .card-back { 
-        transform: rotateY(180deg); 
         background: radial-gradient(circle at 30% 20%, #2a2418, #0f0c07);
         background-image: repeating-linear-gradient(45deg, rgba(250,204,21,0.08) 0px, rgba(250,204,21,0.08) 2px, transparent 2px, transparent 8px);
-        border: 2px solid #facc15;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        font-family: 'Special Elite', 'Courier Prime', monospace;
+        opacity: 0;
+        z-index: -1;
     }
     
-    .card-back::before {
-        content: "✝";
-        font-size: 3rem;
-        color: #facc15;
-        opacity: 0.85;
-        text-shadow: 0 2px 5px black;
-        font-family: 'Special Elite', monospace;
-    }
+    /* Optional overlay text on back */
     .card-back::after {
-        content: "HOPE";
-        font-size: 0.75rem;
-        letter-spacing: 4px;
+        content: "✝ 54 CARDS OF HOPE ✝";
         position: absolute;
         bottom: 20px;
+        left: 0;
+        right: 0;
+        text-align: center;
         color: #facc15;
-        font-weight: bold;
+        font-size: 0.6rem;
+        letter-spacing: 3px;
         font-family: 'Special Elite', 'Courier Prime', monospace;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        background: rgba(0,0,0,0.3);
+        padding: 4px 0;
+        backdrop-filter: blur(2px);
     }
 
-    /* suit colors */
     .suit-red { color: #e67373; }
     .suit-black { color: #e0e0e0; }
 
-    /* responsive grid */
     .card-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
         gap: 1.75rem;
     }
-    @media (min-width: 1024px) {
-        .card-grid { grid-template-columns: repeat(6, minmax(150px, 1fr)); }
-    }
-    @media (max-width: 640px) {
-        .card-grid { gap: 1rem; }
-        .card-front { padding: 12px 8px; }
-    }
+    @media (min-width: 1024px) { .card-grid { grid-template-columns: repeat(6, minmax(150px, 1fr)); } }
+    @media (max-width: 640px) { .card-grid { gap: 1rem; } .card-front { padding: 12px 8px; } }
 
-    /* glass navigation */
     .glass-nav {
-        background: rgba(10, 10, 10, 0.75);
-        backdrop-filter: blur(12px);
+        background: rgba(10, 10, 10, 0.75); backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(250, 204, 21, 0.25);
     }
-    
-    /* subtle fade animation */
-    @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    .animate-fade-up {
-        animation: fadeUp 0.8s ease-out forwards;
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; }
 
-    /* vintage additional styling for card text */
-    .card-text-vintage {
-        font-family: 'Special Elite', 'Courier Prime', monospace;
-        font-size: 0.8rem;
-        line-height: 1.35;
-        text-transform: uppercase;
-        letter-spacing: 0.3px;
+    /* Additional touches */
+    .category-tag {
+        font-size: 0.6rem; letter-spacing: 1px; text-transform: uppercase;
+        border-bottom: 1px dashed #b4975a; padding-bottom: 2px; margin-bottom: 6px;
+    }
+    .verse-ref {
+        font-size: 0.65rem; opacity: 0.8; color: #d4b87a;
     }
     
-    .card-value {
-        font-family: 'Special Elite', 'Courier Prime', monospace;
-        font-size: 1.8rem;
-        font-weight: bold;
+    /* Bottom corner - rotated 180 degrees */
+    .corner-bottom {
+        transform: rotate(180deg);
+        display: inline-block;
     }
 </style>
 </head>
 <body class="text-amber-50">
 
-<!-- NAVIGATION (glass morphism) -->
-<nav class="fixed top-0 w-full z-50 flex items-center justify-between px-6 md:px-12 py-4 glass-nav transition-all">
+<!-- NAVIGATION -->
+<nav class="fixed top-0 w-full z-50 flex items-center justify-between px-6 md:px-12 py-4 glass-nav">
     <div class="flex items-center gap-3">
         <div class="w-8 h-8 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center shadow-md">
             <span class="text-black text-xs font-bold">✝</span>
@@ -222,8 +175,8 @@
     </div>
     <div class="hidden md:flex gap-10 text-sm font-medium text-gray-200">
         <a href="#" class="hover:text-amber-300 transition">Home</a>
-        <a href="#" class="hover:text-amber-300 transition">Stories</a>
         <a href="#prophecies" class="hover:text-amber-300 transition">Prophecies</a>
+        <a href="#" class="hover:text-amber-300 transition">The Deck</a>
     </div>
     <div class="flex items-center gap-5">
         <a href="#" class="text-sm text-gray-200 hover:text-white transition">Log in</a>
@@ -231,68 +184,63 @@
     </div>
 </nav>
 
-<!-- HERO SECTION with local background image -->
+<!-- HERO -->
 <header class="hero-bg min-h-screen flex items-center relative overflow-hidden">
     <div class="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent pointer-events-none"></div>
     <div class="container mx-auto px-6 md:px-12 relative z-10 pt-28 pb-20">
         <div class="max-w-2xl space-y-6 animate-fade-up">
             <div class="inline-block bg-amber-700/40 backdrop-blur-sm px-4 py-1 rounded-full text-xs uppercase tracking-wider border border-amber-400/40 font-mono">✦ Sacred deck ✦</div>
             <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight drop-shadow-2xl">
-                Learning about <br> 
-                <span class="text-amber-300">Jesus</span> <span class="text-white/60">Through</span>
-                <span class="block text-amber-200/90">54 Cards of Hope</span>
+                Prophecies of the <br> 
+                <span class="text-amber-300">Messiah</span> <span class="text-white/60">Fulfilled</span>
+                <span class="block text-amber-200/90">54 Cards · Ancient Witness</span>
             </h1>
-            
-            <p class="text-lg text-gray-200 leading-relaxed max-w-lg drop-shadow-md font-light">
-                Journey through ancient prophecies & the greatest story ever told. Flip each card, 
-                uncover messianic promises — an interactive experience of faith and discovery.
+            <p class="text-lg text-gray-200 leading-relaxed max-w-lg drop-shadow-md">
+                From Genesis to the Gospels — every card holds a promise and its fulfillment. 
+                Flip to uncover the story written across centuries.
             </p>
-
             <div class="flex flex-wrap gap-5 pt-5">
                 <a href="#prophecies" class="bg-amber-500 hover:bg-amber-600 text-black px-8 py-3 rounded-full font-bold transition-all shadow-xl flex items-center gap-2">
-                    Explore Deck <span>✨</span>
+                    Explore the Deck <span>🃟</span>
                 </a>
                 <a href="#" class="border border-white/40 hover:bg-white/10 text-white px-8 py-3 rounded-full font-semibold transition-all backdrop-blur-sm">
-                    Watch Trailer
+                    About the Prophecies
                 </a>
             </div>
-            
             <div class="flex items-center gap-4 pt-4 text-amber-200/70 text-sm font-mono">
-                <span>✝ 52 Prophecies + 2 Hope cards</span>
-                <span>✦ Vintage typewriter edition</span>
+                <span>✝ 52 prophecies + 2 witness cards</span>
+                <span>✦ based on the ancient texts</span>
             </div>
         </div>
     </div>
     <div class="absolute bottom-0 left-0 w-32 h-32 border-l-4 border-b-4 border-amber-500/30 rounded-bl-3xl"></div>
 </header>
 
-<!-- PROPHECIES SECTION (54 cards) -->
+<!-- PROPHECY GRID (populated from Excel data) -->
 <section id="prophecies" class="py-24 px-6 bg-[#050505] relative">
     <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-500/30 to-transparent"></div>
     <div class="container mx-auto">
         <div class="text-center mb-14 space-y-3">
             <span class="text-amber-400 text-sm font-mono tracking-wider">✦ THE MESSIANIC DECK ✦</span>
-            <h2 class="text-4xl md:text-5xl font-bold font-serif bg-gradient-to-r from-amber-200 to-amber-500 bg-clip-text text-transparent">Prophecies of Hope</h2>
-            <p class="text-gray-400 max-w-xl mx-auto font-mono text-sm">Each card reveals a fragment of redemption — from Genesis to the Gospels. <br>Vintage typewriter lettering evokes ancient scribe traditions.</p>
+            <h2 class="text-4xl md:text-5xl font-bold bg-gradient-to-r from-amber-200 to-amber-500 bg-clip-text text-transparent">Prophecies & Fulfillment</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto font-mono text-sm">Each card: Suit · Category · Prophecy & Fulfillment.<br>Flip for the scripture — vintage typewriter, ancient truth.</p>
         </div>
         <div id="prophecy-grid" class="card-grid"></div>
         <div class="text-center mt-16">
             <div class="inline-block bg-black/40 border border-amber-800/40 rounded-full px-6 py-2 text-amber-300 text-sm backdrop-blur-sm font-mono">
-                <span class="font-bold">54 Cards</span> — Complete collector's edition • Flip to discover
+                <span class="font-bold">54 Cards</span> — including Tacitus, Josephus, Pilate Stone & Screwtape
             </div>
         </div>
     </div>
 </section>
 
-<!-- BONUS: SCRIPTURE HIGHLIGHT -->
+<!-- SCRIPTURE HIGHLIGHT -->
 <section class="py-10 bg-gradient-to-b from-[#050505] to-[#0f0b06] border-t border-amber-900/30">
     <div class="container mx-auto px-6 text-center">
-        <div class="max-w-3xl mx-auto">
-            <div class="flex justify-center gap-8 flex-wrap items-center">
-                <div class="flex items-center gap-2"><span class="text-3xl">🕊️</span><span class="text-amber-300 font-mono text-sm">Isaiah 9:6</span></div>
-                <div class="flex items-center gap-2"><span class="text-3xl">🌟</span><span class="text-amber-300 font-mono text-sm">Numbers 24:17</span></div>
-                <div class="flex items-center gap-2"><span class="text-3xl">📜</span><span class="text-amber-300 font-mono text-sm">Micah 5:2</span></div>
-            </div>
+        <div class="max-w-3xl mx-auto flex justify-center gap-8 flex-wrap items-center">
+            <div class="flex items-center gap-2"><span class="text-3xl">📖</span><span class="text-amber-300 font-mono text-sm">Genesis to Malachi</span></div>
+            <div class="flex items-center gap-2"><span class="text-3xl">✟</span><span class="text-amber-300 font-mono text-sm">Gospels & Epistles</span></div>
+            <div class="flex items-center gap-2"><span class="text-3xl">🏺</span><span class="text-amber-300 font-mono text-sm">Archaeological evidence</span></div>
         </div>
     </div>
 </section>
@@ -302,151 +250,214 @@
     <div class="absolute top-0 left-1/2 transform -translate-x-1/2 w-32 h-1 bg-amber-500/40 rounded-full"></div>
     <div class="container mx-auto px-4">
         <div class="mb-8">
-            <a href="https://beyyabonjures-shop.bigcartel.com/" class="group relative inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black px-12 py-4 text-xl rounded-full font-bold transition-all duration-300 shadow-2xl shadow-amber-900/30 font-mono">
-                <span>🃟 BUY THE DECK</span>
+            <a href="#" class="group relative inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-400 text-black px-12 py-4 text-xl rounded-full font-bold transition-all shadow-2xl shadow-amber-900/30 font-mono">
+                <span>🃟 54 CARDS · COLLECTOR'S DECK</span>
                 <span class="group-hover:translate-x-1 transition">→</span>
             </a>
         </div>
-        <p class="text-gray-500 text-sm font-mono">54 Cards of Hope — discover the prophecies, embrace the story.</p>
-        <p class="text-gray-600 text-xs mt-4">© 2025 CardGard | Vintage Typewriter Edition | hero-background.png loaded locally</p>
+        <p class="text-gray-500 text-sm font-mono">54 Cards of Hope — the prophecies and their fulfillment.</p>
+        <p class="text-gray-600 text-xs mt-4">© 2025 CardGard · Screwtape would not approve</p>
     </div>
 </footer>
 
 <script>
-    // ============================================================
-    // COMPLETE DECK: 54 Cards (52 prophecies + 2 Hope cards)
-    // All card text uses vintage typewriter styling (Special Elite)
-    // ============================================================
-    const fullDeck = [
-        { value:"A", suit:"♡", color:"red", text:"Seed of the Woman (Gen 3:15)" },
-        { value:"K", suit:"♡", color:"red", text:"The Morning Star (Rev 22:16)" },
-        { value:"Q", suit:"♣", color:"black", text:"The Scepter of Judah (Gen 49:10)" },
-        { value:"J", suit:"♠", color:"black", text:"The Prophet like Moses (Deut 18:15)" },
-        { value:"10", suit:"♢", color:"red", text:"Born of a Virgin (Isaiah 7:14)" },
-        { value:"9", suit:"♣", color:"black", text:"Pierced Hands & Feet (Psalm 22:16)" },
-        { value:"8", suit:"♡", color:"red", text:"Heir to David's Throne (2 Sam 7:12-13)" },
-        { value:"7", suit:"♠", color:"black", text:"Betrayed for 30 Silver (Zech 11:12)" },
-        { value:"6", suit:"♢", color:"red", text:"The Suffering Servant (Isaiah 53)" },
-        { value:"5", suit:"♣", color:"black", text:"Eternal Priest (Psalm 110:4)" },
-        { value:"4", suit:"♡", color:"red", text:"Called Immanuel (Isaiah 8:8)" },
-        { value:"3", suit:"♠", color:"black", text:"Light to the Gentiles (Isaiah 49:6)" },
-        { value:"2", suit:"♢", color:"red", text:"The Cornerstone (Psalm 118:22)" },
-        { value:"A", suit:"♠", color:"black", text:"Lion of Judah (Rev 5:5)" },
-        { value:"K", suit:"♣", color:"black", text:"Rod from Jesse (Isaiah 11:1)" },
-        { value:"Q", suit:"♢", color:"red", text:"The Branch (Jeremiah 23:5)" },
-        { value:"J", suit:"♡", color:"red", text:"Ruler from Bethlehem (Micah 5:2)" },
-        { value:"10", suit:"♠", color:"black", text:"Crucified with Thieves (Isaiah 53:12)" },
-        { value:"9", suit:"♢", color:"red", text:"No Bones Broken (Psalm 34:20)" },
-        { value:"8", suit:"♣", color:"black", text:"Given Vinegar & Gall (Psalm 69:21)" },
-        { value:"7", suit:"♡", color:"red", text:"Resurrection Promise (Psalm 16:10)" },
-        { value:"6", suit:"♠", color:"black", text:"Ascended on High (Psalm 68:18)" },
-        { value:"5", suit:"♢", color:"red", text:"My God, My God (Psalm 22:1)" },
-        { value:"4", suit:"♣", color:"black", text:"The Beloved Son (Psalm 2:7)" },
-        { value:"3", suit:"♡", color:"red", text:"Stone rejected becomes Chief (Psalm 118:22-23)" },
-        { value:"2", suit:"♠", color:"black", text:"Anointed to preach good news (Isaiah 61:1)" },
-        // additional 26 prophecies to reach 52
-        { value:"A", suit:"♣", color:"black", text:"The Lamb of God (Isaiah 53:7)" },
-        { value:"K", suit:"♢", color:"red", text:"Conceived by Holy Spirit (Luke 1:35)" },
-        { value:"Q", suit:"♡", color:"red", text:"Prince of Peace (Isaiah 9:6)" },
-        { value:"J", suit:"♣", color:"black", text:"Wonderful Counselor (Isaiah 9:6)" },
-        { value:"10", suit:"♡", color:"red", text:"Mighty God (Isaiah 9:6)" },
-        { value:"9", suit:"♢", color:"red", text:"Everlasting Father (Isaiah 9:6)" },
-        { value:"8", suit:"♠", color:"black", text:"Zeal for God's House (Psalm 69:9)" },
-        { value:"7", suit:"♣", color:"black", text:"Silent before Accusers (Isaiah 53:7)" },
-        { value:"6", suit:"♡", color:"red", text:"Clothes Divided (Psalm 22:18)" },
-        { value:"5", suit:"♠", color:"black", text:"Buried with the Rich (Isaiah 53:9)" },
-        { value:"4", suit:"♢", color:"red", text:"Rides on a Donkey (Zech 9:9)" },
-        { value:"3", suit:"♣", color:"black", text:"The Good Shepherd (Ezekiel 34:23)" },
-        { value:"2", suit:"♡", color:"red", text:"Smitten for Sins (Isaiah 53:5)" },
-        { value:"A", suit:"♢", color:"red", text:"The Last Adam (1 Cor 15:45)" },
-        { value:"K", suit:"♠", color:"black", text:"Shoot from Stump of Jesse (Isaiah 11:1)" },
-        { value:"Q", suit:"♠", color:"black", text:"Judge of the World (Joel 3:12)" },
-        { value:"J", suit:"♢", color:"red", text:"Baptized in Spirit (Isaiah 44:3)" },
-        { value:"10", suit:"♣", color:"black", text:"Brought forth Light (Isaiah 60:1)" },
-        { value:"9", suit:"♡", color:"red", text:"He heals the Brokenhearted (Isaiah 61:1)" },
-        { value:"8", suit:"♢", color:"red", text:"King of Glory (Psalm 24:7-10)" },
-        { value:"7", suit:"♣", color:"black", text:"My Servant (Isaiah 42:1)" },
-        { value:"6", suit:"♠", color:"black", text:"Despised & Rejected (Isaiah 53:3)" },
-        { value:"5", suit:"♡", color:"red", text:"Salvation to Ends of Earth (Isaiah 49:6)" },
-        { value:"4", suit:"♢", color:"red", text:"The Messenger of Covenant (Mal 3:1)" },
-        { value:"3", suit:"♠", color:"black", text:"Sun of Righteousness (Mal 4:2)" },
-        { value:"2", suit:"♣", color:"black", text:"The Door (Psalm 118:20)" },
-        // TWO BONUS HOPE CARDS -> total = 54
-        { value:"☆", suit:"✝", color:"gold", text:"Hope Eternal — He is Risen! (Matt 28:6)" },
-        { value:"∞", suit:"🕊️", color:"gold", text:"The Final Victory — Revelation 21:4" }
-    ];
+    (function() {
+        // ---------- DATA FROM EXCEL (54 cards: 52 prophecies/evidence + 2 Jokers) ----------
+        const deckData = [
+            // Diamonds 2
+            { suit:"♦", val:"2", category:"ancestor", main:"descended from Abraham", ref:"Gen 12:3 / 22:18", text:"I will bless those who bless you… all peoples blessed through you. · And through your offspring all nations blessed." },
+            // Clubs 2
+            { suit:"♣", val:"2", category:"ancestor", main:"descended from Isaac", ref:"Gen 17:19 / 21:12", text:"Sarah will bear you a son, Isaac… covenant everlasting. · Through Isaac your offspring reckoned." },
+            // Spades 2
+            { suit:"♠", val:"2", category:"ancestor", main:"descended from Jacob", ref:"Num 24:17", text:"A star will come out of Jacob; a scepter will rise out of Israel." },
+            // Hearts 2
+            { suit:"♥", val:"2", category:"ancestor", main:"descended from Judah / King", ref:"Gen 49:10", text:"The scepter will not depart from Judah until Shiloh comes, allegiance of nations his." },
+            // Diamonds 3
+            { suit:"♦", val:"3", category:"ancestor", main:"heir to David's throne", ref:"2Sam 7:12-13 / Isa 9:7", text:"I will establish his kingdom forever. · Of the increase of his government and peace no end." },
+            // Clubs 3
+            { suit:"♣", val:"3", category:"mother", main:"born of a virgin · Immanuel", ref:"Isa 7:14", text:"The virgin will be with child and will give birth to a son, and will call him Immanuel." },
+            // Spades 3
+            { suit:"♠", val:"3", category:"birthplace", main:"born in Bethlehem", ref:"Mic 5:2", text:"Bethlehem Ephrathah, out of you will come forth One to be ruler over Israel." },
+            // Hearts 3
+            { suit:"♥", val:"3", category:"early years", main:"spent time in Egypt", ref:"Hos 11:1", text:"Out of Egypt I called My son." },
+            // Diamonds 4
+            { suit:"♦", val:"4", category:"home town", main:"called a Nazarene", ref:"Isa 11:1", text:"A shoot from the stump of Jesse, a Branch from his roots will bear fruit." },
+            // Clubs 4
+            { suit:"♣", val:"4", category:"spiritual vanguard", main:"messenger prepares the way", ref:"Isa 40:3-5", text:"A voice calling: 'Prepare the way for the LORD… glory of the LORD revealed.'" },
+            // Spades 4
+            { suit:"♠", val:"4", category:"to be heralded", main:"preceded by Elijah-style prophet", ref:"Mal 4:5-6", text:"I will send you Elijah the prophet before the great and awesome Day of the LORD." },
+            // Hearts 4
+            { suit:"♥", val:"4", category:"mission", main:"prophet like Moses", ref:"Deut 18:15 / Isa 42:1-4", text:"The LORD will raise up a prophet like me… My servant, I will put My Spirit on him." },
+            // Diamonds 5
+            { suit:"♦", val:"5", category:"mission", main:"light to Galilee", ref:"Isa 9:1-2", text:"Galilee of the Gentiles—people walking in darkness have seen a great light." },
+            // Clubs 5
+            { suit:"♣", val:"5", category:"mission", main:"heal brokenhearted", ref:"Isa 61:1-2", text:"The Spirit of the Lord GOD is on Me… bind up the brokenhearted, proclaim liberty." },
+            // Spades 5
+            { suit:"♠", val:"5", category:"mission", main:"priest after Melchizedek", ref:"Ps 110:4", text:"You are a priest forever in the order of Melchizedek." },
+            // Hearts 5
+            { suit:"♥", val:"5", category:"mission", main:"temple cleaner", ref:"Ps 69:9", text:"Zeal for Your house has consumed me." },
+            // Diamonds 6
+            { suit:"♦", val:"6", category:"communicator", main:"speak in parables", ref:"Ps 78:2-4 / Isa 6:9-10", text:"I will open my mouth in parables… ever hearing but never understanding." },
+            // Clubs 6
+            { suit:"♣", val:"6", category:"role", main:"declared Son of God", ref:"Ps 2:7", text:"You are My Son; today I have become Your Father." },
+            // Spades 6
+            { suit:"♠", val:"6", category:"role", main:"humble king on donkey", ref:"Zech 9:9", text:"Your King comes, righteous and victorious, humble and riding on a donkey." },
+            // Hearts 6
+            { suit:"♥", val:"6", category:"role", main:"eternal King / anointed", ref:"Dan 2:44 / Ps 45:6-7", text:"God of heaven will set up a kingdom that will never be destroyed… Your throne, O God, forever." },
+            // Diamonds 7
+            { suit:"♦", val:"7", category:"role", main:"King over nations", ref:"Num 24:17", text:"A star out of Jacob, a scepter out of Israel." },
+            // Clubs 7
+            { suit:"♣", val:"7", category:"who accepted him", main:"children praised him", ref:"Ps 8:2", text:"From the mouths of children and infants You have ordained praise." },
+            // Spades 7
+            { suit:"♠", val:"7", category:"betrayal", main:"hated without cause", ref:"Ps 35:19 / 69:4", text:"Let not those who hate me without cause gloat… those who hate me without cause outnumber hairs." },
+            // Hearts 7
+            { suit:"♥", val:"7", category:"rejection", main:"rejected by his own", ref:"Ps 69:8 / Isa 53:3", text:"A stranger to my brothers… despised and rejected by men." },
+            // Diamonds 8
+            { suit:"♦", val:"8", category:"betrayal", main:"betrayed by a friend", ref:"Ps 41:9 / Zech 11:12-13", text:"My close friend lifted heel against me. Thirty pieces of silver… throw to potter." },
+            // Clubs 8
+            { suit:"♣", val:"8", category:"betrayal", main:"30 silver → potter's field", ref:"Zech 11:12-13", text:"Thirty pieces of silver … throw it to the potter in the house of the LORD." },
+            // Spades 8
+            { suit:"♠", val:"8", category:"betrayal", main:"falsely accused", ref:"Ps 35:11", text:"Malicious witnesses rise up; they confront me with things I do not know." },
+            // Hearts 8
+            { suit:"♥", val:"8", category:"trial", main:"silent before accusers", ref:"Isa 53:7", text:"He was oppressed and afflicted, yet He did not open His mouth." },
+            // Diamonds 9
+            { suit:"♦", val:"9", category:"crucifixion", main:"spat upon, struck, beard torn", ref:"Isa 50:6", text:"I offered My back to those who struck Me, My cheeks to those who tore out My beard." },
+            // Clubs 9
+            { suit:"♣", val:"9", category:"crucifixion", main:"mocked and ridiculed", ref:"Ps 22:7-8", text:"All who see me mock me; they sneer: 'He trusts in the LORD; let the LORD rescue him.'" },
+            // Spades 9
+            { suit:"♠", val:"9", category:"crucifixion", main:"hands & feet pierced", ref:"Ps 22:16 / Zech 12:10", text:"They have pierced my hands and my feet. · They will look on Me, the One they have pierced." },
+            // Hearts 9
+            { suit:"♥", val:"9", category:"crucifixion", main:"gamble for clothes", ref:"Ps 22:18", text:"They divide my garments among them and cast lots for my clothing." },
+            // Diamonds 10
+            { suit:"♦", val:"10", category:"crucifixion", main:"vinegar to drink", ref:"Ps 69:21", text:"They put gall in my food and gave me vinegar for my thirst." },
+            // Clubs 10
+            { suit:"♣", val:"10", category:"crucifixion", main:"forsaken by God", ref:"Ps 22:1", text:"My God, my God, why have You forsaken me?" },
+            // Spades 10
+            { suit:"♠", val:"10", category:"crucifixion", main:"no bone broken", ref:"Ex 12:46 / Ps 34:20", text:"Not one of His bones will be broken." },
+            // Hearts 10
+            { suit:"♥", val:"10", category:"forgiveness", main:"prayed for enemies", ref:"Ps 109:4", text:"In return for my love they accuse me, but I am a man of prayer." },
+            // Diamonds J
+            { suit:"♦", val:"J", category:"crucifixion", main:"pierced for transgressions", ref:"Isa 53:5", text:"He was pierced for our transgressions… by His wounds we are healed." },
+            // Clubs J
+            { suit:"♣", val:"J", category:"crucifixion", main:"pierced side", ref:"Zech 12:10 / Ps 22:16", text:"They will look on Me, the One they have pierced. They pierced my hands and feet." },
+            // Spades J
+            { suit:"♠", val:"J", category:"burial", main:"buried with the rich", ref:"Isa 53:9", text:"Assigned a grave with the wicked, and with a rich man in His death." },
+            // Hearts J (resurrection: John 2:19)
+            { suit:"♥", val:"J", category:"resurrection", main:"rise from the dead", ref:"John 2:19", text:"Destroy this temple, and in three days I will raise it up again." },
+            // Diamonds Q
+            { suit:"♦", val:"Q", category:"resurrection", main:"third day He will raise us", ref:"Hos 6:2", text:"After two days He will revive us; on the third day He will raise us up." },
+            // Clubs Q
+            { suit:"♣", val:"Q", category:"resurrection", main:"not see decay", ref:"Ps 16:10 / Isa 53:10-11", text:"You will not abandon my soul to Sheol, nor let Your Holy One see decay. · He will see the light of life." },
+            // Spades Q
+            { suit:"♠", val:"Q", category:"resurrection", main:"seated at God's right hand", ref:"Ps 68:18 / 110:1", text:"You ascended on high… The LORD said to my Lord: 'Sit at My right hand.'" },
+            // Hearts Q
+            { suit:"♥", val:"Q", category:"mission success", main:"bore sin of many", ref:"Isa 53:12", text:"He poured out His life unto death… bore the sin of many." },
+            // Diamonds K (Tacitus)
+            { suit:"♦", val:"K", category:"independent reporter", main:"Tacitus · Christus", ref:"Annals AD 115-120", text:"Roman historian Tacitus mentions 'Christus' and Christians." },
+            // Clubs K (Josephus)
+            { suit:"♣", val:"K", category:"independent reporter", main:"Josephus · Antiquities", ref:"Antiquities AD 93-94", text:"Flavius Josephus includes two references to Jesus." },
+            // Spades K (Pliny)
+            { suit:"♠", val:"K", category:"independent reporter", main:"Pliny to Trajan", ref:"Letter AD 112", text:"Pliny the Younger wrote to Emperor Trajan about early Christians." },
+            // Hearts K (Epistles/Gospels)
+            { suit:"♥", val:"K", category:"affiliated reporter", main:"Epistles & Gospels", ref:"AD 48–110", text:"Paul, James, eyewitnesses Matthew, John, Mark, Luke — over 64,000 words." },
+            // Diamonds A (Pilate Stone)
+            { suit:"♦", val:"A", category:"rock evidence", main:"Pilate Stone", ref:"AD 26-36", text:"Limestone inscription confirms Pontius Pilate, Prefect of Judea." },
+            // Clubs A (Caiaphas Ossuary)
+            { suit:"♣", val:"A", category:"rock evidence", main:"Ossuary of Caiaphas", ref:"AD 20-60", text:"'Joseph, son of Caiaphas' — high priest who prosecuted Jesus." },
+            // Spades A (Capernaum Synagogue)
+            { suit:"♠", val:"A", category:"rock evidence", main:"Synagogue at Capernaum", ref:"1st cent. basalt", text:"First-century synagogue beneath later structure; where Jesus taught." },
+            // Hearts A (Pool of Siloam)
+            { suit:"♥", val:"A", category:"rock evidence", main:"Pool of Siloam", ref:"Hezekiah / Herodian", text:"Discovered 2004; steps where Jesus healed the blind man." },
+            // Joker 1 — Screwtape letter
+            { suit:"🃏", val:"JOKER", category:"Screwtape", main:"Letter to Nightshade", ref:"date unknown", text:"My dear Nightshade … refute them all! The Old Testament prophecies bear witness. Wormwood got eaten. Your affectionate Uncle Screwtape." },
+            // Joker 2 — MI7 / QR reference
+            { suit:"🃏", val:"JOKER", category:"MI7 TOP SECRET", main:"Declassified intercept", ref:"NIGHTSHADE // ALPHA", text:"A QR code leading to the declassified file. // 'The enemy remains honorable and implacable.'" }
+        ];
 
-    // Function to create card with explicit vintage typewriter class
-    function createVintageCard(card) {
-        const cardDiv = document.createElement("div");
-        cardDiv.className = `card ${card.color === 'gold' ? 'special-card' : ''}`;
-        
-        const isGolden = card.color === 'gold';
-        let suitColorClass = "text-white";
-        if (card.suit === '♡' || card.suit === '♢') suitColorClass = "text-red-400";
-        else if (card.suit === '♣' || card.suit === '♠') suitColorClass = "text-gray-200";
-        else if (card.color === 'gold') suitColorClass = "text-amber-300";
-        
-        if (isGolden) {
-            // Golden hope cards with typewriter emphasis
-            cardDiv.innerHTML = `
-                <div class="card-inner">
-                    <div class="card-face card-front" style="background: linear-gradient(145deg, #2a241a, #1f1b12); border: 2px solid #facc15;">
-                        <div class="flex justify-between items-start">
-                            <span class="text-3xl gold font-bold typewriter" style="font-family:'Special Elite',monospace;">${card.value}</span>
-                            <span class="text-2xl gold typewriter" style="font-family:'Special Elite',monospace;">${card.suit}</span>
-                        </div>
-                        <div class="text-center my-2">
-                            <div class="text-base md:text-lg font-bold gold typewriter leading-tight" style="font-family:'Special Elite',monospace;">${card.text}</div>
-                            <div class="w-12 h-0.5 bg-amber-500/50 mx-auto my-2"></div>
-                            <div class="text-xs text-amber-400/70 typewriter" style="font-family:'Special Elite',monospace;">✦ hope restored ✦</div>
-                        </div>
-                        <div class="text-[9px] text-right gold opacity-50 typewriter" style="font-family:'Special Elite',monospace;">GLORIA • DEO</div>
-                    </div>
-                    <div class="card-face card-back"></div>
-                </div>
-            `;
-        } else {
-            // Standard prophecy card - full vintage typewriter styling
-            cardDiv.innerHTML = `
-                <div class="card-inner">
-                    <div class="card-face card-front typewriter" style="font-family:'Special Elite','Courier Prime',monospace;">
-                        <div class="flex justify-between">
-                            <span class="text-2xl gold font-bold typewriter" style="font-family:'Special Elite',monospace; font-size:1.8rem;">${card.value}</span>
-                            <span class="${suitColorClass} text-2xl font-bold typewriter" style="font-family:'Special Elite',monospace; font-size:1.8rem;">${card.suit}</span>
-                        </div>
-                        <div class="text-center text-sm font-bold uppercase tracking-wide text-amber-100 px-1 leading-tight typewriter" style="font-family:'Special Elite',monospace; line-height:1.3; letter-spacing:0.3px;">${card.text}</div>
-                        <div class="text-[10px] text-right gold opacity-50 typewriter" style="font-family:'Special Elite',monospace;">HEAVENLY // DECK</div>
-                    </div>
-                    <div class="card-face card-back"></div>
-                </div>
-            `;
+        const grid = document.getElementById('prophecy-grid');
+        if (!grid) return;
+
+        // Helper to get suit color
+        function getSuitColorClass(suit) {
+            if (suit === '♥' || suit === '♦') return 'text-red-400';
+            if (suit === '♣' || suit === '♠') return 'text-gray-200';
+            return 'text-amber-300'; // jokers
         }
-        
-        // Flip on click
-        cardDiv.addEventListener("click", (e) => {
-            e.stopPropagation();
-            cardDiv.classList.toggle("flipped");
-        });
-        
-        return cardDiv;
-    }
 
-    // Render all 54 cards
-    const gridContainer = document.getElementById("prophecy-grid");
-    if (gridContainer) {
-        fullDeck.forEach(cardData => {
-            const cardElement = createVintageCard(cardData);
-            gridContainer.appendChild(cardElement);
-        });
-    }
+        // Build each card
+        deckData.forEach(card => {
+            const cardEl = document.createElement('div');
+            cardEl.className = 'card';
 
-    // Background image check (hero-background.png)
-    const testImg = new Image();
-    testImg.src = 'hero-background.png';
-    testImg.onerror = () => {
-        console.log("Note: hero-background.png not found? Ensure it's in same folder as index.html. Gradient fallback active.");
-    };
+            const suitColor = getSuitColorClass(card.suit);
+            const isJoker = card.suit === '🃏';
+
+            // Use special styling for Jokers
+            const bgGradient = isJoker 
+                ? 'linear-gradient(145deg, #2a241a, #1f1b12)' 
+                : 'linear-gradient(145deg, #1e1a14 0%, #2c241c 100%)';
+            const borderJoker = isJoker ? 'border: 2px solid #facc15;' : '';
+
+            cardEl.innerHTML = `
+                <div class="card-inner">
+                    <div class="card-face card-front typewriter" style="background: ${bgGradient}; ${borderJoker}; display: flex; flex-direction: column; justify-content: space-between;">
+                        <!-- TOP CORNER: Value + Suit (normal orientation) -->
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+                            <span class="gold font-bold" style="font-size: 1.8rem; line-height: 1;">${card.val}</span>
+                            <span class="${suitColor} font-bold" style="font-size: 1.8rem; line-height: 1;">${card.suit}</span>
+                        </div>
+                        
+                        <!-- MIDDLE CONTENT -->
+                        <div style="margin-top: 2px; margin-bottom: 2px; flex: 1; display: flex; flex-direction: column; justify-content: center;">
+                            <div class="category-tag gold" style="font-size:0.55rem; letter-spacing:1.5px;">${card.category}</div>
+                            <div style="font-weight: bold; font-size: 0.8rem; line-height: 1.25; color: #f3e9d2; margin: 4px 0 2px;">${card.main}</div>
+                            <div class="verse-ref">${card.ref}</div>
+                            <div style="margin-top: 6px; font-size: 0.65rem; line-height: 1.3; color: #d4c3a2; border-top: 1px dashed #7a6a4b; padding-top: 5px;">${card.text}</div>
+                        </div>
+                        
+                        <!-- BOTTOM CORNER: Suit + Value (rotated 180°, inverted order) -->
+                        <div style="display: flex; justify-content: space-between; align-items: flex-end; transform: rotate(180deg);">
+                            <span class="gold font-bold" style="font-size: 1.8rem; line-height: 1;">${card.val}</span>
+                            <span class="${suitColor} font-bold" style="font-size: 1.8rem; line-height: 1;">${card.suit}</span>
+                        </div>
+                        
+                        <!-- Small footer text (not rotated) -->
+                        <div class="text-right gold opacity-50" style="font-size: 0.5rem; margin-top: 2px;">${isJoker ? 'SCREWTAPE FILES' : 'PROPHECY · FULFILLED'}</div>
+                    </div>
+                    <div class="card-face card-back"></div>
+                </div>
+            `;
+
+            cardEl.addEventListener('click', (e) => {
+                e.stopPropagation();
+                cardEl.classList.toggle('flipped');
+            });
+
+            grid.appendChild(cardEl);
+        });
+
+        // Check if card-back.jpg loads; provide fallback if it doesn't
+        const testBack = new Image();
+        testBack.src = 'card-back.jpg';
+        testBack.onerror = () => {
+            console.log("card-back.jpg not found — using CSS gradient fallback for card backs.");
+            // Add a class to body or adjust style — we'll dynamically add fallback style
+            const style = document.createElement('style');
+            style.textContent = `
+                .card-back {
+                    background-image: repeating-linear-gradient(45deg, rgba(250,204,21,0.1) 0px, rgba(250,204,21,0.1) 2px, transparent 2px, transparent 8px), 
+                                      radial-gradient(circle at 30% 20%, #2a2418, #0f0c07) !important;
+                    background-size: cover, cover;
+                }
+            `;
+            document.head.appendChild(style);
+        };
+        
+        // Hero background fallback
+        const testHero = new Image();
+        testHero.src = 'hero-background.png';
+        testHero.onerror = () => console.log("Hero bg: using gradient fallback (hero-background.png not found)");
+    })();
 </script>
 </body>
 </html>
