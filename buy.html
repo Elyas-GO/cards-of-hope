@@ -1,40 +1,278 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Buy the Deck • Cards of Hope</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Press+Start+2P&display=swap');
-    body { font-family: 'Playfair Display', serif; }
-    .header-font { font-family: 'Press Start 2P', sans-serif; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=1.0">
+    <title>54 Cards of Hope · No Cap · Nuff Said</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Courier+Prime:wght@400;700&family=Pirata+One&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; overflow-x: hidden; }
+        .typewriter, .card-front, .card-front *, .gold, .pirate-font, .btn-mobile, nav a, .prophecy-list-item, .classified-doc {
+            font-family: 'Special Elite', 'Courier Prime', monospace !important;
+        }
+        .pirate-font { font-family: 'Pirata One', cursive; letter-spacing: 2px; }
+        .hero-bg { background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,10,5,0.7) 50%, rgba(0,0,0,0.8) 100%), url('hero-background.png'); background-size: cover; background-position: center 30%; background-repeat: no-repeat; background-attachment: fixed; }
+        @media (max-width: 768px) { .hero-bg { background-attachment: scroll; background-position: center 20%; } }
+        .card { perspective: 1500px; aspect-ratio: 5/7; cursor: pointer; transition: transform 0.2s; width: 100%; max-width: 200px; margin: 0 auto; background: #1e1a14; border-radius: 24px; }
+        .card:hover { transform: translateY(-6px); }
+        .card-inner { width: 100%; height: 100%; transition: transform 0.65s cubic-bezier(0.23,1,0.32,1); transform-style: preserve-3d; position: relative; border-radius: 24px; box-shadow: 0 20px 30px -12px rgba(0,0,0,0.5); }
+        .card.flipped .card-inner { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; border-radius: 24px; backface-visibility: hidden; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
+        .card-front { background: linear-gradient(145deg, #1e1a14 0%, #2c241c 100%); padding: 14px 10px; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-front::after { content:""; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.12'/%3E%3C/svg%3E"); pointer-events: none; opacity: 0.5; border-radius: 24px; }
+        .gold { background: linear-gradient(135deg, #f5e6b0, #e4c580, #f5e6b0); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 3px rgba(0,0,0,0.3); font-weight: 700; letter-spacing: 0.8px; }
+        .card-back { transform: rotateY(180deg); background-image: url('card-back.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; position: relative; }
+        .card-back::after { content: "✝ 54 CARDS OF HOPE ✝"; position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; color: #facc15; font-size: 0.6rem; letter-spacing: 3px; font-family: 'Special Elite', monospace; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); background: rgba(0,0,0,0.3); padding: 4px 0; backdrop-filter: blur(2px); }
+        .suit-red { color: #e67373; } .suit-black { color: #e0e0e0; }
+        .glass-nav { background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(250,204,21,0.25); }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; }
+        .rank-tab { padding: 12px 20px; background: rgba(30,26,20,0.9); border: 1px solid rgba(250,204,21,0.3); border-radius: 12px 12px 0 0; color: #d4c3a2; font-family: 'Special Elite', monospace; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; backdrop-filter: blur(8px); min-width: 60px; text-align: center; }
+        .rank-tab:hover { background: rgba(250,204,21,0.2); color: #f5e6b0; border-color: #facc15; }
+        .rank-tab.active { background: linear-gradient(145deg, #facc15, #e4b014); color: #0a0a0a; border-color: #facc15; box-shadow: 0 0 20px rgba(250,204,21,0.3); }
+        .category-tag { font-size: 0.55rem; letter-spacing: 1.5px; text-transform: uppercase; border-bottom: 1px dashed #b4975a; padding-bottom: 2px; margin-bottom: 6px; }
+        .verse-ref { font-size: 0.65rem; opacity: 0.8; color: #d4b87a; }
+        .tabs-container { overflow-x: auto; scrollbar-width: thin; scrollbar-color: #facc15 #1e1a14; }
+        .tabs-container::-webkit-scrollbar { height: 6px; } .tabs-container::-webkit-scrollbar-track { background: #1e1a14; border-radius: 10px; } .tabs-container::-webkit-scrollbar-thumb { background: #facc15; border-radius: 10px; }
+        .suit-family-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; padding: 2rem 0; }
+        @media (max-width: 768px) { .suit-family-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
+        @media (max-width: 480px) { .suit-family-grid { grid-template-columns: 1fr; } }
+        .btn-mobile { padding: 16px 24px; font-size: 1.1rem; min-height: 56px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50px; font-weight: bold; transition: all 0.3s; cursor: pointer; touch-action: manipulation; }
+        .section-dark { background: linear-gradient(180deg, #050505 0%, #0a0806 100%); border-top: 1px solid rgba(250,204,21,0.15); border-bottom: 1px solid rgba(250,204,21,0.15); }
+        .section-title { font-family: 'Pirata One', cursive; font-size: 2.5rem; background: linear-gradient(135deg, #f5e6b0, #e4c580); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: 3px; }
+        .joker-card-container { background: linear-gradient(145deg, #1a1a1a, #2a2a2a); border: 2px solid #facc15; border-radius: 24px; padding: 1.5rem; }
+        .prophecy-list-item { border-left: 3px solid #facc15; padding: 1rem 1rem 1rem 1rem; margin-bottom: 1rem; background: rgba(30,26,20,0.5); border-radius: 0 12px 12px 0; }
+        .prophecy-search { background: rgba(30,26,20,0.7); border: 1px solid rgba(250,204,21,0.3); border-radius: 50px; padding: 12px 20px; color: #f5e6b0; width: 100%; max-width: 500px; margin: 0 auto 2rem; font-family: 'Special Elite', monospace; } .prophecy-search::placeholder { color: #8a7a5a; }
+        .prophecy-grid-container { max-height: 600px; overflow-y: auto; padding-right: 10px; scrollbar-width: thin; scrollbar-color: #facc15 #1e1a14; }
+        .prophecy-grid-container::-webkit-scrollbar { width: 6px; } .prophecy-grid-container::-webkit-scrollbar-track { background: #1e1a14; border-radius: 10px; } .prophecy-grid-container::-webkit-scrollbar-thumb { background: #facc15; border-radius: 10px; }
+        .strapline-ruffian { font-family: 'Special Elite', 'Courier Prime', monospace; letter-spacing: 2px; }
+        /* Classified memo styling */
+        .memo-wrapper { max-width: 800px; margin: 0 auto; position: relative; background: #f4f1e8; color: #111; padding: 40px 35px; border: 1px solid #666; box-shadow: 0 0 30px rgba(0,0,0,0.5); font-family: 'Courier Prime', 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; }
+        .memo-stamp { position: absolute; top: 20px; right: -10px; transform: rotate(18deg); border: 3px solid #c00; color: #c00; font-size: 2rem; padding: 8px 20px; font-weight: bold; letter-spacing: 2px; opacity: 0.9; background: rgba(244,241,232,0.85); z-index: 2; pointer-events: none; }
+        .memo-header { border-bottom: 3px double #333; padding-bottom: 12px; margin-bottom: 20px; text-align: center; }
+        .memo-field { display: flex; margin-bottom: 3px; font-size: 0.8rem; }
+        .memo-field-label { font-weight: bold; min-width: 140px; text-transform: uppercase; }
+        .memo-field-value { flex: 1; border-bottom: 1px dotted #666; }
+        .memo-section-label { background: #111; color: #f4f1e8; padding: 2px 10px; font-weight: bold; font-size: 0.75rem; letter-spacing: 1px; margin: 18px 0 10px; display: inline-block; }
+        .memo-body p { margin-bottom: 12px; text-align: justify; }
+        .memo-footer { margin-top: 25px; padding-top: 10px; border-top: 1px solid #666; font-size: 0.7rem; text-align: center; }
+    </style>
 </head>
-<body class="bg-zinc-950 text-amber-100">
-
-  <div class="max-w-5xl mx-auto px-6 py-12">
-    <a href="index.html" class="text-amber-400 hover:text-yellow-300 mb-8 inline-flex items-center gap-2">
-      ← Back to Home
-    </a>
-    
-    <h1 class="header-font text-7xl text-center mb-6">BUY THE DECK</h1>
-    <p class="text-3xl text-center max-w-lg mx-auto mb-16">54 Cards of Hope — Prophecy Fulfilled.<br>Perfect for churches, evangelism teams & personal use.</p>
-
-    <div class="bg-gradient-to-r from-amber-400 to-yellow-300 text-zinc-950 rounded-3xl p-10 text-center mb-16">
-      <h2 class="text-4xl font-bold mb-4">CHURCH BULK ORDERS WELCOME</h2>
-      <p class="text-2xl">Special pricing for 10+ decks • Evangelism packs available</p>
-      <a href="mailto:54cardsofhope@gmail.com" class="mt-8 inline-block bg-black text-amber-400 px-12 py-5 rounded-2xl text-xl font-bold">Email the Crew for bulk pricing →</a>
+<body class="text-amber-50">
+<nav class="fixed top-0 w-full z-50 glass-nav py-3">
+    <div class="container mx-auto px-4 flex items-center justify-between flex-wrap gap-3">
+        <a href="#top" class="flex items-center gap-3 cursor-pointer" title="Back to top">
+            <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center shadow-md"><span class="text-black text-lg pirate-font">✝</span></div>
+            <span class="text-white font-bold text-xl pirate-font tracking-wider">Act<span class="text-amber-400">Out</span></span>
+        </a>
+        <div class="flex gap-3 flex-wrap">
+            <a href="#prophecies" class="text-amber-300 hover:text-amber-200 text-sm font-mono px-3 py-2">52 Cards</a>
+            <a href="#jokers" class="text-amber-300 hover:text-amber-200 text-sm font-mono px-3 py-2">Jokers</a>
+            <a href="#other-prophecies" class="text-amber-300 hover:text-amber-200 text-sm font-mono px-3 py-2">The Lot</a>
+        </div>
     </div>
-
-    <div class="text-center mb-20">
-      <a href="YOUR_BIG_CARTEL_SHOP_URL_HERE" target="_blank" class="inline-block bg-black border-4 border-amber-400 text-amber-400 hover:bg-amber-400 hover:text-zinc-950 text-4xl px-16 py-8 rounded-3xl font-bold transition-all">
-        GO TO BIG CARTEL STORE →
-      </a>
-      <p class="text-sm mt-6 opacity-60">Free shipping on orders over 5 decks • Ships worldwide</p>
+</nav>
+<header id="top" class="hero-bg min-h-screen flex items-center relative overflow-hidden pt-20">
+    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent pointer-events-none"></div>
+    <div class="container mx-auto px-6 md:px-12 relative z-10 py-12">
+        <div class="max-w-2xl space-y-6 animate-fade-up">
+            <div class="inline-block bg-amber-700/50 backdrop-blur-sm px-5 py-2 rounded-full text-sm uppercase tracking-widest border border-amber-400/40 strapline-ruffian">Only for card sharps ruffians pirates ne'er do wells and blaggards</div>
+            <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight drop-shadow-2xl pirate-font">54 CARDS <br> <span class="text-amber-300">OF HOPE</span></h1>
+            <p class="text-xl text-gray-200 leading-relaxed max-w-lg drop-shadow-md font-mono">Ancient prophecies. Irrefutable fulfillment. <br> <span class="text-amber-300">Flip the deck. No cap. Nuff said.</span></p>
+            <div class="flex flex-wrap gap-4 pt-6">
+                <a href="https://54cardsofhopes-shop.bigcartel.com/product/54-cards-of-hope-complete-collectors-deck" target="_blank" class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-8 shadow-xl">🃟 BUY THE DECK</a>
+                <a href="#art" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-8">🎨 SEE THE ART</a>
+                <button onclick="nickTheLot()" class="btn-mobile border-2 border-gray-500/60 hover:bg-gray-500/20 text-gray-300 px-8">📜 NICK THE LOT</button>
+            </div>
+        </div>
     </div>
-  </div>
+</header>
+<section id="prophecies" class="py-20 px-4 section-dark">
+    <div class="container mx-auto">
+        <div class="text-center mb-10"><span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">☠️ THE DECK ☠️</span><h2 class="section-title">52 PROPHECIES · FULFILLED</h2><p class="text-gray-400 max-w-2xl mx-auto font-mono">Click a rank — all four suits appear. Flip for proof.</p></div>
+        <div class="tabs-container mb-6"><div class="flex gap-2 pb-2 min-w-max"><div class="rank-tab active" data-rank="2">2</div><div class="rank-tab" data-rank="3">3</div><div class="rank-tab" data-rank="4">4</div><div class="rank-tab" data-rank="5">5</div><div class="rank-tab" data-rank="6">6</div><div class="rank-tab" data-rank="7">7</div><div class="rank-tab" data-rank="8">8</div><div class="rank-tab" data-rank="9">9</div><div class="rank-tab" data-rank="10">10</div><div class="rank-tab" data-rank="J">J</div><div class="rank-tab" data-rank="Q">Q</div><div class="rank-tab" data-rank="K">K</div><div class="rank-tab" data-rank="A">A</div></div></div>
+        <div id="cards-display"></div>
+    </div>
+</section>
+<section id="jokers" class="py-20 px-4 bg-[#0d0b08]">
+    <div class="container mx-auto">
+        <div class="text-center mb-12"><span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">🃏 THE JOKERS 🃏</span><h2 class="section-title">SCREWTAPE & MI7</h2></div>
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="joker-card-container"><h3 class="text-2xl pirate-font text-amber-300">JOKER ONE</h3><p class="text-gray-400 italic mt-3 font-mono text-sm">"My dear Nightshade, refute them all! … Wormwood got eaten."</p></div>
+            <div class="joker-card-container"><h3 class="text-2xl pirate-font text-amber-300">JOKER TWO</h3><p class="text-red-400 text-sm font-mono">TOP SECRET // NOFORN // ORCON</p><p class="text-gray-400 text-sm mt-2 font-mono">Item-99-Omega · Project "CARDS OF HOPE"</p><a href="#full-memo" class="text-amber-300 underline text-sm font-mono">🔓 View declassified memo</a></div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-8 mt-10" id="joker-cards-container"></div>
+    </div>
+</section>
+<section id="full-memo" class="py-16 px-4 bg-[#121212]">
+    <div class="container mx-auto">
+        <div class="text-center mb-8"><span class="text-red-400 text-sm font-mono tracking-widest">🔓 DECLASSIFIED DOCUMENT 🔓</span><h3 class="text-2xl text-red-300 mt-2 font-mono">MI7 · Office of Special Phenomena</h3></div>
+        <div class="memo-wrapper">
+            <div class="memo-stamp">DECLASSIFIED</div>
+            <div class="memo-header"><div style="font-size:1.6rem; font-weight:bold; letter-spacing:2px;">TOP SECRET // NOFORN // ORCON</div></div>
+            <div class="memo-field"><span class="memo-field-label">CONTROL NO:</span><span class="memo-field-value">2026-XQ-0944</span></div>
+            <div class="memo-field"><span class="memo-field-label">DATE:</span><span class="memo-field-value">07 SEP 1963</span></div>
+            <div class="memo-field"><span class="memo-field-label">SUBJECT:</span><span class="memo-field-value">INTERCEPT: NIGHTSHADE // ALPHA</span></div>
+            <div class="memo-field"><span class="memo-field-label">MEMORANDUM FOR:</span><span class="memo-field-value">DIRECTOR, OFFICE OF SPECIAL PHENOMENA (OSP) MI7</span></div>
+            <div class="memo-field"><span class="memo-field-label">FROM:</span><span class="memo-field-value">CHIEF, DIVISION OF SIGNAL INTERCEPTION (DSI)</span></div>
+            <div class="memo-body" style="margin-top:20px;">
+                <p><span class="memo-section-label">(TS//NF)</span> <strong>SUMMARY:</strong> On 06 SEP 1963, field assets at Point-Alpha intercepted a physical package in transit via a non-standard courier route. The package contains one standard-sized deck of fifty-two (52) playing cards and accompanying letter. Technical analysis confirms the cards utilize a sophisticated, unknown etheric. Preliminary inspection of the deck's inscriptions reveals a series of predictive statements that, upon internal verification, are beyond rational or objective dispute as intelligence genuine.</p>
+                <p><span class="memo-section-label">(S//NF)</span> <strong>ORIGIN AND ATTRIBUTION — CARDS:</strong> Both sender and recipient remain unidentified. Digital forensic tracing shows no detectable footprint. Linguistic analysis of the "predictions" does not align with any known state-actor code.</p>
+                <p><span class="memo-section-label">(S//NF)</span> <strong>ORIGIN AND ATTRIBUTION — LETTER "JOKER ONE":</strong> Sender Screwtape and recipient Nightshade unidentified. Trace connection to agent C.S Lewis. Reference "Wormwood" being eaten matches "Screwtape Letters."</p>
+                <p><span class="memo-section-label">(TS//ORCON)</span> <strong>CONTENT EVALUATION:</strong> Initial decryption of the cards' inscriptions yielded high-fidelity intelligence regarding events starting AD 0001. Specifically: • The King of Spades contains a precise geographical coordinate and timestamp for a kinetic event that occurred exactly four hours post-intercept. • The Seven of Diamonds lists technical specifications for an adversary's "next-generation" propulsion system, currently classified at the highest level.</p>
+                <p><span class="memo-section-label">(S//NF)</span> <strong>DISPOSITION:</strong> Data authenticity confirmed. Mechanism of generation and transmission remains an intelligence gap. The "puzzled" nature of the source suggests non-human or highly advanced agency.</p>
+                <p><span class="memo-section-label">(TS//NF)</span> <strong>RECOMMENDATION:</strong> Immediate compartmentalization under Project "CARDS OF HOPE." Division DSI requests OSP assistance to determine if the cards represent a proactive intelligence leak or a new class of predictive defence.</p>
+                <p style="text-align:center; font-weight:bold;">BY DIRECTION OF THE CHIEF, DSI</p>
+            </div>
+            <div class="memo-footer"><div class="memo-field"><span class="memo-field-label">CLASSIFIED BY:</span><span class="memo-field-value">0299441</span></div><div class="memo-field"><span class="memo-field-label">REASON:</span><span class="memo-field-value">1.4(c)</span></div><div class="memo-field"><span class="memo-field-label">DECLASSIFY ON:</span><span class="memo-field-value">20260102</span></div><div class="memo-field"><span class="memo-field-label">COPY NO:</span><span class="memo-field-value">1 OF 3</span></div></div>
+        </div>
+    </div>
+</section>
+<section id="other-prophecies" class="py-20 px-4 section-dark">
+    <div class="container mx-auto max-w-6xl">
+        <div class="text-center mb-8"><span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">📜 THE LOT 📜</span><h2 class="section-title">ALL OTHER PROPHECIES</h2><p class="text-gray-400 font-mono">350+ prophecies — all fulfilled. Nick 'em below.</p></div>
+        <input type="text" id="prophecy-search" class="prophecy-search" placeholder="🔍 Search... (Isaiah, Psalm, Genesis)">
+        <div id="all-prophecies-container" class="prophecy-grid-container"><div id="all-prophecies-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div></div>
+        <div class="text-center mt-8"><button onclick="nickTheLot()" class="btn-mobile bg-amber-600 hover:bg-amber-500 text-black px-8">📜 NICK THE LOT (print)</button></div>
+    </div>
+</section>
+<section id="art" class="py-16 px-4 bg-[#0a0806]">
+    <div class="container mx-auto text-center"><span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">🎨 SEE THE ART 🎨</span><h2 class="section-title text-3xl mt-2 mb-8">Edgy · Eccentric · Arty</h2><div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto"><div class="aspect-square bg-gradient-to-br from-amber-900/30 to-amber-700/20 rounded-xl border border-amber-500/30 flex items-center justify-center"><span class="text-4xl">🃏</span></div><div class="aspect-square bg-gradient-to-br from-amber-900/30 to-amber-700/20 rounded-xl border border-amber-500/30 flex items-center justify-center"><span class="text-4xl">☠️</span></div><div class="aspect-square bg-gradient-to-br from-amber-900/30 to-amber-700/20 rounded-xl border border-amber-500/30 flex items-center justify-center"><span class="text-4xl">✝</span></div><div class="aspect-square bg-gradient-to-br from-amber-900/30 to-amber-700/20 rounded-xl border border-amber-500/30 flex items-center justify-center"><span class="text-4xl">📜</span></div></div></div>
+</section>
+<footer class="py-16 text-center border-t border-amber-900/50 bg-[#020202]">
+    <div class="container mx-auto px-4">
+        <div class="mb-8 flex flex-wrap justify-center gap-4"><a href="https://54cardsofhopes-shop.bigcartel.com/product/54-cards-of-hope-complete-collectors-deck" target="_blank" class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-10">🃟 BUY THE DECK</a><a href="mailto:cardgard@proton.me" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-10">📧 CONTACT THE CREW</a></div>
+        <div class="font-mono text-sm text-gray-400 space-y-2"><p>Scan the QR on your deck to return here.</p><p class="text-amber-400/70">Dynamic QR · Hovercode · ActOut</p><p class="text-gray-600 text-xs mt-6">© 2025 · cardsofhope.live</p></div>
+    </div>
+</footer>
 
+<script>
+    (function() {
+        const deckByRank = {
+            '2':[{suit:"♦",val:"2",category:"ancestor",main:"descended from Abraham",ref:"Gen 12:3 / 22:18",text:"I will bless those who bless you… all peoples blessed."},{suit:"♣",val:"2",category:"ancestor",main:"descended from Isaac",ref:"Gen 17:19 / 21:12",text:"Sarah will bear you a son, Isaac… covenant."},{suit:"♠",val:"2",category:"ancestor",main:"descended from Jacob",ref:"Num 24:17",text:"A star will come out of Jacob; a scepter out of Israel."},{suit:"♥",val:"2",category:"ancestor",main:"descended from Judah / King",ref:"Gen 49:10",text:"The scepter not depart from Judah until Shiloh comes."}],
+            '3':[{suit:"♦",val:"3",category:"ancestor",main:"heir to David's throne",ref:"2Sam 7:12-13 / Isa 9:7",text:"I will establish his kingdom forever."},{suit:"♣",val:"3",category:"mother",main:"born of a virgin · Immanuel",ref:"Isa 7:14",text:"The virgin will be with child… Immanuel."},{suit:"♠",val:"3",category:"birthplace",main:"born in Bethlehem",ref:"Mic 5:2",text:"Bethlehem Ephrathah, out of you will come forth a ruler."},{suit:"♥",val:"3",category:"early years",main:"spent time in Egypt",ref:"Hos 11:1",text:"Out of Egypt I called My son."}],
+            '4':[{suit:"♦",val:"4",category:"home town",main:"called a Nazarene",ref:"Isa 11:1",text:"A shoot from the stump of Jesse."},{suit:"♣",val:"4",category:"spiritual vanguard",main:"messenger prepares the way",ref:"Isa 40:3-5",text:"A voice calling: 'Prepare the way for the LORD.'"},{suit:"♠",val:"4",category:"to be heralded",main:"preceded by Elijah-style prophet",ref:"Mal 4:5-6",text:"I will send you Elijah the prophet."},{suit:"♥",val:"4",category:"mission",main:"prophet like Moses",ref:"Deut 18:15 / Isa 42:1-4",text:"The LORD will raise up a prophet like me."}],
+            '5':[{suit:"♦",val:"5",category:"mission",main:"light to Galilee",ref:"Isa 9:1-2",text:"People walking in darkness have seen a great light."},{suit:"♣",val:"5",category:"mission",main:"heal brokenhearted",ref:"Isa 61:1-2",text:"Bind up the brokenhearted, proclaim liberty."},{suit:"♠",val:"5",category:"mission",main:"priest after Melchizedek",ref:"Ps 110:4",text:"You are a priest forever in the order of Melchizedek."},{suit:"♥",val:"5",category:"mission",main:"temple cleaner",ref:"Ps 69:9",text:"Zeal for Your house has consumed me."}],
+            '6':[{suit:"♦",val:"6",category:"communicator",main:"speak in parables",ref:"Ps 78:2-4 / Isa 6:9-10",text:"I will open my mouth in parables."},{suit:"♣",val:"6",category:"role",main:"declared Son of God",ref:"Ps 2:7",text:"You are My Son; today I have become Your Father."},{suit:"♠",val:"6",category:"role",main:"humble king on donkey",ref:"Zech 9:9",text:"Your King comes… humble and riding on a donkey."},{suit:"♥",val:"6",category:"role",main:"eternal King / anointed",ref:"Dan 2:44 / Ps 45:6-7",text:"God will set up a kingdom never destroyed."}],
+            '7':[{suit:"♦",val:"7",category:"role",main:"King over nations",ref:"Num 24:17",text:"A star out of Jacob, a scepter out of Israel."},{suit:"♣",val:"7",category:"who accepted him",main:"children praised him",ref:"Ps 8:2",text:"From mouths of children You ordained praise."},{suit:"♠",val:"7",category:"betrayal",main:"hated without cause",ref:"Ps 35:19 / 69:4",text:"Those who hate me without cause outnumber my hairs."},{suit:"♥",val:"7",category:"rejection",main:"rejected by his own",ref:"Ps 69:8 / Isa 53:3",text:"A stranger to my brothers… despised and rejected."}],
+            '8':[{suit:"♦",val:"8",category:"betrayal",main:"betrayed by a friend",ref:"Ps 41:9 / Zech 11:12-13",text:"My close friend lifted heel against me. Thirty silver."},{suit:"♣",val:"8",category:"betrayal",main:"30 silver → potter's field",ref:"Zech 11:12-13",text:"Thirty pieces of silver… throw to potter."},{suit:"♠",val:"8",category:"betrayal",main:"falsely accused",ref:"Ps 35:11",text:"Malicious witnesses rise up."},{suit:"♥",val:"8",category:"trial",main:"silent before accusers",ref:"Isa 53:7",text:"He did not open His mouth."}],
+            '9':[{suit:"♦",val:"9",category:"crucifixion",main:"spat upon, struck, beard torn",ref:"Isa 50:6",text:"I offered My back to those who struck Me."},{suit:"♣",val:"9",category:"crucifixion",main:"mocked and ridiculed",ref:"Ps 22:7-8",text:"All who see me mock me; they sneer."},{suit:"♠",val:"9",category:"crucifixion",main:"hands & feet pierced",ref:"Ps 22:16 / Zech 12:10",text:"They have pierced my hands and my feet."},{suit:"♥",val:"9",category:"crucifixion",main:"gamble for clothes",ref:"Ps 22:18",text:"They divide my garments and cast lots."}],
+            '10':[{suit:"♦",val:"10",category:"crucifixion",main:"vinegar to drink",ref:"Ps 69:21",text:"They gave me vinegar for my thirst."},{suit:"♣",val:"10",category:"crucifixion",main:"forsaken by God",ref:"Ps 22:1",text:"My God, my God, why have You forsaken me?"},{suit:"♠",val:"10",category:"crucifixion",main:"no bone broken",ref:"Ex 12:46 / Ps 34:20",text:"Not one of His bones will be broken."},{suit:"♥",val:"10",category:"forgiveness",main:"prayed for enemies",ref:"Ps 109:4",text:"I am a man of prayer."}],
+            'J':[{suit:"♦",val:"J",category:"crucifixion",main:"pierced for transgressions",ref:"Isa 53:5",text:"He was pierced for our transgressions."},{suit:"♣",val:"J",category:"crucifixion",main:"pierced side",ref:"Zech 12:10 / Ps 22:16",text:"They will look on Me, the One they have pierced."},{suit:"♠",val:"J",category:"burial",main:"buried with the rich",ref:"Isa 53:9",text:"With a rich man in His death."},{suit:"♥",val:"J",category:"resurrection",main:"rise from the dead",ref:"John 2:19",text:"Destroy this temple, in three days I will raise it."}],
+            'Q':[{suit:"♦",val:"Q",category:"resurrection",main:"third day He will raise us",ref:"Hos 6:2",text:"On the third day He will raise us up."},{suit:"♣",val:"Q",category:"resurrection",main:"not see decay",ref:"Ps 16:10 / Isa 53:10-11",text:"You will not abandon my soul to Sheol."},{suit:"♠",val:"Q",category:"resurrection",main:"seated at God's right hand",ref:"Ps 68:18 / 110:1",text:"Sit at My right hand."},{suit:"♥",val:"Q",category:"mission success",main:"bore sin of many",ref:"Isa 53:12",text:"He bore the sin of many."}],
+            'K':[{suit:"♦",val:"K",category:"independent reporter",main:"Tacitus · Christus",ref:"Annals AD 115-120",text:"Roman historian mentions 'Christus' and Christians."},{suit:"♣",val:"K",category:"independent reporter",main:"Josephus · Antiquities",ref:"Antiquities AD 93-94",text:"Flavius Josephus includes two references to Jesus."},{suit:"♠",val:"K",category:"independent reporter",main:"Pliny to Trajan",ref:"Letter AD 112",text:"Pliny the Younger wrote to Trajan about Christians."},{suit:"♥",val:"K",category:"affiliated reporter",main:"Epistles & Gospels",ref:"AD 48–110",text:"Paul, James, eyewitnesses — over 64,000 words."}],
+            'A':[{suit:"♦",val:"A",category:"rock evidence",main:"Pilate Stone",ref:"AD 26-36",text:"Limestone inscription confirms Pontius Pilate."},{suit:"♣",val:"A",category:"rock evidence",main:"Ossuary of Caiaphas",ref:"AD 20-60",text:"'Joseph, son of Caiaphas' — high priest."},{suit:"♠",val:"A",category:"rock evidence",main:"Synagogue at Capernaum",ref:"1st cent. basalt",text:"First-century synagogue where Jesus taught."},{suit:"♥",val:"A",category:"rock evidence",main:"Pool of Siloam",ref:"Hezekiah / Herodian",text:"Discovered 2004; steps where Jesus healed blind man."}]
+        };
+        const jokerCards = [{suit:"🃏",val:"JOKER",category:"Screwtape",main:"Letter to Nightshade",ref:"date unknown",text:"My dear Nightshade … refute them all! Wormwood got eaten."},{suit:"🃏",val:"JOKER",category:"MI7 TOP SECRET",main:"Declassified",ref:"NIGHTSHADE // ALPHA",text:"A QR code leading to the declassified file."}];
+
+        const allPropheciesData = [
+            {prophecy:"Genesis 3:15", description:"Seed of a woman (virgin birth)", fulfillment:"Galatians 4:4–5; Matthew 1:18"},
+            {prophecy:"Genesis 3:15", description:"He will bruise Satan's head", fulfillment:"Hebrews 2:14; 1 John 3:8"},
+            {prophecy:"Genesis 5:24", description:"Bodily ascension illustrated", fulfillment:"Mark 16:19"},
+            {prophecy:"Genesis 12:3", description:"Seed of Abraham blesses all nations", fulfillment:"Galatians 3:8; Acts 3:25–26"},
+            {prophecy:"Genesis 14:18", description:"Priest after order of Melchizedek", fulfillment:"Hebrews 6:20"},
+            {prophecy:"Genesis 22:8", description:"Lamb of God promised", fulfillment:"John 1:29"},
+            {prophecy:"Genesis 49:10", description:"Scepter of Judah / Shiloh", fulfillment:"Luke 2:1–7; Galatians 4:4"},
+            {prophecy:"Exodus 12:46", description:"No bone broken (Passover lamb)", fulfillment:"John 19:31–36"},
+            {prophecy:"Numbers 24:17", description:"Star out of Jacob", fulfillment:"Matthew 2:2; Revelation 22:16"},
+            {prophecy:"Deuteronomy 18:15", description:"A prophet like Moses", fulfillment:"John 6:14; Acts 3:22–23"},
+            {prophecy:"2 Samuel 7:12-13", description:"David's throne established forever", fulfillment:"Luke 1:32–33; Hebrews 1:8"},
+            {prophecy:"Psalm 2:7", description:"You are My Son", fulfillment:"Matthew 3:17; Hebrews 1:5"},
+            {prophecy:"Psalm 16:10", description:"Not see decay (resurrection)", fulfillment:"Acts 2:31; Acts 13:35"},
+            {prophecy:"Psalm 22:1", description:"My God, my God, why have You forsaken me?", fulfillment:"Matthew 27:46"},
+            {prophecy:"Psalm 22:16", description:"They pierced my hands and feet", fulfillment:"John 19:34–37; John 20:27"},
+            {prophecy:"Psalm 22:18", description:"They divide my garments", fulfillment:"John 19:23–24"},
+            {prophecy:"Psalm 34:20", description:"No bone broken", fulfillment:"John 19:31–36"},
+            {prophecy:"Psalm 41:9", description:"Betrayed by a familiar friend", fulfillment:"John 13:18"},
+            {prophecy:"Psalm 68:18", description:"Ascended on high, led captives", fulfillment:"Ephesians 4:8; Acts 1:9–11"},
+            {prophecy:"Psalm 69:9", description:"Zeal for Your house consumes me", fulfillment:"John 2:17"},
+            {prophecy:"Psalm 69:21", description:"Gall and vinegar", fulfillment:"Matthew 27:34"},
+            {prophecy:"Psalm 110:1", description:"Sit at My right hand", fulfillment:"Mark 16:19; Hebrews 1:13"},
+            {prophecy:"Psalm 110:4", description:"Priest forever in order of Melchizedek", fulfillment:"Hebrews 5:6; 6:20"},
+            {prophecy:"Isaiah 7:14", description:"Virgin birth; Immanuel", fulfillment:"Matthew 1:18–23; Luke 1:35"},
+            {prophecy:"Isaiah 9:1-2", description:"Light in Galilee", fulfillment:"Matthew 4:12–17"},
+            {prophecy:"Isaiah 9:6", description:"Wonderful Counselor, Mighty God, Everlasting Father, Prince of Peace", fulfillment:"Luke 1:32; John 1:14; Romans 1:3–4"},
+            {prophecy:"Isaiah 11:1", description:"Branch from Jesse (Nazarene)", fulfillment:"Matthew 2:23"},
+            {prophecy:"Isaiah 40:3-5", description:"Voice in the wilderness", fulfillment:"John 1:23; Matthew 3:3"},
+            {prophecy:"Isaiah 42:1-4", description:"Chosen servant brings justice", fulfillment:"Matthew 12:18–21"},
+            {prophecy:"Isaiah 50:6", description:"Back struck, beard torn, spat upon", fulfillment:"Matthew 26:67; 27:26–30"},
+            {prophecy:"Isaiah 52:13-53:12", description:"Suffering servant (pierced, crushed, by His wounds we are healed)", fulfillment:"1 Peter 2:24; Romans 5:6–8; Matthew 8:17"},
+            {prophecy:"Isaiah 53:5", description:"Pierced for our transgressions", fulfillment:"John 19:34; 1 Peter 2:24"},
+            {prophecy:"Isaiah 53:9", description:"Buried with the rich", fulfillment:"Matthew 27:57–60"},
+            {prophecy:"Isaiah 53:12", description:"Numbered with transgressors", fulfillment:"Mark 15:27–28; Luke 23:34"},
+            {prophecy:"Jeremiah 31:31", description:"New covenant", fulfillment:"Matthew 26:28; Hebrews 8:8–12"},
+            {prophecy:"Daniel 2:44", description:"Kingdom never destroyed", fulfillment:"Luke 1:33; Revelation 11:15"},
+            {prophecy:"Daniel 7:13-14", description:"Son of Man given dominion", fulfillment:"Matthew 28:18; Acts 1:9–11"},
+            {prophecy:"Hosea 11:1", description:"Out of Egypt I called My Son", fulfillment:"Matthew 2:15"},
+            {prophecy:"Micah 5:2", description:"Ruler born in Bethlehem, from everlasting", fulfillment:"Matthew 2:1–6; John 1:1"},
+            {prophecy:"Zechariah 9:9", description:"King on donkey", fulfillment:"Matthew 21:1–11; John 12:14–15"},
+            {prophecy:"Zechariah 11:12-13", description:"Thirty pieces of silver, thrown to potter", fulfillment:"Matthew 26:14–15; 27:3–10"},
+            {prophecy:"Zechariah 12:10", description:"They will look on Me whom they pierced", fulfillment:"John 19:37; Revelation 1:7"},
+            {prophecy:"Zechariah 13:7", description:"Strike the shepherd, sheep scattered", fulfillment:"Matthew 26:31; Mark 14:27"},
+            {prophecy:"Malachi 3:1", description:"Messenger prepares the way", fulfillment:"Mark 1:2; Luke 7:27"},
+            {prophecy:"Malachi 4:5-6", description:"Elijah before the great day", fulfillment:"Matthew 11:14; 17:10–13"}
+        ];
+
+        const displayArea = document.getElementById('cards-display');
+        const jokerContainer = document.getElementById('joker-cards-container');
+        const tabs = document.querySelectorAll('.rank-tab');
+
+        function getSuitColor(s) { return (s==='♥'||s==='♦')?'text-red-400':(s==='♣'||s==='♠')?'text-gray-200':'text-amber-300'; }
+
+        function createCard(card) {
+            const el = document.createElement('div'); el.className = 'card';
+            const bg = card.suit==='🃏' ? 'linear-gradient(145deg, #2a241a, #1f1b12)' : 'linear-gradient(145deg, #1e1a14, #2c241c)';
+            el.innerHTML = `<div class="card-inner"><div class="card-face card-front" style="background:${bg};"><div style="display:flex;justify-content:space-between;"><span class="gold font-bold" style="font-size:1.8rem;">${card.val}</span><span class="${getSuitColor(card.suit)} font-bold" style="font-size:1.8rem;">${card.suit}</span></div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;"><div class="category-tag gold">${card.category}</div><div style="font-weight:bold;font-size:0.8rem;color:#f3e9d2;">${card.main}</div><div class="verse-ref">${card.ref}</div><div style="margin-top:6px;font-size:0.65rem;color:#d4c3a2;border-top:1px dashed #7a6a4b;padding-top:5px;">${card.text}</div></div><div style="display:flex;justify-content:space-between;transform:rotate(180deg);"><span class="gold font-bold" style="font-size:1.8rem;">${card.val}</span><span class="${getSuitColor(card.suit)} font-bold" style="font-size:1.8rem;">${card.suit}</span></div></div><div class="card-face card-back"></div></div>`;
+            el.addEventListener('click', e => { e.stopPropagation(); el.classList.toggle('flipped'); });
+            return el;
+        }
+
+        function displayRank(rank) {
+            const cards = deckByRank[rank]; if(!cards) return;
+            displayArea.innerHTML = `<div class="suit-family-grid">${['♦','♣','♠','♥'].map((s,i)=>`<div id="card-${rank}-${i}"></div>`).join('')}</div>`;
+            ['♦','♣','♠','♥'].forEach((s,i)=>{ const c=cards.find(x=>x.suit===s); if(c) document.getElementById(`card-${rank}-${i}`).appendChild(createCard(c)); });
+        }
+
+        jokerCards.forEach(card => { const w = document.createElement('div'); w.style.maxWidth='200px'; w.style.width='100%'; w.appendChild(createCard(card)); jokerContainer.appendChild(w); });
+        tabs.forEach(tab=>tab.addEventListener('click',()=>{ tabs.forEach(t=>t.classList.remove('active')); tab.classList.add('active'); displayRank(tab.dataset.rank); }));
+        displayRank('2');
+
+        // Prophecies list rendering
+        const listContainer = document.getElementById('all-prophecies-list');
+        function renderList(filter = '') {
+            const filtered = allPropheciesData.filter(p => p.prophecy.toLowerCase().includes(filter) || p.description.toLowerCase().includes(filter) || p.fulfillment.toLowerCase().includes(filter));
+            listContainer.innerHTML = filtered.map(p => `<div class="prophecy-list-item"><div class="font-bold text-amber-300 font-mono">${p.prophecy}</div><div class="text-sm text-gray-300 mt-1">${p.description}</div><div class="text-xs text-amber-400/70 mt-2">→ ${p.fulfillment}</div></div>`).join('') || '<p class="text-gray-400 text-center py-8">No matches, mate.</p>';
+        }
+        renderList();
+        document.getElementById('prophecy-search').addEventListener('input', e => renderList(e.target.value));
+
+        // Nick the Lot
+        window.nickTheLot = function() {
+            const w = window.open('', '_blank', 'width=800,height=600');
+            w.document.write(`
+                <!DOCTYPE html><html><head><title>54 Cards of Hope - All Prophecies</title>
+                <style>body{font-family:'Courier New',monospace;padding:1cm;background:white;color:black;font-size:11px;line-height:1.4;}
+                h2{text-align:center;}p{margin:6px 0}img{display:block;margin:15px auto}
+                .prophecy{margin-bottom:10px;border-bottom:1px dotted #ccc;padding-bottom:6px}
+                .ref{color:#555;font-size:10px}hr{margin:15px 0}</style>
+                </head><body><h2>54 Cards of Hope – All Prophecies & Fulfillments</h2>
+                <p style="text-align:center;">cardsofhope.live</p>
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://cardsofhope.live" alt="QR" />
+                <hr/>${allPropheciesData.map(p => `<div class="prophecy"><strong>${p.prophecy}</strong> – ${p.description}<br/><span class="ref">↳ ${p.fulfillment}</span></div>`).join('')}
+                <hr/><p style="text-align:center;font-size:10px;">Downloaded from cardsofhope.live · 54 Cards of Hope</p></body></html>
+            `);
+            w.document.close();
+            w.focus();
+            w.print();
+        };
+
+        // Card back fallback
+        const test = new Image(); test.src='card-back.jpg';
+        test.onerror = () => { const s = document.createElement('style'); s.textContent = '.card-back{background-image:repeating-linear-gradient(45deg,rgba(250,204,21,0.1) 0px,rgba(250,204,21,0.1) 2px,transparent 2px,transparent 8px),radial-gradient(circle at 30% 20%,#2a2418,#0f0c07)!important;}'; document.head.appendChild(s); };
+    })();
+</script>
 </body>
 </html>
