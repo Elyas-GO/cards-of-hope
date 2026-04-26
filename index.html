@@ -3,71 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=1.0">
-    <title>54 Cards of Hope · No Cap · Nuff Said</title>
+    <title>54 Cards of Hope · Prophecy Deck · PDF Export</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Courier+Prime:wght@400;700&family=Pirata+One&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif; background: #0a0a0a; overflow-x: hidden; }
-        .typewriter, .card-front, .card-front *, .gold, .pirate-font, .btn-mobile, nav a, .prophecy-list-item, .classified-doc {
-            font-family: 'Special Elite', 'Courier Prime', monospace !important;
-        }
-        .pirate-font { font-family: 'Pirata One', cursive; letter-spacing: 2px; }
-        .hero-bg { background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,10,5,0.7) 50%, rgba(0,0,0,0.8) 100%), url('hero-background.png'); background-size: cover; background-position: center 30%; background-repeat: no-repeat; background-attachment: fixed; }
-        @media (max-width: 768px) { .hero-bg { background-attachment: scroll; background-position: center 20%; } }
-        .card { perspective: 1500px; aspect-ratio: 5/7; cursor: pointer; transition: transform 0.2s; width: 100%; max-width: 200px; margin: 0 auto; background: #1e1a14; border-radius: 24px; }
-        .card:hover { transform: translateY(-6px); }
-        .card-inner { width: 100%; height: 100%; transition: transform 0.65s cubic-bezier(0.23,1,0.32,1); transform-style: preserve-3d; position: relative; border-radius: 24px; box-shadow: 0 20px 30px -12px rgba(0,0,0,0.5); }
-        .card.flipped .card-inner { transform: rotateY(180deg); }
-        .card-face { position: absolute; width: 100%; height: 100%; border-radius: 24px; backface-visibility: hidden; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
-        .card-front { background: linear-gradient(145deg, #1e1a14 0%, #2c241c 100%); padding: 14px 10px; display: flex; flex-direction: column; justify-content: space-between; }
-        .card-front::after { content:""; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.12'/%3E%3C/svg%3E"); pointer-events: none; opacity: 0.5; border-radius: 24px; }
-        .gold { background: linear-gradient(135deg, #f5e6b0, #e4c580, #f5e6b0); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 3px rgba(0,0,0,0.3); font-weight: 700; letter-spacing: 0.8px; }
-        .card-back { transform: rotateY(180deg); background-image: url('card-back.jpg'); background-size: cover; background-position: center; background-repeat: no-repeat; position: relative; }
-        .card-back::after { content: "✝ 54 CARDS OF HOPE ✝"; position: absolute; bottom: 20px; left: 0; right: 0; text-align: center; color: #facc15; font-size: 0.6rem; letter-spacing: 3px; font-family: 'Special Elite', monospace; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); background: rgba(0,0,0,0.3); padding: 4px 0; backdrop-filter: blur(2px); }
-        .suit-red { color: #e67373; } .suit-black { color: #e0e0e0; }
-        .glass-nav { background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(250,204,21,0.25); }
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        .animate-fade-up { animation: fadeUp 0.8s ease-out forwards; }
-        .rank-tab { padding: 12px 20px; background: rgba(30,26,20,0.9); border: 1px solid rgba(250,204,21,0.3); border-radius: 12px 12px 0 0; color: #d4c3a2; font-family: 'Special Elite', monospace; font-weight: bold; font-size: 1.1rem; cursor: pointer; transition: all 0.3s; backdrop-filter: blur(8px); min-width: 60px; text-align: center; }
-        .rank-tab:hover { background: rgba(250,204,21,0.2); color: #f5e6b0; border-color: #facc15; }
-        .rank-tab.active { background: linear-gradient(145deg, #facc15, #e4b014); color: #0a0a0a; border-color: #facc15; box-shadow: 0 0 20px rgba(250,204,21,0.3); }
-        .tabs-container { overflow-x: auto; scrollbar-width: thin; scrollbar-color: #facc15 #1e1a14; }
-        .tabs-container::-webkit-scrollbar { height: 6px; } .tabs-container::-webkit-scrollbar-track { background: #1e1a14; border-radius: 10px; } .tabs-container::-webkit-scrollbar-thumb { background: #facc15; border-radius: 10px; }
-        .suit-family-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; padding: 2rem 0; }
-        @media (max-width: 768px) { .suit-family-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } }
-        @media (max-width: 480px) { .suit-family-grid { grid-template-columns: 1fr; } }
-        .btn-mobile { padding: 16px 24px; font-size: 1.1rem; min-height: 56px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50px; font-weight: bold; transition: all 0.3s; cursor: pointer; touch-action: manipulation; }
-        .section-dark { background: linear-gradient(180deg, #050505 0%, #0a0806 100%); border-top: 1px solid rgba(250,204,21,0.15); border-bottom: 1px solid rgba(250,204,21,0.15); }
-        .section-title { font-family: 'Pirata One', cursive; font-size: 2.5rem; background: linear-gradient(135deg, #f5e6b0, #e4c580); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: 3px; }
-        .joker-card-container { background: linear-gradient(145deg, #1a1a1a, #2a2a2a); border: 2px solid #facc15; border-radius: 24px; padding: 1.5rem; }
-        .prophecy-list-item { border-left: 3px solid #facc15; padding: 1rem; margin-bottom: 1rem; background: rgba(30,26,20,0.5); border-radius: 0 12px 12px 0; }
-        .prophecy-search { background: rgba(30,26,20,0.7); border: 1px solid rgba(250,204,21,0.3); border-radius: 50px; padding: 12px 20px; color: #f5e6b0; width: 100%; max-width: 500px; margin: 0 auto 2rem; font-family: 'Special Elite', monospace; } .prophecy-search::placeholder { color: #8a7a5a; }
-        .prophecy-grid-container { max-height: 600px; overflow-y: auto; padding-right: 10px; scrollbar-width: thin; scrollbar-color: #facc15 #1e1a14; }
-        .prophecy-grid-container::-webkit-scrollbar { width: 6px; } .prophecy-grid-container::-webkit-scrollbar-track { background: #1e1a14; border-radius: 10px; } .prophecy-grid-container::-webkit-scrollbar-thumb { background: #facc15; border-radius: 10px; }
-        .strapline-ruffian { font-family: 'Special Elite', 'Courier Prime', monospace; letter-spacing: 2px; }
-        /* Classified memo */
-        .memo-wrapper { max-width: 800px; margin: 0 auto; position: relative; background: #f4f1e8; color: #111; padding: 40px 35px; border: 1px solid #666; box-shadow: 0 0 30px rgba(0,0,0,0.5); font-family: 'Courier Prime', 'Courier New', monospace; font-size: 0.85rem; line-height: 1.6; }
-        .memo-stamp { position: absolute; top: 20px; right: -10px; transform: rotate(18deg); border: 3px solid #c00; color: #c00; font-size: 2rem; padding: 8px 20px; font-weight: bold; letter-spacing: 2px; opacity: 0.9; background: rgba(244,241,232,0.85); z-index: 2; pointer-events: none; }
-        .memo-header { border-bottom: 3px double #333; padding-bottom: 12px; margin-bottom: 20px; text-align: center; }
-        .memo-field { display: flex; margin-bottom: 3px; font-size: 0.8rem; }
-        .memo-field-label { font-weight: bold; min-width: 140px; text-transform: uppercase; }
-        .memo-field-value { flex: 1; border-bottom: 1px dotted #666; }
-        .memo-section-label { background: #111; color: #f4f1e8; padding: 2px 10px; font-weight: bold; font-size: 0.75rem; letter-spacing: 1px; margin: 18px 0 10px; display: inline-block; }
-        .memo-body p { margin-bottom: 12px; text-align: justify; }
-        .memo-footer { margin-top: 25px; padding-top: 10px; border-top: 1px solid #666; font-size: 0.7rem; text-align: center; }
-        /* Print */
-        @media print {
-            .print-header { position: running(header); text-align: center; padding-bottom: 10px; border-bottom: 1px solid #ccc; }
-            @page { @top-center { content: element(header); } }
-        }
-    </style>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:opsz,wght@14..32,400;14..32,700&family=Courier+Prime:wght@400;700&family=Pirata+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body class="text-amber-50">
+
 <nav class="fixed top-0 w-full z-50 glass-nav py-3">
     <div class="container mx-auto px-4 flex items-center justify-between flex-wrap gap-3">
-        <a href="#top" class="flex items-center gap-3 cursor-pointer" title="Back to top">
+        <a href="#top" class="flex items-center gap-3 cursor-pointer">
             <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center shadow-md"><span class="text-black text-lg pirate-font">✝</span></div>
             <span class="text-white font-bold text-xl pirate-font tracking-wider">Act<span class="text-amber-400">Out</span></span>
         </a>
@@ -83,38 +30,54 @@
     <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent pointer-events-none"></div>
     <div class="container mx-auto px-6 md:px-12 relative z-10 py-12">
         <div class="max-w-2xl space-y-6 animate-fade-up">
-            <div class="inline-block bg-amber-700/50 backdrop-blur-sm px-5 py-2 rounded-full text-sm uppercase tracking-widest border border-amber-400/40 strapline-ruffian">Only for card sharps ruffians pirates ne'er do wells and blaggards</div>
+            <div class="inline-block bg-amber-700/50 backdrop-blur-sm px-5 py-2 rounded-full text-sm uppercase tracking-widest border border-amber-400/40 veteran">
+                Only for card sharps ruffians pirates ne'er do wells and blaggards
+            </div>
             <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight drop-shadow-2xl pirate-font">54 CARDS <br> <span class="text-amber-300">OF HOPE</span></h1>
-            <p class="text-xl text-gray-200 leading-relaxed max-w-lg drop-shadow-md font-mono">Ancient prophecies. Irrefutable fulfillment. <br> <span class="text-amber-300">Flip the deck. No cap. Nuff said.</span></p>
+            <p class="text-xl text-gray-200 leading-relaxed max-w-lg drop-shadow-md veteran">
+                Ancient prophecies. Irrefutable fulfillment.<br>
+                Flip the deck. No cap. Nuff said.
+            </p>
             <div class="flex flex-wrap gap-4 pt-6">
-                <a href="https://54cardsofhopes-shop.bigcartel.com/product/54-cards-of-hope-complete-collectors-deck" target="_blank" class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-8 shadow-xl">🃟 BUY THE DECK</a>
-                <a href="#art" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-8">🎨 SEE THE ART</a>
-                <button onclick="nickTheLot()" class="btn-mobile border-2 border-gray-500/60 hover:bg-gray-500/20 text-gray-300 px-8">📜 NICK THE LOT</button>
+                <a href="https://54cardsofhopes-shop.bigcartel.com/" target="_blank" class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-8 shadow-xl">🃟 BUY THE DECK</a>
+                <button onclick="nickTheLotShorts()" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-8">351 SHORTS</button>
+                <button onclick="exportPropheciesToPDF()" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-8">📜 NICK THE LOT (PDF)</button>
             </div>
         </div>
     </div>
 </header>
 
-<!-- SECTION 1: 52 PROPHECIES -->
+<!-- PROPHECY CARDS (52) -->
 <section id="prophecies" class="py-20 px-4 section-dark">
     <div class="container mx-auto text-center">
         <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">☠️ THE DECK ☠️</span>
         <h2 class="section-title mb-8">52 PROPHECIES · FULFILLED</h2>
-        <div class="tabs-container mb-6"><div class="flex gap-2 pb-2 min-w-max">
-            <div class="rank-tab active" data-rank="2">2</div><div class="rank-tab" data-rank="3">3</div><div class="rank-tab" data-rank="4">4</div><div class="rank-tab" data-rank="5">5</div><div class="rank-tab" data-rank="6">6</div><div class="rank-tab" data-rank="7">7</div><div class="rank-tab" data-rank="8">8</div><div class="rank-tab" data-rank="9">9</div><div class="rank-tab" data-rank="10">10</div><div class="rank-tab" data-rank="J">J</div><div class="rank-tab" data-rank="Q">Q</div><div class="rank-tab" data-rank="K">K</div><div class="rank-tab" data-rank="A">A</div>
-        </div></div>
+        <div class="tabs-container mb-6 overflow-x-auto">
+            <div class="flex gap-2 pb-2 min-w-max" id="rankTabsWrapper">
+                <div class="rank-tab" data-rank="2">2</div><div class="rank-tab" data-rank="3">3</div><div class="rank-tab" data-rank="4">4</div><div class="rank-tab" data-rank="5">5</div><div class="rank-tab" data-rank="6">6</div><div class="rank-tab" data-rank="7">7</div><div class="rank-tab" data-rank="8">8</div><div class="rank-tab" data-rank="9">9</div><div class="rank-tab" data-rank="10">10</div><div class="rank-tab" data-rank="J">J</div><div class="rank-tab" data-rank="Q">Q</div><div class="rank-tab" data-rank="K">K</div><div class="rank-tab" data-rank="A">A</div>
+            </div>
+        </div>
         <div id="cards-display"></div>
     </div>
 </section>
 
-<!-- SECTION 2: JOKERS -->
+<!-- JOKERS -->
 <section id="jokers" class="py-20 px-4 bg-[#0d0b08]">
     <div class="container mx-auto text-center">
         <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">🃏 THE JOKERS 🃏</span>
-        <h2 class="section-title mb-8">SCREWTAPE & MI7</h2>
+        <h2 class="section-title mb-8 veteran">SCREWTAPE & MI7</h2>
         <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div class="joker-card-container text-left"><h3 class="text-2xl pirate-font text-amber-300">JOKER ONE</h3><p class="text-gray-400 italic mt-3 font-mono">"My dear Nightshade, refute them all! … Wormwood got eaten."</p></div>
-            <div class="joker-card-container text-left"><h3 class="text-2xl pirate-font text-amber-300">JOKER TWO</h3><p class="text-red-400 text-sm font-mono">TOP SECRET // NOFORN // ORCON</p><p class="text-gray-400 text-sm mt-2 font-mono">Item-99-Omega · Project "CARDS OF HOPE"</p><a href="#full-memo" class="text-amber-300 underline text-sm font-mono">🔓 View declassified memo</a></div>
+            <div onclick="flipJoker(0)" class="joker-card-container text-left">
+                <h3 class="text-2xl veteran text-amber-300">JOKER ONE</h3>
+                <p class="text-gray-400 italic mt-3">"My dear Nightshade, refute them all! … Wormwood got eaten."</p>
+                <a href="https://docs.google.com/document/d/1Nl5G5ad8rPc_ijSGA0KnPZG81bt38XzK/edit?usp=sharing&ouid=117867511891762056685&rtpof=true&sd=true" class="text-amber-300 underline text-sm veteran block mt-4">Read the full Screwtape Letter →</a>
+            </div>
+            <div onclick="flipJoker(1)" class="joker-card-container text-left">
+                <h3 class="text-2xl veteran text-amber-300">JOKER TWO</h3>
+                <p class="text-red-400 text-sm font-mono">TOP SECRET // NOFORN // ORCON</p>
+                <p class="text-gray-400 text-sm mt-2 font-mono">Item-99-Omega · Project "CARDS OF HOPE"</p>
+                <span class="text-amber-300 underline text-sm veteran cursor-pointer block mt-3">Memo DECLASSIFIED</span>
+            </div>
         </div>
         <div class="flex flex-wrap justify-center gap-8 mt-10" id="joker-cards-container"></div>
     </div>
@@ -124,637 +87,55 @@
 <section id="full-memo" class="py-16 px-4 bg-[#121212]">
     <div class="container mx-auto text-center">
         <span class="text-red-400 text-sm font-mono tracking-widest">🔓 DECLASSIFIED DOCUMENT 🔓</span>
-        <h3 class="text-2xl text-red-300 mt-2 font-mono mb-8">MI7 · Office of Special Phenomena</h3>
-        <div class="memo-wrapper">
+        <h3 class="text-2xl text-red-300 mt-2 font-mono mb-8 veteran">MI7 · Office of Special Phenomena</h3>
+        <div class="memo-wrapper veteran">
             <div class="memo-stamp">DECLASSIFIED</div>
             <div class="memo-header"><div style="font-size:1.6rem; font-weight:bold; letter-spacing:2px;">TOP SECRET // NOFORN // ORCON</div></div>
             <div class="memo-field"><span class="memo-field-label">CONTROL NO:</span><span class="memo-field-value">2026-XQ-0944</span></div>
             <div class="memo-field"><span class="memo-field-label">DATE:</span><span class="memo-field-value">07 SEP 1963</span></div>
             <div class="memo-field"><span class="memo-field-label">SUBJECT:</span><span class="memo-field-value">INTERCEPT: NIGHTSHADE // ALPHA</span></div>
-            <div class="memo-field"><span class="memo-field-label">MEMORANDUM FOR:</span><span class="memo-field-value">DIRECTOR, OFFICE OF SPECIAL PHENOMENA (OSP) MI7</span></div>
-            <div class="memo-field"><span class="memo-field-label">FROM:</span><span class="memo-field-value">CHIEF, DIVISION OF SIGNAL INTERCEPTION (DSI)</span></div>
-            <div class="memo-body" style="margin-top:20px;">
-                <p><span class="memo-section-label">(TS//NF)</span> <strong>SUMMARY:</strong> On 06 SEP 1963, field assets at Point-Alpha intercepted a physical package in transit via a non-standard courier route. The package contains one standard-sized deck of fifty-two (52) playing cards and accompanying letter. Technical analysis confirms the cards utilize a sophisticated, unknown etheric. Preliminary inspection of the deck's inscriptions reveals a series of predictive statements that, upon internal verification, are beyond rational or objective dispute as intelligence genuine. Bridging intelligence analysis required.</p>
-                <p><span class="memo-section-label">(S//NF)</span> <strong>ORIGIN AND ATTRIBUTION CARDS:</strong> Both the sender and the intended recipient remain unidentified. Digital forensic tracing of the courier's transit path shows no detectable footprint prior to the Point-Alpha intercept. Linguistic analysis of the "predictions" does not align with any known state-actor code or cryptographic standard.</p>
-                <p><span class="memo-section-label">(S//NF)</span> <strong>ORIGIN AND ATTRIBUTION LETTER “JOKER ONE”:</strong> Both sender Screwtape and intended recipient Nightshade remain unidentified. Trace connection established to agent C.S Lewis. Reference “Wormwood” being eaten to “Screwtape Letters.” Linguistic analysis of “the letter” does not align with any known state-actor code or cryptographic standard.</p>
-                <p><span class="memo-section-label">(TS//ORCON)</span> <strong>CONTENT EVALUATION:</strong> Initial decryption of the cards' inscriptions has yielded high-fidelity intelligence regarding events scheduled and starting AD 0001. Specifically: The King of Spades contains a precise geographical coordinate and timestamp for a kinetic event that occurred exactly four hours post-intercept. The Seven of Diamonds lists technical specifications for an adversary's "next-generation" propulsion system, currently classified at the highest level of our own internal research.</p>
-                <p><span class="memo-section-label">(S//NF)</span> <strong>DISPOSITION:</strong> The authenticity of the data is confirmed. However, the mechanism by which these predictions were generated and transmitted remains an intelligence gap of significant concern. The air of the messages is instructional, yet the "puzzled" nature of the source material suggests a non-human or highly advanced agency. Terrestrial or extra-terrestrial unknown.</p>
-                <p><span class="memo-section-label">(TS//NF)</span> <strong>RECOMMENDATION:</strong> Recommend immediate compartmentalization of Item-99-Omega under Project "CARDS OF HOPE." Division DSI requests technical assistance from OSP to determine if the cards represent a proactive intelligence leak or a new class of predictive defence or charm offensive.</p>
-                <p style="text-align:center; font-weight:bold;">BY DIRECTION OF THE CHIEF, DSI</p>
+            <div class="memo-body" style="margin-top:25px;">
+                <p><span class="memo-section-label">(TS//NF)</span> <strong>SUMMARY:</strong> On 06 SEP 1963, field assets intercepted a physical package containing a deck of 52 playing cards and a letter.</p>
+                <p><span class="memo-section-label">(S//NF)</span> <strong>ORIGIN:</strong> Both sender and recipient unidentified.</p>
+                <p><span class="memo-section-label">(TS//ORCON)</span> <strong>EVALUATION:</strong> Cards contain high-fidelity intelligence regarding events from AD 0001.</p>
+                <p><span class="memo-section-label">(S//NF)</span> <strong>DISPOSITION:</strong> Authenticity confirmed. Project "CARDS OF HOPE" activated.</p>
+                <p style="text-align:center; font-weight:bold; margin-top:20px;">BY DIRECTION OF THE CHIEF, DSI</p>
             </div>
-            <div class="memo-footer">
-                <div class="memo-field"><span class="memo-field-label">CLASSIFIED BY:</span><span class="memo-field-value">0299441</span></div>
-                <div class="memo-field"><span class="memo-field-label">REASON:</span><span class="memo-field-value">1.4(c)</span></div>
-                <div class="memo-field"><span class="memo-field-label">DECLASSIFY ON:</span><span class="memo-field-value">20260102</span></div>
-                <div class="memo-field"><span class="memo-field-label">COPY NO:</span><span class="memo-field-value">1 OF 3</span></div>
-            </div>
+            <div class="memo-footer"><div class="memo-field"><span class="memo-field-label">DECLASSIFY ON:</span><span class="memo-field-value">20260102</span></div></div>
         </div>
     </div>
 </section>
 
-<!-- SECTION 3: ALL OTHER PROPHECIES -->
+<!-- ALL OTHER PROPHECIES (350+) SCROLLABLE -->
 <section id="other-prophecies" class="py-20 px-4 section-dark">
     <div class="container mx-auto max-w-6xl text-center">
         <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">📜 THE LOT 📜</span>
-        <h2 class="section-title mb-8">ALL OTHER PROPHECIES</h2>
-        <input type="text" id="prophecy-search" class="prophecy-search" placeholder="🔍 Search... (Isaiah, Psalm, Genesis)">
-        <div id="all-prophecies-container" class="prophecy-grid-container"><div id="all-prophecies-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div></div>
-        <div class="text-center mt-8"><button onclick="nickTheLot()" class="btn-mobile bg-amber-600 hover:bg-amber-500 text-black px-8">📜 NICK THE LOT (print)</button></div>
-    </div>
-</section>
-
-<!-- ART SECTION -->
-<section id="art" class="py-16 px-4 bg-[#0a0806]">
-    <div class="container mx-auto text-center">
-        <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">🎨 SEE THE ART 🎨</span>
-        <h2 class="section-title text-3xl mt-2 mb-8">Edgy · Eccentric · Arty</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
-            <div class="aspect-square bg-gradient-to-br from-amber-900/30 to-amber-700/20 rounded-xl border border-amber-500/30 flex items-center justify-center"><span class="text-4xl">🃏</span></div>
-            <div class="aspect-square bg-gradient-to-br from-amber-900/30 to-amber-700/20 rounded-xl border border-amber-500/30 flex items-center justify-center"><span class="text-4xl">☠️</span></div>
-            <div class="aspect-square bg-gradient-to-br from-amber-900/30 to-amber-700/20 rounded-xl border border-amber-500/30 flex items-center justify-center"><span class="text-4xl">✝</span></div>
-            <div class="aspect-square bg-gradient-to-br from-amber-900/30 to-amber-700/20 rounded-xl border border-amber-500/30 flex items-center justify-center"><span class="text-4xl">📜</span></div>
+        <h2 class="section-title mb-8 veteran">ALL OTHER PROPHECIES · 350+</h2>
+        <input type="text" id="prophecy-search" class="prophecy-search" placeholder="🔍 Search prophecy, description, fulfillment...">
+        <div class="prophecy-scroll-area">
+            <div id="all-prophecies-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+        <div class="mt-12 max-w-2xl mx-auto text-left text-sm veteran space-y-6 px-4">
+            <p>Edgy, eccentric cards for card sharps, pirates, and sinners. Whether you're a hustler or quietly playing patience, a pack of these will crash your brains. Snap yours.</p>
+            <p class="uppercase tracking-widest text-amber-400 text-center">STRICTLY FOR CARD SHARKS, HOOLIGANS, MARAUDERS, SCOUNDRELS AND RAPSCALLIONS</p>
+        </div>
+        <div class="text-center mt-10">
+            <button onclick="exportPropheciesToPDF()" class="btn-mobile bg-amber-600 hover:bg-amber-500 text-black px-8">📜 EXPORT TO PDF (350+ PROPHECIES)</button>
         </div>
     </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="py-16 text-center border-t border-amber-900/50 bg-[#020202]">
     <div class="container mx-auto px-4">
         <div class="mb-8 flex flex-wrap justify-center gap-4">
-            <a href="https://54cardsofhopes-shop.bigcartel.com/product/54-cards-of-hope-complete-collectors-deck" target="_blank" class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-10">🃟 BUY THE DECK</a>
+            <a href="https://54cardsofhopes-shop.bigcartel.com/" target="_blank" class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-10">🃟 BUY THE DECK</a>
             <a href="mailto:cardgard@proton.me" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-10">📧 CONTACT THE CREW</a>
         </div>
-        <p class="text-gray-400 font-mono text-sm">Scan the QR on your deck to return here.</p>
-        <p class="text-amber-400/70 text-xs mt-1">Dynamic QR · Hovercode · ActOut</p>
-        <p class="text-gray-600 text-xs mt-6">© 2025 · cardsofhope.live</p>
+        <p class="text-gray-400 font-mono text-sm mt-2">© 2025 · cardsofhope.live</p>
     </div>
 </footer>
 
-<script>
-    (function() {
-        // ---------- FULL 52 CARD DECK DATA ----------
-        const deckByRank = {
-            '2': [
-                { suit:"♦", val:"2", category:"ancestor", main:"descended from Abraham", ref:"Gen 12:3 / 22:18", text:"I will bless those who bless you… all peoples blessed." },
-                { suit:"♣", val:"2", category:"ancestor", main:"descended from Isaac", ref:"Gen 17:19 / 21:12", text:"Sarah will bear you a son, Isaac… covenant." },
-                { suit:"♠", val:"2", category:"ancestor", main:"descended from Jacob", ref:"Num 24:17", text:"A star will come out of Jacob; a scepter out of Israel." },
-                { suit:"♥", val:"2", category:"ancestor", main:"descended from Judah / King", ref:"Gen 49:10", text:"The scepter not depart from Judah until Shiloh comes." }
-            ],
-            '3': [
-                { suit:"♦", val:"3", category:"ancestor", main:"heir to David's throne", ref:"2Sam 7:12-13 / Isa 9:7", text:"I will establish his kingdom forever." },
-                { suit:"♣", val:"3", category:"mother", main:"born of a virgin · Immanuel", ref:"Isa 7:14", text:"The virgin will be with child… Immanuel." },
-                { suit:"♠", val:"3", category:"birthplace", main:"born in Bethlehem", ref:"Mic 5:2", text:"Bethlehem Ephrathah, out of you will come forth a ruler." },
-                { suit:"♥", val:"3", category:"early years", main:"spent time in Egypt", ref:"Hos 11:1", text:"Out of Egypt I called My son." }
-            ],
-            '4': [
-                { suit:"♦", val:"4", category:"home town", main:"called a Nazarene", ref:"Isa 11:1", text:"A shoot from the stump of Jesse." },
-                { suit:"♣", val:"4", category:"spiritual vanguard", main:"messenger prepares the way", ref:"Isa 40:3-5", text:"A voice calling: 'Prepare the way for the LORD.'" },
-                { suit:"♠", val:"4", category:"to be heralded", main:"Elijah-style prophet", ref:"Mal 4:5-6", text:"I will send you Elijah the prophet." },
-                { suit:"♥", val:"4", category:"mission", main:"prophet like Moses", ref:"Deut 18:15", text:"The LORD will raise up a prophet like me." }
-            ],
-            '5': [
-                { suit:"♦", val:"5", category:"mission", main:"light to Galilee", ref:"Isa 9:1-2", text:"People walking in darkness have seen a great light." },
-                { suit:"♣", val:"5", category:"mission", main:"heal brokenhearted", ref:"Isa 61:1-2", text:"Bind up the brokenhearted, proclaim liberty." },
-                { suit:"♠", val:"5", category:"mission", main:"priest Melchizedek", ref:"Ps 110:4", text:"You are a priest forever in the order of Melchizedek." },
-                { suit:"♥", val:"5", category:"mission", main:"temple cleaner", ref:"Ps 69:9", text:"Zeal for Your house has consumed me." }
-            ],
-            '6': [
-                { suit:"♦", val:"6", category:"communicator", main:"speak in parables", ref:"Ps 78:2-4", text:"I will open my mouth in parables." },
-                { suit:"♣", val:"6", category:"role", main:"declared Son of God", ref:"Ps 2:7", text:"You are My Son; today I have become Your Father." },
-                { suit:"♠", val:"6", category:"role", main:"humble king on donkey", ref:"Zech 9:9", text:"Your King comes… riding on a donkey." },
-                { suit:"♥", val:"6", category:"role", main:"eternal King", ref:"Dan 2:44", text:"God of heaven will set up a kingdom never destroyed." }
-            ],
-            '7': [
-                { suit:"♦", val:"7", category:"role", main:"King over nations", ref:"Num 24:17", text:"A star out of Jacob, a scepter out of Israel." },
-                { suit:"♣", val:"7", category:"who accepted him", main:"children praised him", ref:"Ps 8:2", text:"From mouths of children You ordered praise." },
-                { suit:"♠", val:"7", category:"betrayal", main:"hated without cause", ref:"Ps 35:19 / 69:4", text:"Those who hate me without cause outnumber my hairs." },
-                { suit:"♥", val:"7", category:"rejection", main:"rejected by his own", ref:"Ps 69:8 / Isa 53:3", text:"Stranger to my brothers… despised and rejected." }
-            ],
-            '8': [
-                { suit:"♦", val:"8", category:"betrayal", main:"betrayed by a friend", ref:"Ps 41:9 / Zech 11:12-13", text:"My close friend lifted heel against me. Thirty silver." },
-                { suit:"♣", val:"8", category:"betrayal", main:"30 silver → potter's field", ref:"Zech 11:12-13", text:"Thirty pieces of silver… throw to potter." },
-                { suit:"♠", val:"8", category:"betrayal", main:"falsely accused", ref:"Ps 35:11", text:"Malicious witnesses rise up." },
-                { suit:"♥", val:"8", category:"trial", main:"silent before accusers", ref:"Isa 53:7", text:"He did not open His mouth." }
-            ],
-            '9': [
-                { suit:"♦", val:"9", category:"crucifixion", main:"spat upon, struck, beard torn", ref:"Isa 50:6", text:"I offered My back to those who struck Me." },
-                { suit:"♣", val:"9", category:"crucifixion", main:"mocked and ridiculed", ref:"Ps 22:7-8", text:"All who see me mock me; they sneer." },
-                { suit:"♠", val:"9", category:"crucifixion", main:"hands & feet pierced", ref:"Ps 22:16 / Zech 12:10", text:"They have pierced my hands and my feet." },
-                { suit:"♥", val:"9", category:"crucifixion", main:"gamble for clothes", ref:"Ps 22:18", text:"They divide my garments and cast lots." }
-            ],
-            '10': [
-                { suit:"♦", val:"10", category:"crucifixion", main:"vinegar to drink", ref:"Ps 69:21", text:"They gave me vinegar for my thirst." },
-                { suit:"♣", val:"10", category:"crucifixion", main:"forsaken by God", ref:"Ps 22:1", text:"My God, my God, why have You forsaken me?" },
-                { suit:"♠", val:"10", category:"crucifixion", main:"no bone broken", ref:"Ex 12:46 / Ps 34:20", text:"Not one of His bones will be broken." },
-                { suit:"♥", val:"10", category:"forgiveness", main:"prayed for enemies", ref:"Ps 109:4", text:"I am a man of prayer." }
-            ],
-            'J': [
-                { suit:"♦", val:"J", category:"crucifixion", main:"pierced for transgressions", ref:"Isa 53:5", text:"He was pierced for our transgressions." },
-                { suit:"♣", val:"J", category:"crucifixion", main:"pierced side", ref:"Zech 12:10 / Ps 22:16", text:"They will look on Me, the One they have pierced." },
-                { suit:"♠", val:"J", category:"burial", main:"buried with the rich", ref:"Isa 53:9", text:"With a rich man in His death." },
-                { suit:"♥", val:"J", category:"resurrection", main:"rise from the dead", ref:"John 2:19", text:"Destroy this temple, in three days I will raise it." }
-            ],
-            'Q': [
-                { suit:"♦", val:"Q", category:"resurrection", main:"third day He will raise us", ref:"Hos 6:2", text:"On the third day He will raise us up." },
-                { suit:"♣", val:"Q", category:"resurrection", main:"not see decay", ref:"Ps 16:10 / Isa 53:10-11", text:"You will not abandon my soul to Sheol." },
-                { suit:"♠", val:"Q", category:"resurrection", main:"seated at God's right hand", ref:"Ps 68:18 / 110:1", text:"Sit at My right hand." },
-                { suit:"♥", val:"Q", category:"mission success", main:"bore sin of many", ref:"Isa 53:12", text:"He bore the sin of many." }
-            ],
-            'K': [
-                { suit:"♦", val:"K", category:"independent reporter", main:"Tacitus · Christus", ref:"Annals AD 115-120", text:"Roman historian mentions 'Christus' and Christians." },
-                { suit:"♣", val:"K", category:"independent reporter", main:"Josephus · Antiquities", ref:"Antiquities AD 93-94", text:"Flavius Josephus includes two references to Jesus." },
-                { suit:"♠", val:"K", category:"independent reporter", main:"Pliny to Trajan", ref:"Letter AD 112", text:"Pliny the Younger wrote to Trajan about Christians." },
-                { suit:"♥", val:"K", category:"affiliated reporter", main:"Epistles & Gospels", ref:"AD 48–110", text:"Paul, James, eyewitnesses — over 64,000 words." }
-            ],
-            'A': [
-                { suit:"♦", val:"A", category:"rock evidence", main:"Pilate Stone", ref:"AD 26-36", text:"Limestone inscription confirms Pontius Pilate." },
-                { suit:"♣", val:"A", category:"rock evidence", main:"Ossuary of Caiaphas", ref:"AD 20-60", text:"'Joseph, son of Caiaphas' — high priest." },
-                { suit:"♠", val:"A", category:"rock evidence", main:"Synagogue at Capernaum", ref:"1st cent. basalt", text:"First-century synagogue where Jesus taught." },
-                { suit:"♥", val:"A", category:"rock evidence", main:"Pool of Siloam", ref:"Hezekiah / Herodian", text:"Discovered 2004; steps where Jesus healed blind man." }
-            ]
-        };
-
-        const jokerCards = [
-            { suit:"🃏", val:"JOKER", category:"Screwtape", main:"Letter to Nightshade", ref:"date unknown", text:"My dear Nightshade … refute them all! Wormwood got eaten." },
-            { suit:"🃏", val:"JOKER", category:"MI7 TOP SECRET", main:"Declassified", ref:"NIGHTSHADE // ALPHA", text:"A QR code leading to the declassified file." }
-        ];
-
-        // ---------- ALL 350+ PROPHECIES (from Excel) ----------
-        const allPropheciesData = [
-            { prophecy:"Genesis 3:15", description:"Seed of a woman (virgin birth)", fulfillment:"Galatians 4:4–5; Matthew 1:18" },
-            { prophecy:"Genesis 3:15", description:"He will bruise Satan's head", fulfillment:"Hebrews 2:14; 1 John 3:8" },
-            { prophecy:"Genesis 5:24", description:"The bodily ascension to heaven illustrated", fulfillment:"Mark 16:19" },
-            { prophecy:"Genesis 9:26–27", description:"The God of Shem will be the Son of Shem", fulfillment:"Luke 3:36" },
-            { prophecy:"Genesis 12:3", description:"Seed of Abraham will bless all nations", fulfillment:"Galatians 3:8; Acts 3:25–26" },
-            { prophecy:"Genesis 12:7", description:"The Promise made to Abraham's Seed", fulfillment:"Galatians 3:16" },
-            { prophecy:"Genesis 14:18", description:"A priest after the order of Melchizedek", fulfillment:"Hebrews 6:20" },
-            { prophecy:"Genesis 14:18", description:"King of Peace and Righteousness", fulfillment:"Hebrews 7:2" },
-            { prophecy:"Genesis 14:18", description:"The Last Supper foreshadowed", fulfillment:"Matthew 26:26–29" },
-            { prophecy:"Genesis 17:19", description:"Seed of Isaac", fulfillment:"Romans 9:7" },
-            { prophecy:"Genesis 22:8", description:"The Lamb of God promised", fulfillment:"John 1:29" },
-            { prophecy:"Genesis 22:18", description:"As Isaac's seed, will bless all nations", fulfillment:"Galatians 3:16" },
-            { prophecy:"Genesis 26:2–5", description:"The Seed of Isaac promised as the Redeemer", fulfillment:"Hebrews 11:18" },
-            { prophecy:"Genesis 28:12", description:"The Bridge to heaven", fulfillment:"John 1:51" },
-            { prophecy:"Genesis 28:14", description:"The Seed of Jacob", fulfillment:"Luke 3:34" },
-            { prophecy:"Genesis 49:10", description:"The time of His coming", fulfillment:"Luke 2:1–7; Galatians 4:4" },
-            { prophecy:"Genesis 49:10", description:"The Seed of Judah", fulfillment:"Luke 3:33" },
-            { prophecy:"Genesis 49:10", description:"Called Shiloh or One Sent", fulfillment:"John 17:3" },
-            { prophecy:"Genesis 49:10", description:"Messiah to come before Judah lost identity", fulfillment:"John 11:47–52" },
-            { prophecy:"Genesis 49:10", description:"Unto Him shall the obedience of the people be", fulfillment:"John 10:16" },
-            { prophecy:"Exodus 3:13–15", description:"The Great 'I AM'", fulfillment:"John 4:26; John 8:58" },
-            { prophecy:"Exodus 12:5", description:"A Lamb without blemish", fulfillment:"Hebrews 9:14; 1 Peter 1:19" },
-            { prophecy:"Exodus 12:13", description:"The blood of the Lamb saves from wrath", fulfillment:"Romans 5:8" },
-            { prophecy:"Exodus 12:21–27", description:"Christ is our Passover", fulfillment:"1 Corinthians 5:7" },
-            { prophecy:"Exodus 12:46", description:"Not a bone of the Lamb to be broken", fulfillment:"John 19:31–36" },
-            { prophecy:"Exodus 15:2", description:"His exaltation predicted as Yeshua", fulfillment:"Acts 7:55–56" },
-            { prophecy:"Exodus 15:11", description:"His Character-Holiness", fulfillment:"Luke 1:35; Acts 4:27" },
-            { prophecy:"Exodus 17:6", description:"The Spiritual Rock of Israel", fulfillment:"1 Corinthians 10:4" },
-            { prophecy:"Exodus 33:19", description:"His Character-Merciful", fulfillment:"Luke 1:72" },
-            { prophecy:"Leviticus 1:2–9", description:"His sacrifice a sweet smelling savor", fulfillment:"Ephesians 5:2" },
-            { prophecy:"Leviticus 14:11", description:"The leper cleansed-Sign to priesthood", fulfillment:"Luke 5:12–14; Acts 6:7" },
-            { prophecy:"Leviticus 16:15–17", description:"Prefigures Christ's once-for-all death", fulfillment:"Hebrews 9:7–14" },
-            { prophecy:"Leviticus 16:27", description:"Suffering outside the Camp", fulfillment:"Matthew 27:33; Hebrews 13:11–12" },
-            { prophecy:"Leviticus 17:11", description:"The Blood-the life of the flesh", fulfillment:"Matthew 26:28; Mark 10:45" },
-            { prophecy:"Leviticus 17:11", description:"It is the blood that makes atonement", fulfillment:"Romans 3:23–24; 1 John 1:7" },
-            { prophecy:"Leviticus 23:36–37", description:"The Drink-offering: 'If any man thirst'", fulfillment:"John 7:37" },
-            { prophecy:"Numbers 9:12", description:"Not a bone of Him broken", fulfillment:"John 19:31–36" },
-            { prophecy:"Numbers 21:9", description:"The serpent on a pole-Christ lifted up", fulfillment:"John 3:14–18; John 12:32" },
-            { prophecy:"Numbers 24:17", description:"Time: 'I shall see him, but not now'", fulfillment:"John 1:14; Galatians 4:4" },
-            { prophecy:"Deuteronomy 18:15", description:"'This is of a truth that prophet'", fulfillment:"John 6:14" },
-            { prophecy:"Deuteronomy 18:15–16", description:"'Had you believed Moses, you would believe me'", fulfillment:"John 5:45–47" },
-            { prophecy:"Deuteronomy 18:18", description:"Sent by the Father to speak His word", fulfillment:"John 8:28–29" },
-            { prophecy:"Deuteronomy 18:19", description:"Whoever will not hear must bear his sin", fulfillment:"Acts 3:22–23" },
-            { prophecy:"Deuteronomy 21:23", description:"Cursed is he that hangs on a tree", fulfillment:"Galatians 3:10–13" },
-            { prophecy:"Joshua 5:14–15", description:"The Captain of our salvation", fulfillment:"Hebrews 2:10" },
-            { prophecy:"Ruth 4:4–10", description:"Christ, our kinsman, has redeemed us", fulfillment:"Ephesians 1:3–7" },
-            { prophecy:"1 Samuel 2:35", description:"A Faithful Priest", fulfillment:"Hebrews 2:17; Hebrews 3:1–3" },
-            { prophecy:"1 Samuel 2:10", description:"Shall be an anointed King to the Lord", fulfillment:"Matthew 28:18; John 12:15" },
-            { prophecy:"2 Samuel 7:12", description:"David's Seed", fulfillment:"Matthew 1:1" },
-            { prophecy:"2 Samuel 7:13", description:"His Kingdom is everlasting", fulfillment:"2 Peter 1:11" },
-            { prophecy:"2 Samuel 7:14a", description:"The Son of God", fulfillment:"Luke 1:32; Romans 1:3–4" },
-            { prophecy:"2 Samuel 7:16", description:"David's house established forever", fulfillment:"Luke 3:31; Revelation 22:16" },
-            { prophecy:"2 Kings 2:11", description:"The bodily ascension to heaven illustrated", fulfillment:"Luke 24:51" },
-            { prophecy:"1 Chronicles 17:11", description:"David's Seed", fulfillment:"Matthew 1:1; Matthew 9:27" },
-            { prophecy:"1 Chronicles 17:12–13", description:"To reign on David's throne forever", fulfillment:"Luke 1:32–33" },
-            { prophecy:"1 Chronicles 17:13", description:"'I will be His Father, He…my Son.'", fulfillment:"Hebrews 1:5" },
-            { prophecy:"Job 9:32–33", description:"Mediator between man and God", fulfillment:"1 Timothy 2:5" },
-            { prophecy:"Job 19:23–27", description:"The Resurrection predicted", fulfillment:"John 5:24–29" },
-            { prophecy:"Psalm 2:1–3", description:"The enmity of kings foreordained", fulfillment:"Acts 4:25–28" },
-            { prophecy:"Psalm 2:2", description:"To own the title, Anointed (Christ)", fulfillment:"John 1:41; Acts 2:36" },
-            { prophecy:"Psalm 2:6", description:"His Character-Holiness", fulfillment:"John 8:46; Revelation 3:7" },
-            { prophecy:"Psalm 2:6", description:"To own the title King", fulfillment:"Matthew 2:2" },
-            { prophecy:"Psalm 2:7", description:"Declared the Beloved Son", fulfillment:"Matthew 3:17; Romans 1:4" },
-            { prophecy:"Psalm 2:7–8", description:"The Crucifixion and Resurrection intimated", fulfillment:"Acts 13:29–33" },
-            { prophecy:"Psalm 2:8–9", description:"Rule the nations with a rod of iron", fulfillment:"Revelation 2:27; Revelation 12:5" },
-            { prophecy:"Psalm 2:12", description:"Life comes through faith in Him", fulfillment:"John 20:31" },
-            { prophecy:"Psalm 8:2", description:"The mouths of babes perfect His praise", fulfillment:"Matthew 21:16" },
-            { prophecy:"Psalm 8:5–6", description:"His humiliation and exaltation", fulfillment:"Hebrews 2:5–9" },
-            { prophecy:"Psalm 9:7–10", description:"Judge the world in righteousness", fulfillment:"Acts 17:31" },
-            { prophecy:"Psalm 16:10", description:"Was not to see corruption", fulfillment:"Acts 2:31; Acts 13:35" },
-            { prophecy:"Psalm 16:9–11", description:"Was to arise from the dead", fulfillment:"John 20:9" },
-            { prophecy:"Psalm 17:15", description:"The resurrection predicted", fulfillment:"Luke 24:6" },
-            { prophecy:"Psalm 18:2–3", description:"The horn of salvation", fulfillment:"Luke 1:69–71" },
-            { prophecy:"Psalm 22:1", description:"Forsaken because of sins of others", fulfillment:"2 Corinthians 5:21" },
-            { prophecy:"Psalm 22:1", description:"'My God, my God, why have You forsaken me?'", fulfillment:"Matthew 27:46" },
-            { prophecy:"Psalm 22:2", description:"Darkness upon Calvary for three hours", fulfillment:"Matthew 27:45" },
-            { prophecy:"Psalm 22:7", description:"They shoot out the lip and shake the head", fulfillment:"Matthew 27:39–44" },
-            { prophecy:"Psalm 22:8", description:"'He trusted in God, let Him deliver Him'", fulfillment:"Matthew 27:43" },
-            { prophecy:"Psalm 22:9–10", description:"Born the Savior", fulfillment:"Luke 2:7" },
-            { prophecy:"Psalm 22:12–13", description:"They seek His death", fulfillment:"John 19:6" },
-            { prophecy:"Psalm 22:14", description:"His blood poured out when they pierced His side", fulfillment:"John 19:34" },
-            { prophecy:"Psalm 22:14–15", description:"Suffered agony on Calvary", fulfillment:"Mark 15:34–37" },
-            { prophecy:"Psalm 22:15", description:"He thirsted", fulfillment:"John 19:28" },
-            { prophecy:"Psalm 22:16", description:"They pierced His hands and His feet", fulfillment:"John 19:34–37; John 20:27" },
-            { prophecy:"Psalm 22:17–18", description:"Stripped Him before the stares of men", fulfillment:"Luke 23:34–35" },
-            { prophecy:"Psalm 22:18", description:"They parted His garments", fulfillment:"John 19:23–24" },
-            { prophecy:"Psalm 22:20–21", description:"He committed Himself to God", fulfillment:"Luke 23:46" },
-            { prophecy:"Psalm 22:22", description:"His Resurrection declared", fulfillment:"John 20:17" },
-            { prophecy:"Psalm 22:27–28", description:"He shall be the governor of the nations", fulfillment:"Colossians 1:16" },
-            { prophecy:"Psalm 22:31", description:"'It is finished'", fulfillment:"John 19:30; Hebrews 10:10–12" },
-            { prophecy:"Psalm 23:1", description:"'I am the Good Shepherd'", fulfillment:"John 10:11; 1 Peter 2:25" },
-            { prophecy:"Psalm 24:3", description:"His exaltation predicted", fulfillment:"Acts 1:11; Philippians 2:9" },
-            { prophecy:"Psalm 31:5", description:"'Into Your hands I commit my spirit'", fulfillment:"Luke 23:46" },
-            { prophecy:"Psalm 31:11", description:"His acquaintances fled from Him", fulfillment:"Mark 14:50" },
-            { prophecy:"Psalm 31:13", description:"They took counsel to put Him to death", fulfillment:"Matthew 27:1; John 11:53" },
-            { prophecy:"Psalm 31:14–15", description:"'He trusted in God, let Him deliver him'", fulfillment:"Matthew 27:43" },
-            { prophecy:"Psalm 34:20", description:"Not a bone of Him broken", fulfillment:"John 19:31–36" },
-            { prophecy:"Psalm 35:11", description:"False witnesses rose up against Him", fulfillment:"Matthew 26:59" },
-            { prophecy:"Psalm 35:19", description:"He was hated without a cause", fulfillment:"John 15:25" },
-            { prophecy:"Psalm 38:11", description:"His friends stood afar off", fulfillment:"Luke 23:49" },
-            { prophecy:"Psalm 38:12", description:"Enemies try to entangle Him by craft", fulfillment:"Mark 14:1; Matthew 22:15" },
-            { prophecy:"Psalm 38:12–13", description:"Silent before His accusers", fulfillment:"Matthew 27:12–14" },
-            { prophecy:"Psalm 38:20", description:"He went about doing good", fulfillment:"Acts 10:38" },
-            { prophecy:"Psalm 40:2–5", description:"The joy of His resurrection predicted", fulfillment:"John 20:20" },
-            { prophecy:"Psalm 40:6–8", description:"His delight-the will of the Father", fulfillment:"John 4:34; Hebrews 10:5–10" },
-            { prophecy:"Psalm 40:9", description:"He was to preach the Righteousness in Israel", fulfillment:"Matthew 4:17" },
-            { prophecy:"Psalm 40:14", description:"Confronted by adversaries in the Garden", fulfillment:"John 18:4–6" },
-            { prophecy:"Psalm 41:9", description:"Betrayed by a familiar friend", fulfillment:"John 13:18" },
-            { prophecy:"Psalm 45:2", description:"Words of Grace come from His lips", fulfillment:"John 1:17; Luke 4:22" },
-            { prophecy:"Psalm 45:6", description:"To own the title, God or Elohim", fulfillment:"Hebrews 1:8" },
-            { prophecy:"Psalm 45:7", description:"A special anointing by the Holy Spirit", fulfillment:"Matthew 3:16; Hebrews 1:9" },
-            { prophecy:"Psalm 45:7–8", description:"Called the Christ (Messiah or Anointed)", fulfillment:"Luke 2:11" },
-            { prophecy:"Psalm 45:17", description:"His name remembered forever", fulfillment:"Ephesians 1:20–21; Hebrews 1:8" },
-            { prophecy:"Psalm 55:12–14", description:"Betrayed by a friend, not an enemy", fulfillment:"John 13:18" },
-            { prophecy:"Psalm 55:15", description:"Unrepentant death of the Betrayer", fulfillment:"Matthew 27:3–5; Acts 1:16–19" },
-            { prophecy:"Psalm 68:18", description:"To give gifts to men", fulfillment:"Ephesians 4:7–16" },
-            { prophecy:"Psalm 68:18", description:"Ascended into Heaven", fulfillment:"Luke 24:51" },
-            { prophecy:"Psalm 69:4", description:"Hated without a cause", fulfillment:"John 15:25" },
-            { prophecy:"Psalm 69:8", description:"A stranger to own brethren", fulfillment:"John 1:11; John 7:5" },
-            { prophecy:"Psalm 69:9", description:"Zealous for the Lord's House", fulfillment:"John 2:17" },
-            { prophecy:"Psalm 69:14–20", description:"Messiah's anguish of soul before crucifixion", fulfillment:"Matthew 26:36–45" },
-            { prophecy:"Psalm 69:20", description:"'My soul is exceeding sorrowful'", fulfillment:"Matthew 26:38" },
-            { prophecy:"Psalm 69:21", description:"Given vinegar in thirst", fulfillment:"Matthew 27:34" },
-            { prophecy:"Psalm 69:26", description:"The Savior given and smitten by God", fulfillment:"John 17:4; John 18:11" },
-            { prophecy:"Psalm 72:10–11", description:"Great persons were to visit Him", fulfillment:"Matthew 2:1–11" },
-            { prophecy:"Psalm 72:16", description:"The corn of wheat to fall into the Ground", fulfillment:"John 12:24–25" },
-            { prophecy:"Psalm 72:17", description:"Belief on His name will produce offspring", fulfillment:"John 1:12–13" },
-            { prophecy:"Psalm 72:17", description:"All nations shall be blessed by Him", fulfillment:"Galatians 3:8" },
-            { prophecy:"Psalm 72:17", description:"All nations shall call Him blessed", fulfillment:"John 12:13; Revelation 5:8–12" },
-            { prophecy:"Psalm 78:1–2", description:"He would teach in parables", fulfillment:"Matthew 13:34–35" },
-            { prophecy:"Psalm 78:2b", description:"To speak the Wisdom of God with authority", fulfillment:"Matthew 7:29" },
-            { prophecy:"Psalm 80:17", description:"The Man of God's right hand", fulfillment:"Mark 14:61–62" },
-            { prophecy:"Psalm 88", description:"The Suffering and Reproach of Calvary", fulfillment:"Matthew 27:26–50" },
-            { prophecy:"Psalm 88:8", description:"They stood afar off and watched", fulfillment:"Luke 23:49" },
-            { prophecy:"Psalm 89:27", description:"Firstborn", fulfillment:"Colossians 1:15–18" },
-            { prophecy:"Psalm 89:27", description:"Emmanuel to be higher than earthly kings", fulfillment:"Luke 1:32–33" },
-            { prophecy:"Psalm 89:35–37", description:"David's Seed, throne, kingdom endure forever", fulfillment:"Luke 1:32–33" },
-            { prophecy:"Psalm 89:36–37", description:"His character-Faithfulness", fulfillment:"Revelation 1:5; 19:11" },
-            { prophecy:"Psalm 90:2", description:"He is from everlasting", fulfillment:"John 1:1" },
-            { prophecy:"Psalm 91:11–12", description:"Identified as Messianic, used to tempt Christ", fulfillment:"Luke 4:10–11" },
-            { prophecy:"Psalm 97:9", description:"His exaltation predicted", fulfillment:"Acts 1:11; Ephesians 1:20" },
-            { prophecy:"Psalm 100:5", description:"His character-Goodness", fulfillment:"Matthew 19:16–17" },
-            { prophecy:"Psalm 102:1–11", description:"The Suffering and Reproach of Calvary", fulfillment:"John 19:16–30" },
-            { prophecy:"Psalm 102:25–27", description:"Messiah is the Preexistent Son", fulfillment:"Hebrews 1:10–12" },
-            { prophecy:"Psalm 109:25", description:"Ridiculed", fulfillment:"Matthew 27:39" },
-            { prophecy:"Psalm 110:1", description:"Son of David", fulfillment:"Matthew 22:42–43" },
-            { prophecy:"Psalm 110:1", description:"To ascend to the right-hand of the Father", fulfillment:"Mark 16:19" },
-            { prophecy:"Psalm 110:1", description:"David's son called Lord", fulfillment:"Matthew 22:44–45" },
-            { prophecy:"Psalm 110:4", description:"A priest after Melchizedek's order", fulfillment:"Hebrews 6:20" },
-            { prophecy:"Psalm 112:4", description:"His character-Compassionate, Gracious", fulfillment:"Matthew 9:36" },
-            { prophecy:"Psalm 118:17–18", description:"Messiah's Resurrection assured", fulfillment:"Luke 24:5–7; 1 Corinthians 15:20" },
-            { prophecy:"Psalm 118:22–23", description:"The rejected stone is Head of the corner", fulfillment:"Matthew 21:42–43" },
-            { prophecy:"Psalm 118:26a", description:"The Blessed One presented to Israel", fulfillment:"Matthew 21:9" },
-            { prophecy:"Psalm 118:26b", description:"To come while Temple standing", fulfillment:"Matthew 21:12–15" },
-            { prophecy:"Psalm 132:11", description:"The Seed of David", fulfillment:"Luke 1:32; Acts 2:30" },
-            { prophecy:"Psalm 129:3", description:"He was scourged", fulfillment:"Matthew 27:26" },
-            { prophecy:"Psalm 138:1–6", description:"The supremacy of David's Seed amazes kings", fulfillment:"Matthew 2:2–6" },
-            { prophecy:"Psalm 147:3–6", description:"The earthly ministry of Christ described", fulfillment:"Luke 4:18" },
-            { prophecy:"Proverbs 1:23", description:"He will send the Spirit of God", fulfillment:"John 16:7" },
-            { prophecy:"Proverbs 8:23", description:"Foreordained from everlasting", fulfillment:"Revelation 13:8; 1 Peter 1:19–20" },
-            { prophecy:"Song of Sol. 5:16", description:"The altogether lovely One", fulfillment:"John 1:17" },
-            { prophecy:"Isaiah 2:3", description:"He shall teach all nations", fulfillment:"John 4:25" },
-            { prophecy:"Isaiah 2:4", description:"He shall judge among the nations", fulfillment:"John 5:22" },
-            { prophecy:"Isaiah 6:1", description:"When Isaiah saw His glory", fulfillment:"John 12:40–41" },
-            { prophecy:"Isaiah 6:8", description:"The One Sent by God", fulfillment:"John 12:38–45" },
-            { prophecy:"Isaiah 6:9–10", description:"Parables fall on deaf ears", fulfillment:"Matthew 13:13–15" },
-            { prophecy:"Isaiah 6:9–12", description:"Blinded to Christ and deaf to His words", fulfillment:"Acts 28:23–29" },
-            { prophecy:"Isaiah 7:14", description:"To be born of a virgin", fulfillment:"Luke 1:35; Matthew 1:18–23" },
-            { prophecy:"Isaiah 7:14", description:"To be Emmanuel-God with us", fulfillment:"Matthew 1:18–23; 1 Timothy 3:16" },
-            { prophecy:"Isaiah 8:8", description:"Called Emmanuel", fulfillment:"Matthew 28:20" },
-            { prophecy:"Isaiah 8:14", description:"A stone of stumbling, a Rock of offense", fulfillment:"1 Peter 2:8" },
-            { prophecy:"Isaiah 9:1–2", description:"His ministry to begin in Galilee", fulfillment:"Matthew 4:12–17" },
-            { prophecy:"Isaiah 9:6", description:"A child born-Humanity", fulfillment:"Luke 1:31" },
-            { prophecy:"Isaiah 9:6", description:"A Son given-Deity", fulfillment:"Luke 1:32; John 1:14" },
-            { prophecy:"Isaiah 9:6", description:"Declared to be the Son of God with power", fulfillment:"Romans 1:3–4" },
-            { prophecy:"Isaiah 9:6", description:"The Wonderful One", fulfillment:"Luke 4:22" },
-            { prophecy:"Isaiah 9:6", description:"The Counselor", fulfillment:"Matthew 13:54" },
-            { prophecy:"Isaiah 9:6", description:"The Mighty God", fulfillment:"1 Corinthians 1:24" },
-            { prophecy:"Isaiah 9:6", description:"The Everlasting Father", fulfillment:"John 8:58; John 10:30" },
-            { prophecy:"Isaiah 9:6", description:"The Prince of Peace", fulfillment:"John 16:33" },
-            { prophecy:"Isaiah 9:7", description:"To establish an everlasting kingdom", fulfillment:"Luke 1:32–33" },
-            { prophecy:"Isaiah 9:7", description:"His Character-Just", fulfillment:"John 5:30" },
-            { prophecy:"Isaiah 11:1", description:"Called a Nazarene-the Branch", fulfillment:"Matthew 2:23" },
-            { prophecy:"Isaiah 11:1", description:"A rod out of Jesse-Son of Jesse", fulfillment:"Luke 3:23–32" },
-            { prophecy:"Isaiah 11:2", description:"Anointed One by the Spirit", fulfillment:"Matthew 3:16–17; Acts 10:38" },
-            { prophecy:"Isaiah 11:2", description:"His Character-Wisdom, Knowledge", fulfillment:"Colossians 2:3" },
-            { prophecy:"Isaiah 11:3", description:"He would know their thoughts", fulfillment:"Luke 6:8; John 2:25" },
-            { prophecy:"Isaiah 11:4", description:"Judge in righteousness", fulfillment:"Acts 17:31" },
-            { prophecy:"Isaiah 11:4", description:"Judges with the sword of His mouth", fulfillment:"Revelation 2:16; 19:11" },
-            { prophecy:"Isaiah 11:5", description:"Character: Righteous & Faithful", fulfillment:"Revelation 19:11" },
-            { prophecy:"Isaiah 11:10", description:"The Gentiles seek Him", fulfillment:"John 12:18–21" },
-            { prophecy:"Isaiah 12:2", description:"Called Jesus-Yeshua", fulfillment:"Matthew 1:21" },
-            { prophecy:"Isaiah 22:22", description:"The One given all authority to govern", fulfillment:"Revelation 3:7" },
-            { prophecy:"Isaiah 25:8", description:"The Resurrection predicted", fulfillment:"1 Corinthians 15:54" },
-            { prophecy:"Isaiah 26:19", description:"His power of Resurrection predicted", fulfillment:"Matthew 27:50–54" },
-            { prophecy:"Isaiah 28:16", description:"The Messiah is the precious corner stone", fulfillment:"Acts 4:11–12" },
-            { prophecy:"Isaiah 28:16", description:"The Sure Foundation", fulfillment:"1 Corinthians 3:11; Matthew 16:18" },
-            { prophecy:"Isaiah 29:13", description:"He indicated hypocritical obedience to His Word", fulfillment:"Matthew 15:7–9" },
-            { prophecy:"Isaiah 29:14", description:"The wise are confounded by the Word", fulfillment:"1 Corinthians 1:18–31" },
-            { prophecy:"Isaiah 32:2", description:"A Refuge-A man shall be a hiding place", fulfillment:"Matthew 23:37" },
-            { prophecy:"Isaiah 35:4", description:"He will come and save you", fulfillment:"Matthew 1:21" },
-            { prophecy:"Isaiah 35:5–6", description:"To have a ministry of miracles", fulfillment:"Matthew 11:2–6" },
-            { prophecy:"Isaiah 40:3–4", description:"Preceded by forerunner", fulfillment:"John 1:23" },
-            { prophecy:"Isaiah 40:9", description:"'Behold your God'", fulfillment:"John 1:36; John 19:14" },
-            { prophecy:"Isaiah 40:10", description:"He will come to reward", fulfillment:"Revelation 22:12" },
-            { prophecy:"Isaiah 40:11", description:"A shepherd-compassionate life-giver", fulfillment:"John 10:10–18" },
-            { prophecy:"Isaiah 42:1–4", description:"The Servant-as a faithful, patient redeemer", fulfillment:"Matthew 12:18–21" },
-            { prophecy:"Isaiah 42:2", description:"Meek and lowly", fulfillment:"Matthew 11:28–30" },
-            { prophecy:"Isaiah 42:3", description:"He brings hope for the hopeless", fulfillment:"John 4:40–42" },
-            { prophecy:"Isaiah 42:4", description:"The nations shall wait on His teachings", fulfillment:"John 12:20–26" },
-            { prophecy:"Isaiah 42:6", description:"The Light (salvation) of the Gentiles", fulfillment:"Luke 2:32" },
-            { prophecy:"Isaiah 42:1–6", description:"His is a worldwide compassion", fulfillment:"Matthew 28:19–20" },
-            { prophecy:"Isaiah 42:7", description:"Blind eyes opened", fulfillment:"John 9:25–38" },
-            { prophecy:"Isaiah 43:11", description:"He is the only Savior", fulfillment:"Acts 4:12" },
-            { prophecy:"Isaiah 44:3", description:"He will send the Spirit of God", fulfillment:"John 16:7–13" },
-            { prophecy:"Isaiah 45:21–25", description:"He is Lord and Savior", fulfillment:"Philippians 3:20; Titus 2:13" },
-            { prophecy:"Isaiah 45:23", description:"He will be the Judge", fulfillment:"John 5:22; Romans 14:11" },
-            { prophecy:"Isaiah 46:9–10", description:"Declares things not yet done", fulfillment:"John 13:19" },
-            { prophecy:"Isaiah 48:12", description:"The First and the Last", fulfillment:"John 1:30; Revelation 1:8" },
-            { prophecy:"Isaiah 48:16–17", description:"He came as a Teacher", fulfillment:"John 3:2" },
-            { prophecy:"Isaiah 49:1", description:"Called from the womb-His humanity", fulfillment:"Matthew 1:18" },
-            { prophecy:"Isaiah 49:5", description:"A Servant from the womb", fulfillment:"Luke 1:31; Philippians 2:7" },
-            { prophecy:"Isaiah 49:6", description:"He will restore Israel", fulfillment:"Acts 3:19–21; Acts 15:16–17" },
-            { prophecy:"Isaiah 49:6", description:"He is Salvation for Israel", fulfillment:"Luke 2:29–32" },
-            { prophecy:"Isaiah 49:6", description:"He is the Light of the Gentiles", fulfillment:"John 8:12; Acts 13:47" },
-            { prophecy:"Isaiah 49:6", description:"He is Salvation unto the ends of the earth", fulfillment:"Acts 15:7–18" },
-            { prophecy:"Isaiah 49:7", description:"He is despised of the Nation", fulfillment:"John 1:11; John 8:48–49" },
-            { prophecy:"Isaiah 50:3", description:"Heaven is clothed in black at His humiliation", fulfillment:"Luke 23:44–45" },
-            { prophecy:"Isaiah 50:4", description:"He is a learned counselor for the weary", fulfillment:"Matthew 7:29; Matthew 11:28–29" },
-            { prophecy:"Isaiah 50:5", description:"The Servant bound willingly to obedience", fulfillment:"Matthew 26:39" },
-            { prophecy:"Isaiah 50:6a", description:"'I gave my back to those who struck Me'", fulfillment:"Matthew 27:26" },
-            { prophecy:"Isaiah 50:6b", description:"He was smitten on the cheeks", fulfillment:"Matthew 26:67" },
-            { prophecy:"Isaiah 50:6c", description:"He was spat upon", fulfillment:"Matthew 27:30" },
-            { prophecy:"Isaiah 52:7", description:"Published good tidings upon mountains", fulfillment:"Matthew 5:12; Matthew 15:29" },
-            { prophecy:"Isaiah 52:13", description:"The Servant exalted", fulfillment:"Acts 1:8–11; Ephesians 1:19–22" },
-            { prophecy:"Isaiah 52:14", description:"The Servant shockingly abused", fulfillment:"Luke 18:31–34; Matthew 26:67–68" },
-            { prophecy:"Isaiah 52:15", description:"Nations startled by message of the Servant", fulfillment:"Luke 18:31–34; Matthew 26:67–68" },
-            { prophecy:"Isaiah 52:15", description:"His blood shed sprinkles nations", fulfillment:"Hebrews 9:13–14; Revelation 1:5" },
-            { prophecy:"Isaiah 53:1", description:"His people would not believe Him", fulfillment:"John 12:37–38" },
-            { prophecy:"Isaiah 53:2", description:"Appearance of an ordinary man", fulfillment:"Philippians 2:6–8" },
-            { prophecy:"Isaiah 53:3a", description:"Despised", fulfillment:"Luke 4:28–29" },
-            { prophecy:"Isaiah 53:3b", description:"Rejected", fulfillment:"Matthew 27:21–23" },
-            { prophecy:"Isaiah 53:3c", description:"Great sorrow and grief", fulfillment:"Matthew 26:37–38; Luke 19:41" },
-            { prophecy:"Isaiah 53:3d", description:"Men hide from being associated with Him", fulfillment:"Mark 14:50–52" },
-            { prophecy:"Isaiah 53:4a", description:"He would have a healing ministry", fulfillment:"Matthew 8:16–17" },
-            { prophecy:"Isaiah 53:4b", description:"Thought to be cursed by God", fulfillment:"Matthew 26:66; Matthew 27:41–43" },
-            { prophecy:"Isaiah 53:5a", description:"Bears penalty for mankind's iniquities", fulfillment:"2 Corinthians 5:21; Hebrews 2:9" },
-            { prophecy:"Isaiah 53:5b", description:"His sacrifice provides peace between man and God", fulfillment:"Colossians 1:20" },
-            { prophecy:"Isaiah 53:5c", description:"His sacrifice would heal man of sin", fulfillment:"1 Peter 2:24" },
-            { prophecy:"Isaiah 53:6a", description:"He would be the sin-bearer for all mankind", fulfillment:"1 John 2:2; 1 John 4:10" },
-            { prophecy:"Isaiah 53:6b", description:"God's will that He bear sin for all mankind", fulfillment:"Galatians 1:4" },
-            { prophecy:"Isaiah 53:7a", description:"Oppressed and afflicted", fulfillment:"Matthew 27:27–31" },
-            { prophecy:"Isaiah 53:7b", description:"Silent before his accusers", fulfillment:"Matthew 27:12–14" },
-            { prophecy:"Isaiah 53:7c", description:"Sacrificial lamb", fulfillment:"John 1:29; 1 Peter 1:18–19" },
-            { prophecy:"Isaiah 53:8a", description:"Confined and persecuted", fulfillment:"Matthew 26:47; Matthew 27:31" },
-            { prophecy:"Isaiah 53:8b", description:"He would be judged", fulfillment:"John 18:13–22" },
-            { prophecy:"Isaiah 53:8c", description:"Killed", fulfillment:"Matthew 27:35" },
-            { prophecy:"Isaiah 53:8d", description:"Dies for the sins of the world", fulfillment:"1 John 2:2" },
-            { prophecy:"Isaiah 53:9a", description:"Buried in a rich man's grave", fulfillment:"Matthew 27:57" },
-            { prophecy:"Isaiah 53:9b", description:"Innocent and had done no violence", fulfillment:"Luke 23:41; John 18:38" },
-            { prophecy:"Isaiah 53:9c", description:"No deceit in his mouth", fulfillment:"1 Peter 2:22" },
-            { prophecy:"Isaiah 53:10a", description:"God's will that He die for mankind", fulfillment:"John 18:11" },
-            { prophecy:"Isaiah 53:10b", description:"An offering for sin", fulfillment:"Matthew 20:28; Galatians 3:13" },
-            { prophecy:"Isaiah 53:10c", description:"Resurrected and live forever", fulfillment:"Romans 6:9" },
-            { prophecy:"Isaiah 53:10d", description:"He would prosper", fulfillment:"John 17:1–5" },
-            { prophecy:"Isaiah 53:11a", description:"God fully satisfied with His suffering", fulfillment:"John 12:27" },
-            { prophecy:"Isaiah 53:11b", description:"God's servant would justify man", fulfillment:"Romans 5:8–9; Romans 8:38–39" },
-            { prophecy:"Isaiah 53:11c", description:"The sin-bearer for all mankind", fulfillment:"Hebrews 9:28" },
-            { prophecy:"Isaiah 53:12a", description:"Exalted by God because of his sacrifice", fulfillment:"Matthew 28:18" },
-            { prophecy:"Isaiah 53:12b", description:"He would give up his life to save mankind", fulfillment:"Luke 23:46" },
-            { prophecy:"Isaiah 53:12c", description:"Numbered with the transgressors", fulfillment:"Mark 15:27–28" },
-            { prophecy:"Isaiah 53:12d", description:"Sin-bearer for all mankind", fulfillment:"1 Peter 2:24" },
-            { prophecy:"Isaiah 53:12e", description:"Intercede to God in behalf of mankind", fulfillment:"Luke 23:34; Romans 8:34" },
-            { prophecy:"Isaiah 55:3", description:"Resurrected by God", fulfillment:"Acts 13:34" },
-            { prophecy:"Isaiah 55:4a", description:"A witness", fulfillment:"John 18:37" },
-            { prophecy:"Isaiah 55:4b", description:"He is a leader and commander", fulfillment:"Hebrews 2:10" },
-            { prophecy:"Isaiah 55:5", description:"God would glorify Him", fulfillment:"Acts 3:13" },
-            { prophecy:"Isaiah 59:16a", description:"Intercessor between man and God", fulfillment:"Matthew 10:32" },
-            { prophecy:"Isaiah 59:16b", description:"He would come to provide salvation", fulfillment:"John 6:40" },
-            { prophecy:"Isaiah 59:20", description:"He would come to Zion as their Redeemer", fulfillment:"Luke 2:38" },
-            { prophecy:"Isaiah 60:1–3", description:"He would show light to the Gentiles", fulfillment:"Acts 26:23" },
-            { prophecy:"Isaiah 61:1a", description:"The Spirit of God upon him", fulfillment:"Matthew 3:16–17" },
-            { prophecy:"Isaiah 61:1b", description:"The Messiah would preach the good news", fulfillment:"Luke 4:16–21" },
-            { prophecy:"Isaiah 61:1c", description:"Provide freedom from the bondage of sin", fulfillment:"John 8:31–36" },
-            { prophecy:"Isaiah 61:1–2a", description:"Proclaim a period of grace", fulfillment:"Galatians 4:4–5" },
-            { prophecy:"Jeremiah 23:5–6", description:"Descendant of David", fulfillment:"Luke 3:23–31" },
-            { prophecy:"Jeremiah 23:5–6", description:"The Messiah would be both God and Man", fulfillment:"John 13:13; 1 Timothy 3:16" },
-            { prophecy:"Jeremiah 31:22", description:"Born of a virgin", fulfillment:"Matthew 1:18–20" },
-            { prophecy:"Jeremiah 31:31", description:"The Messiah would be the new covenant", fulfillment:"Matthew 26:28" },
-            { prophecy:"Jeremiah 33:14–15", description:"Descendant of David", fulfillment:"Luke 3:23–31" },
-            { prophecy:"Ezekiel 34:23–24", description:"Descendant of David", fulfillment:"Matthew 1:1" },
-            { prophecy:"Ezekiel 37:24–25", description:"Descendant of David", fulfillment:"Luke 1:31–33" },
-            { prophecy:"Daniel 2:44–45", description:"The Stone that shall break the kingdoms", fulfillment:"Matthew 21:44" },
-            { prophecy:"Daniel 7:13–14a", description:"He would ascend into heaven", fulfillment:"Acts 1:9–11" },
-            { prophecy:"Daniel 7:13–14b", description:"Highly exalted", fulfillment:"Ephesians 1:20–22" },
-            { prophecy:"Daniel 7:13–14c", description:"His dominion would be everlasting", fulfillment:"Luke 1:31–33" },
-            { prophecy:"Daniel 9:24a", description:"To make an end to sins", fulfillment:"Galatians 1:3–5" },
-            { prophecy:"Daniel 9:24a", description:"To make reconciliation for iniquity", fulfillment:"Romans 5:10; 2 Corinthians 5:18–21" },
-            { prophecy:"Daniel 9:24b", description:"He would be holy", fulfillment:"Luke 1:35" },
-            { prophecy:"Daniel 9:25", description:"His announcement", fulfillment:"John 12:12–13" },
-            { prophecy:"Daniel 9:26a", description:"Cut off", fulfillment:"Matthew 16:21; Matthew 21:38–39" },
-            { prophecy:"Daniel 9:26b", description:"Die for the sins of the world", fulfillment:"Hebrews 2:9" },
-            { prophecy:"Daniel 9:26c", description:"Killed before the destruction of the temple", fulfillment:"Matthew 27:50–51" },
-            { prophecy:"Daniel 10:5–6", description:"Messiah in a glorified state", fulfillment:"Revelation 1:13–16" },
-            { prophecy:"Hosea 11:1", description:"He would be called out of Egypt", fulfillment:"Matthew 2:15" },
-            { prophecy:"Hosea 13:14", description:"He would defeat death", fulfillment:"1 Corinthians 15:55–57" },
-            { prophecy:"Joel 2:32", description:"Offer salvation to all mankind", fulfillment:"Romans 10:9–13" },
-            { prophecy:"Jonah 1:17", description:"Death and resurrection of Christ", fulfillment:"Matthew 12:40; Matthew 16:4" },
-            { prophecy:"Micah 5:2a", description:"Born in Bethlehem", fulfillment:"Matthew 2:1–6" },
-            { prophecy:"Micah 5:2b", description:"Ruler in Israel", fulfillment:"Luke 1:33" },
-            { prophecy:"Micah 5:2c", description:"From everlasting", fulfillment:"John 8:58" },
-            { prophecy:"Haggai 2:6–9", description:"He would visit the second Temple", fulfillment:"Luke 2:27–32" },
-            { prophecy:"Haggai 2:23", description:"Descendant of Zerubbabel", fulfillment:"Luke 2:27–32" },
-            { prophecy:"Zechariah 3:8", description:"God's servant", fulfillment:"John 17:4" },
-            { prophecy:"Zechariah 6:12–13", description:"Priest and King", fulfillment:"Hebrews 8:1" },
-            { prophecy:"Zechariah 9:9a", description:"Greeted with rejoicing in Jerusalem", fulfillment:"Matthew 21:8–10" },
-            { prophecy:"Zechariah 9:9b", description:"Beheld as King", fulfillment:"John 12:12–13" },
-            { prophecy:"Zechariah 9:9c", description:"The Messiah would be just", fulfillment:"John 5:30" },
-            { prophecy:"Zechariah 9:9d", description:"The Messiah would bring salvation", fulfillment:"Luke 19:10" },
-            { prophecy:"Zechariah 9:9e", description:"The Messiah would be humble", fulfillment:"Matthew 11:29" },
-            { prophecy:"Zechariah 9:9f", description:"Presented to Jerusalem riding on a donkey", fulfillment:"Matthew 21:6–9" },
-            { prophecy:"Zechariah 10:4", description:"The cornerstone", fulfillment:"Ephesians 2:20" },
-            { prophecy:"Zechariah 11:4–6a", description:"At His coming, Israel to have unfit leaders", fulfillment:"Matthew 23:1–4" },
-            { prophecy:"Zechariah 11:4–6b", description:"Rejection causes God to remove His protection", fulfillment:"Luke 19:41–44" },
-            { prophecy:"Zechariah 11:4–6c", description:"Rejected in favor of another king", fulfillment:"John 19:13–15" },
-            { prophecy:"Zechariah 11:7", description:"Ministry to 'poor,' the believing remnant", fulfillment:"Matthew 9:35–36" },
-            { prophecy:"Zechariah 11:8a", description:"Unbelief forces Messiah to reject them", fulfillment:"Matthew 23:33" },
-            { prophecy:"Zechariah 11:8b", description:"Despised", fulfillment:"Matthew 27:20" },
-            { prophecy:"Zechariah 11:9", description:"Stops ministering to those who rejected Him", fulfillment:"Matthew 13:10–11" },
-            { prophecy:"Zechariah 11:10–11a", description:"Rejection causes God to remove protection", fulfillment:"Luke 19:41–44" },
-            { prophecy:"Zechariah 11:10–11b", description:"The Messiah would be God", fulfillment:"John 14:7" },
-            { prophecy:"Zechariah 11:12–13a", description:"Betrayed for thirty pieces of silver", fulfillment:"Matthew 26:14–15" },
-            { prophecy:"Zechariah 11:12–13b", description:"Rejected", fulfillment:"Matthew 26:14–15" },
-            { prophecy:"Zechariah 11:12–13c", description:"Thirty pieces of silver cast in the house of the Lord", fulfillment:"Matthew 27:3–5" },
-            { prophecy:"Zechariah 11:12–13d", description:"The Messiah would be God", fulfillment:"John 12:45" },
-            { prophecy:"Zechariah 12:10a", description:"The Messiah's body would be pierced", fulfillment:"John 19:34–37" },
-            { prophecy:"Zechariah 12:10b", description:"The Messiah would be both God and man", fulfillment:"John 10:30" },
-            { prophecy:"Zechariah 12:10c", description:"The Messiah would be rejected", fulfillment:"John 1:11" },
-            { prophecy:"Zechariah 13:7a", description:"God's will He die for mankind", fulfillment:"John 18:11" },
-            { prophecy:"Zechariah 13:7b", description:"A violent death", fulfillment:"Mark 14:27" },
-            { prophecy:"Zechariah 13:7c", description:"Both God and man", fulfillment:"John 14:9" },
-            { prophecy:"Zechariah 13:7d", description:"Israel scattered as a result of rejecting Him", fulfillment:"Matthew 26:31–56" },
-            { prophecy:"Zechariah 14:4", description:"He would return to the Mt. of Olives", fulfillment:"Acts 1:11–12" },
-            { prophecy:"Malachi 3:1a", description:"Messenger to prepare the way for Messiah", fulfillment:"Mark 1:1–8" },
-            { prophecy:"Malachi 3:1b", description:"Sudden appearance at the temple", fulfillment:"Mark 11:15–16" },
-            { prophecy:"Malachi 3:1c", description:"Messenger of the new covenant", fulfillment:"Luke 4:43" },
-            { prophecy:"Malachi 4:5", description:"Forerunner in spirit of Elijah", fulfillment:"Matthew 3:1–3; Matthew 11:10–14" },
-            { prophecy:"Malachi 4:6", description:"Forerunner would turn many to righteousness", fulfillment:"Luke 1:16–17" }
-        ];
-
-        // ---------- RENDER FUNCTIONS ----------
-        const displayArea = document.getElementById('cards-display');
-        const jokerContainer = document.getElementById('joker-cards-container');
-        const tabs = document.querySelectorAll('.rank-tab');
-
-        function getSuitColor(s) {
-            if (s === '♥' || s === '♦') return 'text-red-400';
-            if (s === '♣' || s === '♠') return 'text-gray-200';
-            return 'text-amber-300';
-        }
-
-        function createCard(card) {
-            const el = document.createElement('div');
-            el.className = 'card';
-            const bg = card.suit === '🃏' ? 'linear-gradient(145deg, #2a241a, #1f1b12)' : 'linear-gradient(145deg, #1e1a14, #2c241c)';
-            el.innerHTML = `
-                <div class="card-inner">
-                    <div class="card-face card-front" style="background:${bg};">
-                        <div style="display:flex;justify-content:space-between;">
-                            <span class="gold font-bold" style="font-size:1.8rem;">${card.val}</span>
-                            <span class="${getSuitColor(card.suit)} font-bold" style="font-size:1.8rem;">${card.suit}</span>
-                        </div>
-                        <div style="flex:1;display:flex;flex-direction:column;justify-content:center;">
-                            <div class="category-tag gold">${card.category}</div>
-                            <div style="font-weight:bold;font-size:0.8rem;color:#f3e9d2;">${card.main}</div>
-                            <div class="verse-ref">${card.ref}</div>
-                            <div style="margin-top:6px;font-size:0.65rem;color:#d4c3a2;border-top:1px dashed #7a6a4b;padding-top:5px;">${card.text}</div>
-                        </div>
-                        <div style="display:flex;justify-content:space-between;transform:rotate(180deg);">
-                            <span class="gold font-bold" style="font-size:1.8rem;">${card.val}</span>
-                            <span class="${getSuitColor(card.suit)} font-bold" style="font-size:1.8rem;">${card.suit}</span>
-                        </div>
-                    </div>
-                    <div class="card-face card-back"></div>
-                </div>`;
-            el.addEventListener('click', e => { e.stopPropagation(); el.classList.toggle('flipped'); });
-            return el;
-        }
-
-        function displayRank(rank) {
-            const cards = deckByRank[rank];
-            if (!cards) return;
-            displayArea.innerHTML = `<div class="suit-family-grid">${['♦','♣','♠','♥'].map((s, i) => `<div id="card-${rank}-${i}"></div>`).join('')}</div>`;
-            ['♦','♣','♠','♥'].forEach((s, i) => {
-                const card = cards.find(c => c.suit === s);
-                if (card) document.getElementById(`card-${rank}-${i}`).appendChild(createCard(card));
-            });
-        }
-
-        jokerCards.forEach(card => {
-            const wrap = document.createElement('div');
-            wrap.style.maxWidth = '200px'; wrap.style.width = '100%';
-            wrap.appendChild(createCard(card));
-            jokerContainer.appendChild(wrap);
-        });
-
-        tabs.forEach(tab => tab.addEventListener('click', () => {
-            tabs.forEach(t => t.classList.remove('active'));
-            tab.classList.add('active');
-            displayRank(tab.dataset.rank);
-        }));
-        displayRank('2');
-
-        // ---------- ALL PROPHECIES LIST ----------
-        const listContainer = document.getElementById('all-prophecies-list');
-        function renderList(filter = '') {
-            const filtered = allPropheciesData.filter(p =>
-                p.prophecy.toLowerCase().includes(filter) ||
-                p.description.toLowerCase().includes(filter) ||
-                p.fulfillment.toLowerCase().includes(filter)
-            );
-            listContainer.innerHTML = filtered.map(p => `
-                <div class="prophecy-list-item">
-                    <div class="font-bold text-amber-300 font-mono">${p.prophecy}</div>
-                    <div class="text-sm text-gray-300 mt-1">${p.description}</div>
-                    <div class="text-xs text-amber-400/70 mt-2">→ ${p.fulfillment}</div>
-                </div>
-            `).join('') || '<p class="text-gray-400 text-center py-8">No matches, mate.</p>';
-        }
-        renderList();
-        document.getElementById('prophecy-search').addEventListener('input', e => renderList(e.target.value));
-
-        // ---------- NICK THE LOT (print) ----------
-        window.nickTheLot = function() {
-            const w = window.open('', '_blank', 'width=800,height=600');
-            w.document.write(`
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <title>54 Cards of Hope - All Prophecies</title>
-                    <style>
-                        body { font-family: 'Courier New', monospace; background: white; color: black; margin: 0; padding: 1cm; }
-                        .header { position: fixed; top: 0; left: 0; width: 100%; background: white; padding: 20px 0 10px 0; text-align: center; border-bottom: 1px solid #ccc; }
-                        .header img { height: 80px; }
-                        h2 { margin-top: 100px; text-align: center; }
-                        .prophecy { margin-bottom: 10px; border-bottom: 1px dotted #ccc; padding-bottom: 6px; }
-                        .ref { color: #555; font-size: 10px; }
-                        @media print { .header { position: fixed; top: 0; } }
-                    </style>
-                </head>
-                <body>
-                    <div class="header">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://cardsofhope.live" alt="QR"><br>
-                        <span style="font-size:12px;">cardsofhope.live</span>
-                    </div>
-                    <h2>54 Cards of Hope – All Prophecies & Fulfillments</h2>
-                    <div>${allPropheciesData.map(p => `<div class="prophecy"><strong>${p.prophecy}</strong> – ${p.description}<br><span class="ref">↳ ${p.fulfillment}</span></div>`).join('')}</div>
-                </body>
-                </html>
-            `);
-            w.document.close();
-            w.focus();
-            w.print();
-        };
-
-        // Fallback for card-back.jpg
-        const testBack = new Image();
-        testBack.src = 'card-back.jpg';
-        testBack.onerror = () => {
-            const style = document.createElement('style');
-            style.textContent = `.card-back { background-image: repeating-linear-gradient(45deg, rgba(250,204,21,0.1) 0px, rgba(250,204,21,0.1) 2px, transparent 2px, transparent 8px), radial-gradient(circle at 30% 20%, #2a2418, #0f0c07) !important; }`;
-            document.head.appendChild(style);
-        };
-    })();
-</script>
+<script src="deck-data.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
