@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=1.0">
+    <title>54 Cards of Hope · Prophecy Deck · PDF Export</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:opsz,wght@14..32,400;14..32,700&family=Courier+Prime:wght@400;700&family=Pirata+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="text-amber-50">
+
+<nav class="fixed top-0 w-full z-50 glass-nav py-3">
+    <div class="container mx-auto px-4 flex items-center justify-between flex-wrap gap-3">
+        <a href="#top" class="flex items-center gap-3 cursor-pointer">
+            <div class="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center shadow-md"><span class="text-black text-lg pirate-font">✝</span></div>
+            <span class="text-white font-bold text-xl pirate-font tracking-wider">Act<span class="text-amber-400">Out</span></span>
+        </a>
+        <div class="flex gap-3 flex-wrap">
+            <a href="#prophecies" class="text-amber-300 hover:text-amber-200 text-sm font-mono px-3 py-2">52 Cards</a>
+            <a href="#jokers" class="text-amber-300 hover:text-amber-200 text-sm font-mono px-3 py-2">Jokers</a>
+            <a href="#other-prophecies" class="text-amber-300 hover:text-amber-200 text-sm font-mono px-3 py-2">The Lot</a>
+        </div>
+    </div>
+</nav>
+
+<header id="top" class="hero-bg min-h-screen flex items-center relative overflow-hidden pt-20">
+    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent pointer-events-none"></div>
+    <div class="container mx-auto px-6 md:px-12 relative z-10 py-12">
+        <div class="max-w-2xl space-y-6 animate-fade-up">
+            <div class="inline-block bg-amber-700/50 backdrop-blur-sm px-5 py-2 rounded-full text-sm uppercase tracking-widest border border-amber-400/40 veteran">
+                Only for card sharps ruffians pirates ne'er do wells and blaggards
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight drop-shadow-2xl pirate-font">54 CARDS <br> <span class="text-amber-300">OF HOPE</span></h1>
+            <p class="text-xl text-gray-200 leading-relaxed max-w-lg drop-shadow-md veteran">
+                Ancient prophecies. Irrefutable fulfillment.<br>
+                Flip the deck. No cap. Nuff said.
+            </p>
+            <div class="flex flex-wrap gap-4 pt-6">
+                <a href="https://54cardsofhopes-shop.bigcartel.com/" target="_blank" class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-8 shadow-xl">🃟 BUY THE DECK</a>
+                <button onclick="nickTheLotShorts()" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-8">351 SHORTS</button>
+                <button onclick="exportPropheciesToPDF()" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-8">📜 NICK THE LOT (PDF)</button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- PROPHECY CARDS (52) -->
+<section id="prophecies" class="py-20 px-4 section-dark">
+    <div class="container mx-auto text-center">
+        <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">☠️ THE DECK ☠️</span>
+        <h2 class="section-title mb-8">52 PROPHECIES · FULFILLED</h2>
+        <div class="tabs-container mb-6 overflow-x-auto">
+            <div class="flex flex-wrap justify-center gap-2 pb-2" id="rankTabsWrapper">
+                <div class="rank-tab" data-rank="2">2</div><div class="rank-tab" data-rank="3">3</div><div class="rank-tab" data-rank="4">4</div><div class="rank-tab" data-rank="5">5</div><div class="rank-tab" data-rank="6">6</div><div class="rank-tab" data-rank="7">7</div><div class="rank-tab" data-rank="8">8</div><div class="rank-tab" data-rank="9">9</div><div class="rank-tab" data-rank="10">10</div><div class="rank-tab" data-rank="J">J</div><div class="rank-tab" data-rank="Q">Q</div><div class="rank-tab" data-rank="K">K</div><div class="rank-tab" data-rank="A">A</div>
+            </div>
+        </div>
+        <div id="cards-display"></div>
+    </div>
+</section>
+
+<!-- JOKERS -->
+<section id="jokers" class="py-20 px-4 bg-[#0d0b08]">
+    <div class="container mx-auto text-center">
+        <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">🃏 THE JOKERS 🃏</span>
+        <h2 class="section-title mb-8 veteran">SCREWTAPE & MI7</h2>
+        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div onclick="flipJoker(0)" class="joker-card-container text-left">
+                <h3 class="text-2xl veteran text-amber-300">JOKER ONE</h3>
+                <p class="text-gray-400 italic mt-3">"My dear Nightshade, refute them all! … Wormwood got eaten."</p>
+                <a href="Screwtape to Nightshade letter.pdf" class="text-amber-300 underline text-sm veteran block mt-4">Read the full Screwtape Letter →</a>
+            </div>
+            <div onclick="flipJoker(1)" class="joker-card-container text-left">
+                <h3 class="text-2xl veteran text-amber-300">JOKER TWO</h3>
+                <p class="text-red-400 text-sm font-mono">TOP SECRET // NOFORN // ORCON</p>
+                <p class="text-gray-400 text-sm mt-2 font-mono">Item-99-Omega · Project "CARDS OF HOPE"</p>
+                <span class="text-amber-300 underline text-sm veteran cursor-pointer block mt-3">Memo DECLASSIFIED</span>
+            </div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-8 mt-10" id="joker-cards-container"></div>
+    </div>
+</section>
+
+<!-- DECLASSIFIED MEMO -->
+<section id="full-memo" class="py-16 px-4 bg-[#121212]">
+    <div class="container mx-auto text-center">
+        <span class="text-red-400 text-sm font-mono tracking-widest">🔓 DECLASSIFIED DOCUMENT 🔓</span>
+        <h3 class="text-2xl text-red-300 mt-2 font-mono mb-8 veteran">MI7 · Office of Special Phenomena</h3>
+        <div class="memo-wrapper veteran">
+            <div class="memo-stamp">
+                <img src="declassified.png" alt="DECLASSIFIED" class="declassified-stamp">
+            </div>
+            <div class="memo-header"><div style="font-size:1.6rem; font-weight:bold; letter-spacing:2px;">TOP SECRET // NOFORN // ORCON</div></div>
+            <div class="memo-field"><span class="memo-field-label">CONTROL NO:</span><span class="memo-field-value">2026-XQ-0944</span></div>
+            <div class="memo-field"><span class="memo-field-label">DATE:</span><span class="memo-field-value">07 SEP 1963</span></div>
+            <div class="memo-field"><span class="memo-field-label">SUBJECT:</span><span class="memo-field-value">INTERCEPT: NIGHTSHADE // ALPHA</span></div>
+            <div class="memo-body" style="margin-top:25px;">
+                <p><span class="memo-section-label">(TS//NF)</span> <strong>SUMMARY:</strong> On 06 SEP 1963, field assets intercepted a physical package containing a deck of 52 playing cards and a letter.</p>
+                <p><span class="memo-section-label">(S//NF)</span> <strong>ORIGIN:</strong> Both sender and recipient unidentified.</p>
+                <p><span class="memo-section-label">(TS//ORCON)</span> <strong>EVALUATION:</strong> Cards contain high-fidelity intelligence regarding events from AD 0001.</p>
+                <p><span class="memo-section-label">(S//NF)</span> <strong>DISPOSITION:</strong> Authenticity confirmed. Project "CARDS OF HOPE" activated.</p>
+                <p style="text-align:center; font-weight:bold; margin-top:20px;">BY DIRECTION OF THE CHIEF, DSI</p>
+            </div>
+            <div class="memo-footer"><div class="memo-field"><span class="memo-field-label">DECLASSIFY ON:</span><span class="memo-field-value">20260102</span></div></div>
+        </div>
+    </div>
+</section>
+
+<!-- ALL OTHER PROPHECIES (350+) SCROLLABLE -->
+<section id="other-prophecies" class="py-20 px-4 section-dark">
+    <div class="container mx-auto max-w-6xl text-center">
+        <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">📜 THE LOT 📜</span>
+        <h2 class="section-title mb-8 veteran">ALL OTHER PROPHECIES · 350+</h2>
+        <input type="text" id="prophecy-search" class="prophecy-search" placeholder="🔍 Search prophecy, description, fulfillment...">
+        <div class="prophecy-scroll-area">
+            <div id="all-prophecies-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+        <div class="mt-12 max-w-2xl mx-auto text-left text-sm veteran space-y-6 px-4">
+            <p>Edgy, eccentric cards for card sharps, pirates, and sinners. Whether you're a hustler or quietly playing patience, a pack of these will crash your brains. Snap yours.</p>
+            <p class="uppercase tracking-widest text-amber-400 text-center">STRICTLY FOR CARD SHARKS, HOOLIGANS, MARAUDERS, SCOUNDRELS AND RAPSCALLIONS</p>
+        </div>
+        <div class="text-center mt-10">
+            <button onclick="exportPropheciesToPDF()" class="btn-mobile bg-amber-600 hover:bg-amber-500 text-black px-8">📜 EXPORT TO PDF (350+ PROPHECIES)</button>
+        </div>
+    </div>
+</section>
+
+<footer class="py-16 text-center border-t border-amber-900/50 bg-[#020202]">
+    <div class="container mx-auto px-4">
+        <div class="mb-8 flex flex-wrap justify-center gap-4">
+            <a href="https://54cardsofhopes-shop.bigcartel.com/" target="_blank" class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-10">🃟 BUY THE DECK</a>
+            <a href="mailto:cardgard@proton.me" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-10">📧 CONTACT THE CREW</a>
+        </div>
+        <p class="text-gray-400 font-mono text-sm mt-2">© 2026 · cardsofhope.live</p>
+    </div>
+</footer>
+
+<script src="deck-data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

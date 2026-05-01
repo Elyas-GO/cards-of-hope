@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -5,10 +6,170 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=1.0">
     <title>54 Cards of Hope · Prophecy Deck · PDF Export</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- jsPDF for PDF export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- QR Code Library for LIVE QR -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:opsz,wght@14..32,400;14..32,700&family=Courier+Prime:wght@400;700&family=Pirata+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* ---------- VETERAN TYPEWRITER & CARD STYLES (merged & refined) ---------- */
+        @font-face {
+            font-family: 'Veteran Typewriter';
+            src: url('veteran-typewriter.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: #0a0a0a; overflow-x: hidden; }
+        .typewriter, .card-front, .card-front *, .gold, .pirate-font, .btn-mobile, nav a, .prophecy-list-item, .classified-doc, .veteran {
+            font-family: 'Veteran Typewriter', 'Special Elite', 'Courier Prime', monospace !important;
+        }
+        .pirate-font { font-family: 'Pirata One', cursive; letter-spacing: 2px; }
+        .hero-bg { 
+            background: linear-gradient(135deg, rgba(0,0,0,0.85) 0%, rgba(20,10,5,0.7) 50%, rgba(0,0,0,0.8) 100%), url('hero-background.png'); 
+            background-size: cover; background-position: center 30%; background-repeat: no-repeat; background-attachment: fixed; 
+        }
+        @media (max-width: 768px) { .hero-bg { background-attachment: scroll; background-position: center 20%; } }
+        .tabs-container { margin-bottom: 2rem; }
+        #rankTabsWrapper { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 12px 0; }
+        .rank-tab {
+            position: relative; display: inline-flex; flex-direction: column; align-items: center; justify-content: space-between;
+            width: clamp(58px, 7.2vw, 88px); height: clamp(82px, 10.5vw, 122px); background: #fdfaf0; border: 2px solid #2c2c2c;
+            border-radius: 12px; cursor: pointer; transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.4), 0 4px 6px -2px rgba(0,0,0,0.3), inset 0 3px 0 rgba(255,255,255,0.7), inset 0 -3px 0 rgba(0,0,0,0.2);
+            overflow: hidden; padding: 6px 5px;
+        }
+        .rank-tab::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 25% 25%, rgba(0,0,0,0.03) 1px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 12px 12px; pointer-events: none; }
+        .rank-tab .tab-rank-number { font-size: clamp(1.35rem, 3.2vw, 2.4rem); font-weight: 900; line-height: 1; color: #1c1c1c; align-self: flex-start; margin-left: 4px; text-shadow: 1px 1px 0 #fff; }
+        .rank-tab .tab-suit-symbol { font-size: clamp(1.25rem, 2.8vw, 2.1rem); align-self: flex-end; margin-right: 4px; margin-bottom: 3px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+        .rank-tab .tab-suit-symbol.red-suit { color: #c8102e; }
+        .rank-tab .tab-suit-symbol.black-suit { color: #111111; }
+        .rank-tab.active { transform: translateY(-8px) scale(1.08) rotate(2deg); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5), 0 0 0 4px #facc15, inset 0 4px 0 rgba(255,255,255,0.9); z-index: 10; border-color: #d4af37; background: #fffef5; }
+        .prophecy-scroll-area { max-height: 540px; overflow-y: auto; padding-right: 6px; margin-top: 1rem; scrollbar-width: thin; scrollbar-color: #facc15 #2c241a; }
+        .prophecy-scroll-area::-webkit-scrollbar { width: 8px; }
+        .prophecy-scroll-area::-webkit-scrollbar-track { background: #2c241a; border-radius: 12px; }
+        .prophecy-scroll-area::-webkit-scrollbar-thumb { background: #facc15; border-radius: 12px; }
+        .card { perspective: 1200px; width: 100%; max-width: 220px; height: 310px; cursor: pointer; transition: transform 0.15s ease; }
+        .card:hover { transform: translateY(-8px); }
+        .card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); border-radius: 18px; }
+        .card.flipped .card-inner { transform: rotateY(180deg); }
+        .card-face { position: absolute; inset: 0; border-radius: 18px; overflow: hidden; backface-visibility: hidden; }
+        /* FRONT FACE - MAIN FIX HERE */
+.card-front {
+    background: #ffffff;
+    color: #111;
+    border: 3px solid #1c1c1c;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+    padding: 14px 12px;           /* Increased padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+       .card-front > div:nth-child(2) {     /* The middle flex div */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 8px 0;
+    min-height: 0;                   /* Important for flex */
+}
+
+/* Text inside the card */
+.card-front .gold {
+    font-size: 2.8rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.card-front div[style*="font-weight:bold"] {
+    font-size: 0.95rem;
+    line-height: 1.15;
+    margin-bottom: 8px;
+}
+
+.card-front .text-xs {
+    font-size: 0.73rem;
+    line-height: 1.25;
+    color: #444;
+}
+
+/* Bottom rank & suit (upside down) */
+.card-front > div:last-child {
+    transform: rotate(180deg);
+    margin-top: auto;
+}
+
+/* Make sure text doesn't get cut off */
+.card-front * {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
+.card-back { transform: rotateY(180deg); background: linear-gradient(135deg, #1a0800, #3c1f0f); background-image: url('card-back.jpg'); background-size: cover; background-position: center; border: 3px solid #1c1c1c; display: flex; align-items: center; justify-content: center; color: #facc15; text-align: center; }
+        /* .card-back::after { content: "✝ 54 CARDS OF HOPE ✝"; position: absolute; bottom: 20px; left: 0; right: 0; font-size: 0.75rem; letter-spacing: 3px; opacity: 0.9; } */
+        .card-back::after {
+    content: "✝ 54 CARDS OF HOPE ✝";
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);   /* dark semi-transparent background */
+    color: #facc15;                    /* keep yellow text */
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    padding: 6px 10px;
+    border-radius: 0;               /* pill shape, or use 0 for rectangle */
+    /* text-align: center; */
+    font-family: 'Veteran Typewriter', monospace;
+    backdrop-filter: blur(2px);        /* optional: soft blur behind text */
+}
+        .joker-card { perspective: 1500px; width: 100%; max-width: 280px; height: 400px; cursor: pointer; margin: 0; }
+        .joker-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); border-radius: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.6); }
+        .joker-card.flipped .joker-card-inner { transform: rotateY(180deg); }
+        .joker-card-face { position: absolute; inset: 0; border-radius: 18px; overflow: hidden; backface-visibility: hidden; border: 3px solid #1c1c1c; }
+        .joker-front { background: linear-gradient(145deg, #1e1a12, #2b2319); color: #facc15; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px 15px; font-family: 'Veteran Typewriter', monospace; overflow-y: auto; }
+        .joker-front .joker-symbol { font-size: 4rem; margin-bottom: 6px; filter: drop-shadow(0 0 6px #facc15); }
+        .joker-front h3 { font-size: 1.3rem; color: #facc15; margin-bottom: 8px; letter-spacing: 2px; }
+        .joker-front p { font-size: 0.85rem; line-height: 1.35; color: #e2dccd; max-width: 95%; margin-bottom: 8px; }
+        .joker-back { transform: rotateY(180deg); background: linear-gradient(135deg, #3c1f0f, #1a0800); background-image: url('card-back.jpg'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; color: #facc15; font-size: 1.1rem; }
+        /* .joker-back::after { content: "🃏 JOKER 🃏"; font-size: 1.4rem; letter-spacing: 4px; text-shadow: 0 2px 6px black; } */
+        .joker-back::after {
+            content: "🃏 JOKER 🃏";
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.5);
+            color: #facc15;
+            font-size: 1.1rem;
+            letter-spacing: 4px;
+            padding: 8px 12px;
+            border-radius: 0;
+            text-align: center;
+            font-weight: bold;
+            font-family: 'Veteran Typewriter', monospace;
+        }
+        .glass-nav { background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(250,204,21,0.25); }
+        .section-title { font-family: 'Pirata One', cursive; font-size: 2.5rem; background: linear-gradient(135deg, #f5e6b0, #e4c580); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: 3px; }
+        .prophecy-list-item { border-left: 3px solid #facc15; padding: 1.1rem; margin-bottom: 1rem; background: rgba(30,26,20,0.5); border-radius: 0 12px 12px 0; }
+        .prophecy-search { background: rgba(30,26,20,0.7); border: 1px solid rgba(250,204,21,0.3); border-radius: 50px; padding: 14px 24px; color: #f5e6b0; width: 100%; max-width: 520px; margin: 0 auto 2rem; font-family: 'Veteran Typewriter', monospace; }
+        .memo-wrapper { max-width: 820px; margin: 0 auto; position: relative; background: #f4f1e8; color: #111; padding: 45px 40px; border: 1px solid #666; box-shadow: 0 0 35px rgba(0,0,0,0.5); font-family: 'Veteran Typewriter', 'Courier Prime', monospace; font-size: 0.87rem; line-height: 1.65; }
+        .memo-stamp { position: absolute; top: 25px; right: -12px; transform: rotate(18deg); border: 3px solid #c00; background: rgba(244,241,232,0.95); padding: 5px 18px; font-weight: bold; font-size: 1.6rem; color: #c00; z-index: 2; }
+        .declassified-stamp { width: 140px; height: auto; display: block; opacity: 0.95; }
+        .btn-mobile { transition: all 0.2s ease; font-weight: bold; padding: 12px 28px; border-radius: 0; display: inline-block; text-align: center; }
+        .btn-mobile:hover { transform: scale(0.97); }
+        #joker-cards-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin-top: 2rem; }
+        .joker-qr { margin-top: 15px; display: flex; flex-direction: column; align-items: center; }
+        .qr-code-wrapper { background: white; padding: 6px; border-radius: 12px; display: inline-block; }
+        .memo-button { background: #6b2e2e; border: none; color: #facc15; padding: 8px 16px; border-radius: 40px; font-family: monospace; font-size: 0.75rem; cursor: pointer; transition: 0.2s; margin-top: 12px; }
+        .memo-button:hover { background: #8b3a3a; }
+        @media (max-width: 700px) {
+            .rank-tab { width: 68px; height: 96px; margin: 0 4px; padding: 8px 3px; }
+            .joker-card { max-width: 260px; height: 420px; }
+        }
+        .veteran-uppercase { font-family: 'Veteran Typewriter', monospace; text-transform: uppercase; letter-spacing: 1px; }
+    </style>
 </head>
 <body class="text-amber-50">
 
@@ -29,15 +190,10 @@
 <header id="top" class="hero-bg min-h-screen flex items-center relative overflow-hidden pt-20">
     <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent pointer-events-none"></div>
     <div class="container mx-auto px-6 md:px-12 relative z-10 py-12">
-        <div class="max-w-2xl space-y-6 animate-fade-up">
-            <div class="inline-block bg-amber-700/50 backdrop-blur-sm px-5 py-2 rounded-full text-sm uppercase tracking-widest border border-amber-400/40 veteran">
-                Only for card sharps ruffians pirates ne'er do wells and blaggards
-            </div>
+        <div class="max-w-2xl space-y-6">
+            <div class="inline-block bg-amber-700/50 backdrop-blur-sm px-5 py-2 rounded-full text-sm uppercase tracking-widest border border-amber-400/40 veteran">Only for card sharps ruffians pirates ne'er do wells and blaggards</div>
             <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight drop-shadow-2xl pirate-font">54 CARDS <br> <span class="text-amber-300">OF HOPE</span></h1>
-            <p class="text-xl text-gray-200 leading-relaxed max-w-lg drop-shadow-md veteran">
-                Ancient prophecies. Irrefutable fulfillment.<br>
-                Flip the deck. No cap. Nuff said.
-            </p>
+            <p class="text-xl text-gray-200 leading-relaxed max-w-lg drop-shadow-md veteran">Ancient prophecies. Irrefutable fulfillment.<br> Flip the deck. No cap. Nuff said.</p>
             <div class="flex flex-wrap gap-4 pt-6">
                 <a href="https://54cardsofhopes-shop.bigcartel.com/" target="_blank" class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-8 shadow-xl">🃟 BUY THE DECK</a>
                 <button onclick="nickTheLotShorts()" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-8">351 SHORTS</button>
@@ -47,13 +203,14 @@
     </div>
 </header>
 
-<!-- PROPHECY CARDS (52) -->
+<!-- 52 PROPHECIES SECTION -->
 <section id="prophecies" class="py-20 px-4 section-dark">
     <div class="container mx-auto text-center">
         <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">☠️ THE DECK ☠️</span>
-        <h2 class="section-title mb-8">52 PROPHECIES · FULFILLED</h2>
+        <!-- REFINEMENT #6: Capitalized Veteran type, same prominent size -->
+        <h2 class="veteran-uppercase text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent mb-6 tracking-wider">52 PROPHECIES · FULFILLED</h2>
         <div class="tabs-container mb-6 overflow-x-auto">
-            <div class="flex gap-2 pb-2 min-w-max" id="rankTabsWrapper">
+            <div class="flex flex-wrap justify-center gap-2 pb-2" id="rankTabsWrapper">
                 <div class="rank-tab" data-rank="2">2</div><div class="rank-tab" data-rank="3">3</div><div class="rank-tab" data-rank="4">4</div><div class="rank-tab" data-rank="5">5</div><div class="rank-tab" data-rank="6">6</div><div class="rank-tab" data-rank="7">7</div><div class="rank-tab" data-rank="8">8</div><div class="rank-tab" data-rank="9">9</div><div class="rank-tab" data-rank="10">10</div><div class="rank-tab" data-rank="J">J</div><div class="rank-tab" data-rank="Q">Q</div><div class="rank-tab" data-rank="K">K</div><div class="rank-tab" data-rank="A">A</div>
             </div>
         </div>
@@ -61,35 +218,22 @@
     </div>
 </section>
 
-<!-- JOKERS -->
+<!-- JOKERS (TWO CARDS) with LIVE QR on Joker2 -->
 <section id="jokers" class="py-20 px-4 bg-[#0d0b08]">
     <div class="container mx-auto text-center">
         <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">🃏 THE JOKERS 🃏</span>
         <h2 class="section-title mb-8 veteran">SCREWTAPE & MI7</h2>
-        <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <div onclick="flipJoker(0)" class="joker-card-container text-left">
-                <h3 class="text-2xl veteran text-amber-300">JOKER ONE</h3>
-                <p class="text-gray-400 italic mt-3">"My dear Nightshade, refute them all! … Wormwood got eaten."</p>
-                <a href="https://docs.google.com/document/d/1Nl5G5ad8rPc_ijSGA0KnPZG81bt38XzK/edit?usp=sharing&ouid=117867511891762056685&rtpof=true&sd=true" class="text-amber-300 underline text-sm veteran block mt-4">Read the full Screwtape Letter →</a>
-            </div>
-            <div onclick="flipJoker(1)" class="joker-card-container text-left">
-                <h3 class="text-2xl veteran text-amber-300">JOKER TWO</h3>
-                <p class="text-red-400 text-sm font-mono">TOP SECRET // NOFORN // ORCON</p>
-                <p class="text-gray-400 text-sm mt-2 font-mono">Item-99-Omega · Project "CARDS OF HOPE"</p>
-                <span class="text-amber-300 underline text-sm veteran cursor-pointer block mt-3">Memo DECLASSIFIED</span>
-            </div>
-        </div>
-        <div class="flex flex-wrap justify-center gap-8 mt-10" id="joker-cards-container"></div>
+        <div id="joker-cards-container" class="flex flex-wrap justify-center gap-4 mt-6"></div>
     </div>
 </section>
 
-<!-- DECLASSIFIED MEMO -->
+<!-- TOP SECRET MEMO (with link to landing journey) -->
 <section id="full-memo" class="py-16 px-4 bg-[#121212]">
     <div class="container mx-auto text-center">
         <span class="text-red-400 text-sm font-mono tracking-widest">🔓 DECLASSIFIED DOCUMENT 🔓</span>
         <h3 class="text-2xl text-red-300 mt-2 font-mono mb-8 veteran">MI7 · Office of Special Phenomena</h3>
         <div class="memo-wrapper veteran">
-            <div class="memo-stamp">DECLASSIFIED</div>
+            <div class="memo-stamp"><img src="declassified.png" alt="DECLASSIFIED" class="declassified-stamp" onerror="this.style.display='none'; this.parentElement.innerText='DECLASSIFIED';"></div>
             <div class="memo-header"><div style="font-size:1.6rem; font-weight:bold; letter-spacing:2px;">TOP SECRET // NOFORN // ORCON</div></div>
             <div class="memo-field"><span class="memo-field-label">CONTROL NO:</span><span class="memo-field-value">2026-XQ-0944</span></div>
             <div class="memo-field"><span class="memo-field-label">DATE:</span><span class="memo-field-value">07 SEP 1963</span></div>
@@ -100,21 +244,21 @@
                 <p><span class="memo-section-label">(TS//ORCON)</span> <strong>EVALUATION:</strong> Cards contain high-fidelity intelligence regarding events from AD 0001.</p>
                 <p><span class="memo-section-label">(S//NF)</span> <strong>DISPOSITION:</strong> Authenticity confirmed. Project "CARDS OF HOPE" activated.</p>
                 <p style="text-align:center; font-weight:bold; margin-top:20px;">BY DIRECTION OF THE CHIEF, DSI</p>
+                <!-- REFINEMENT #8: Link leads to Netify landing journey (same as QR destination) -->
+                <!-- <p class="text-center text-sm mt-6"><a href="https://qrto.to/0b879a6d" target="_blank" id="memoJourneyLink" class="text-amber-800 underline font-bold bg-amber-100 px-3 py-1 rounded-full">➡️ PROCEED TO LANDING PAGE: JOURNEY OF DISCOVERY ⬅️</a></p> -->
             </div>
             <div class="memo-footer"><div class="memo-field"><span class="memo-field-label">DECLASSIFY ON:</span><span class="memo-field-value">20260102</span></div></div>
         </div>
     </div>
 </section>
 
-<!-- ALL OTHER PROPHECIES (350+) SCROLLABLE -->
+<!-- ALL OTHER PROPHECIES (350+ total, corrected total entries) -->
 <section id="other-prophecies" class="py-20 px-4 section-dark">
     <div class="container mx-auto max-w-6xl text-center">
         <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">📜 THE LOT 📜</span>
         <h2 class="section-title mb-8 veteran">ALL OTHER PROPHECIES · 350+</h2>
         <input type="text" id="prophecy-search" class="prophecy-search" placeholder="🔍 Search prophecy, description, fulfillment...">
-        <div class="prophecy-scroll-area">
-            <div id="all-prophecies-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
-        </div>
+        <div class="prophecy-scroll-area"><div id="all-prophecies-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-4"></div></div>
         <div class="mt-12 max-w-2xl mx-auto text-left text-sm veteran space-y-6 px-4">
             <p>Edgy, eccentric cards for card sharps, pirates, and sinners. Whether you're a hustler or quietly playing patience, a pack of these will crash your brains. Snap yours.</p>
             <p class="uppercase tracking-widest text-amber-400 text-center">STRICTLY FOR CARD SHARKS, HOOLIGANS, MARAUDERS, SCOUNDRELS AND RAPSCALLIONS</p>
@@ -129,13 +273,329 @@
     <div class="container mx-auto px-4">
         <div class="mb-8 flex flex-wrap justify-center gap-4">
             <a href="https://54cardsofhopes-shop.bigcartel.com/" target="_blank" class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-10">🃟 BUY THE DECK</a>
-            <a href="mailto:cardgard@proton.me" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-10">📧 CONTACT THE CREW</a>
+            <a href="mailto:54cardsofhope@gmail.com" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-10">📧 CONTACT THE CREW</a>
         </div>
-        <p class="text-gray-400 font-mono text-sm mt-2">© 2025 · cardsofhope.live</p>
+        <p class="text-gray-400 font-mono text-sm mt-2">© 2026 · cardsofhope.live</p>
     </div>
 </footer>
-
 <script src="deck-data.js"></script>
-<script src="app.js"></script>
+<script>
+    // ============================================================
+    // MAIN APP LOGIC – uses data from deck-data.js (external file)
+    // ============================================================
+    document.addEventListener("DOMContentLoaded", function() {
+        // Data is already loaded from deck-data.js into window.deckData
+        const { deckByRank, jokerCards, allPropheciesData } = window.deckData;
+        const JOURNEY_QR_URL = "https://qrto.to/0b879a6d";
+
+        console.log(`Loaded ${allPropheciesData.length} prophecies from deck-data.js`);
+
+        // ---------- CARD RENDERING ----------
+        function renderCard(cardData) {
+            const div = document.createElement("div");
+            div.className = "card";
+            const isRed = cardData.suit === "♥" || cardData.suit === "♦";
+            div.innerHTML = `<div class="card-inner"><div class="card-face card-front"><div style="display:flex;justify-content:space-between;"><span class="gold rank-suit">${cardData.val}</span><span class="${isRed ? 'suit-red' : 'suit-black'} rank-suit">${cardData.suit}</span></div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:10px 0;"><div class="gold text-xs uppercase tracking-widest mb-3">${cardData.category}</div><div style="font-weight:bold; font-size:0.96rem;">${cardData.main}</div><div class="text-xs text-gray-600 mt-4">${cardData.ref}</div><div style="margin-top:12px; font-size:0.74rem;">${cardData.text}</div></div><div style="display:flex;justify-content:space-between;transform:rotate(180deg);"><span class="gold rank-suit">${cardData.val}</span><span class="${isRed ? 'suit-red' : 'suit-black'} rank-suit">${cardData.suit}</span></div></div><div class="card-face card-back"></div></div>`;
+            div.addEventListener("click", () => div.classList.toggle("flipped"));
+            return div;
+        }
+
+        const container = document.getElementById("cards-display");
+        function showRank(rank) {
+            let cards = deckByRank[rank];
+            if (!cards) return;
+            container.innerHTML = `<div class="grid grid-cols-2 md:grid-cols-4 gap-6">${["♦", "♣", "♠", "♥"].map((s, i) => `<div id="card-${rank}-${i}"></div>`).join("")}</div>`;
+            ["♦", "♣", "♠", "♥"].forEach((suit, i) => {
+                let card = cards.find(c => c.suit === suit);
+                if (card) document.getElementById(`card-${rank}-${i}`).appendChild(renderCard(card));
+            });
+        }
+
+        // Build rank tabs
+        document.querySelectorAll(".rank-tab").forEach(tab => {
+            tab.addEventListener("click", () => {
+                document.querySelectorAll(".rank-tab").forEach(t => t.classList.remove("active"));
+                tab.classList.add("active");
+                showRank(tab.dataset.rank);
+            });
+            const rSuit = ["♦", "♣", "♠", "♥"][Math.floor(Math.random() * 4)];
+            const isRedSuit = rSuit === "♦" || rSuit === "♥";
+            tab.innerHTML = `<div class="tab-rank-number">${tab.dataset.rank}</div><div class="tab-suit-symbol ${isRedSuit ? 'red-suit' : 'black-suit'}">${rSuit}</div>`;
+        });
+        document.querySelector('.rank-tab[data-rank="2"]')?.classList.add("active");
+        showRank("2");
+
+        // ---------- JOKERS with QR ----------
+        const jokerZone = document.getElementById("joker-cards-container");
+        if (jokerZone && jokerCards.length >= 2) {
+            jokerZone.innerHTML = "";
+            const jokersDom = [];
+            jokerCards.forEach((j, idx) => {
+                const isScrew = idx === 0;
+                const jDiv = document.createElement("div");
+                jDiv.className = "joker-card";
+                let extra = !isScrew ? `<button class="memo-button" id="scrollToMemoBtn">📜 VIEW TOP SECRET LETTER</button><div id="liveQrJoker2" class="joker-qr"></div>` : `<a href="Screwtape_to_Nightshade.pdf" target="_blank" class="text-amber-300 underline text-sm mt-3 block veteran">📄 READ FULL LETTER (PDF)</a>`;
+                jDiv.innerHTML = `<div class="joker-card-inner"><div class="joker-card-face joker-front"><div class="joker-symbol">🃏</div><h3>${j.main}</h3><p>${j.text}</p>${extra}</div><div class="joker-card-face joker-back"></div></div>`;
+                jokerZone.appendChild(jDiv);
+                jokersDom.push(jDiv);
+                if (!isScrew) {
+                    const btn = jDiv.querySelector("#scrollToMemoBtn");
+                    if (btn) btn.addEventListener("click", (e) => { e.stopPropagation(); document.getElementById("full-memo").scrollIntoView({ behavior: "smooth" }); });
+                    const qrDiv = jDiv.querySelector("#liveQrJoker2");
+                    if (qrDiv && typeof QRCode !== 'undefined') {
+                        qrDiv.innerHTML = "";
+                        new QRCode(qrDiv, { text: JOURNEY_QR_URL, width: 90, height: 90, colorDark: "#000", colorLight: "#fff" });
+                        let label = document.createElement("div");
+                        label.className = "text-[10px] text-amber-400/80 mt-1 veteran";
+                        label.innerText = "SCAN → JOURNEY";
+                        qrDiv.appendChild(label);
+                    }
+                }
+            });
+            jokersDom.forEach((card, i) => {
+                const other = jokersDom[i === 0 ? 1 : 0];
+                card.addEventListener("click", (e) => {
+                    if (e.target.closest('button') || e.target.closest('a') || e.target.closest('#liveQrJoker2')) return;
+                    other.classList.toggle("flipped");
+                });
+            });
+        }
+
+        // ---------- PROPHECIES SEARCH ----------
+        const listArea = document.getElementById("all-prophecies-list");
+        function renderProphecies(term = "") {
+            const lowerTerm = term.toLowerCase();
+            const filtered = allPropheciesData.filter(p =>
+                (p.prophecy || "").toLowerCase().includes(lowerTerm) ||
+                (p.description || "").toLowerCase().includes(lowerTerm)
+            );
+            listArea.innerHTML = filtered.map(p => `
+                <div class="prophecy-list-item veteran">
+                    <div class="font-bold text-amber-300">${p.prophecy}</div>
+                    <div class="text-sm text-gray-300 mt-1">${p.description}</div>
+                    <div class="text-xs text-amber-400/80 mt-2">✓ ${p.fulfillment1}: ${(p.fulfillment1Text || "").substring(0, 100)}</div>
+                </div>
+            `).join("");
+            if (!filtered.length) listArea.innerHTML = "<p class='text-gray-400 text-center'>No match</p>";
+        }
+        renderProphecies();
+        document.getElementById("prophecy-search")?.addEventListener("input", e => renderProphecies(e.target.value.toLowerCase()));
+
+        // ---------- PDF EXPORT (FIXED) ----------
+        window.exportPropheciesToPDF = async function() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const margin = 15;
+            let y = 20;
+
+            // Use the real data from the external file
+            const prophecies = allPropheciesData;
+
+            if (!prophecies || prophecies.length === 0) {
+                alert("No prophecy data available.");
+                return;
+            }
+
+            doc.setFont("courier", "bold");
+            doc.setFontSize(18);
+            doc.text("54 CARDS OF HOPE – COMPLETE PROPHECIES (Full Details)", pageWidth / 2, y, { align: "center" });
+            y += 10;
+            doc.setFontSize(10);
+            doc.text(`Total entries: ${prophecies.length} | OT Text + Fulfillment 1 & 2`, pageWidth / 2, y, { align: "center" });
+            y += 12;
+            doc.line(margin, y, pageWidth - margin, y);
+            y += 8;
+
+            for (let i = 0; i < prophecies.length; i++) {
+                const p = prophecies[i];
+                if (y + 50 > doc.internal.pageSize.getHeight() - margin) {
+                    doc.addPage();
+                    y = margin;
+                }
+                doc.setFontSize(11);
+                doc.setFont("courier", "bold");
+                doc.text(`${p.prophecy} – ${p.description}`, margin, y);
+                y += 6;
+                doc.setFontSize(9);
+                doc.setFont("courier", "normal");
+                const otLines = doc.splitTextToSize(`OT: ${p.otText || ""}`, pageWidth - 30);
+                doc.text(otLines, margin + 2, y);
+                y += 4.5 * otLines.length;
+                doc.setFont("courier", "bold");
+                doc.text(`✓ Fulfillment 1 (${p.fulfillment1}):`, margin, y);
+                y += 4.5;
+                doc.setFont("courier", "normal");
+                const f1Lines = doc.splitTextToSize(p.fulfillment1Text || "", pageWidth - 34);
+                doc.text(f1Lines, margin + 4, y);
+                y += 4.5 * f1Lines.length;
+                if (p.fulfillment2 && p.fulfillment2.trim() !== "") {
+                    doc.setFont("courier", "bold");
+                    doc.text(`+ Fulfillment 2 (${p.fulfillment2}):`, margin, y);
+                    y += 4.5;
+                    doc.setFont("courier", "normal");
+                    const f2Lines = doc.splitTextToSize(p.fulfillment2Text || "", pageWidth - 34);
+                    doc.text(f2Lines, margin + 4, y);
+                    y += 4.5 * f2Lines.length;
+                }
+                y += 3;
+                doc.setDrawColor(180, 150, 80);
+                doc.line(margin, y - 1, pageWidth - margin, y - 1);
+                y += 4;
+            }
+
+            const totalPages = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= totalPages; i++) {
+                doc.setPage(i);
+                doc.setFontSize(8);
+                doc.text(`54 Cards of Hope – Prophecy Archive – Page ${i} of ${totalPages}`, pageWidth / 2, doc.internal.pageSize.getHeight() - 10, { align: "center" });
+            }
+            doc.save("54_cards_of_hope_complete_prophecies.pdf");
+        };
+
+        // ---------- "NICK THE LOT" SHORTS PDF ----------
+       window.nickTheLotShorts = function() {
+    const prophecies = allPropheciesData; // already in closure scope
+    if (!prophecies || prophecies.length === 0) {
+        alert("No prophecy data available.");
+        return;
+    }
+
+    const win = window.open("", "_blank");
+    if (!win) {
+        alert("Please allow pop-ups for this site.");
+        return;
+    }
+
+    // Build HTML content
+    let html = `<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>351 Short Prophecies – 54 Cards of Hope</title>
+        <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body {
+                font-family: 'Courier New', 'Special Elite', monospace;
+                background: #fef9e8;
+                padding: 20px;
+                color: #1e1a12;
+            }
+            h1 {
+                text-align: center;
+                font-size: 1.8rem;
+                margin-bottom: 8px;
+                letter-spacing: 2px;
+                border-bottom: 2px solid #c99b2e;
+                display: inline-block;
+                width: auto;
+                padding-bottom: 6px;
+            }
+            .header {
+                text-align: center;
+                margin-bottom: 30px;
+            }
+            .prophecy-item {
+                background: #fffef7;
+                border-left: 5px solid #d4af37;
+                padding: 12px 16px;
+                margin-bottom: 16px;
+                page-break-inside: avoid;
+                break-inside: avoid;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            }
+            .prophecy-title {
+                font-weight: bold;
+                font-size: 1.1rem;
+                color: #a0522d;
+            }
+            .description {
+                margin: 6px 0 4px;
+                font-size: 0.9rem;
+            }
+            .ot-text {
+                font-size: 0.8rem;
+                background: #f3efdf;
+                padding: 4px 8px;
+                border-radius: 12px;
+                margin: 8px 0;
+                color: #3b2a1f;
+            }
+            .fulfillment {
+                font-size: 0.85rem;
+                color: #2c5e2e;
+                margin-top: 6px;
+                font-style: italic;
+            }
+            hr {
+                margin: 20px 0;
+                border: 0;
+                height: 1px;
+                background: #e0cba0;
+            }
+            .footer {
+                text-align: center;
+                margin-top: 30px;
+                font-size: 0.7rem;
+                color: #5c4b2a;
+            }
+            @media print {
+                body { background: white; padding: 10px; }
+                .prophecy-item { break-inside: avoid; box-shadow: none; border-left-width: 3px; }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>✝ 54 CARDS OF HOPE · 351 SHORT PROPHECIES ✝</h1>
+            <p style="margin-top: 6px;">Complete list of all prophecies, OT references, and fulfillments</p>
+        </div>
+        <div id="prophecies-container">`;
+
+    // Add each prophecy
+    for (let i = 0; i < prophecies.length; i++) {
+        const p = prophecies[i];
+        html += `
+        <div class="prophecy-item">
+            <div class="prophecy-title">${escapeHtml(p.prophecy || '')} – ${escapeHtml(p.description || '')}</div>
+            <div class="ot-text">📖 OT: ${escapeHtml(p.otText || '')}</div>
+            <div class="fulfillment">✓ ${escapeHtml(p.fulfillment1 || '')}: ${escapeHtml((p.fulfillment1Text || '').substring(0, 200))}${(p.fulfillment1Text && p.fulfillment1Text.length > 200) ? '…' : ''}</div>`;
+        if (p.fulfillment2 && p.fulfillment2.trim() !== "") {
+            html += `<div class="fulfillment" style="margin-top: 4px;">+ ${escapeHtml(p.fulfillment2)}: ${escapeHtml((p.fulfillment2Text || '').substring(0, 200))}${(p.fulfillment2Text && p.fulfillment2Text.length > 200) ? '…' : ''}</div>`;
+        }
+        html += `</div>`;
+    }
+
+    html += `
+        </div>
+        <div class="footer">
+            <hr>
+            <p>Source: 54 Cards of Hope · Total prophecies: ${prophecies.length}<br>Generated for personal reference · cardsofhope.live</p>
+        </div>
+        <script>
+            // Auto-trigger print after page fully loads
+            window.onload = function() { setTimeout(() => window.print(), 300); };
+        <\/script>
+    </body>
+    </html>`;
+
+    win.document.write(html);
+    win.document.close();
+};
+
+// Helper: prevent XSS / broken characters
+function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+        return c;
+    });
+}
+    });
+</script>
 </body>
 </html>

@@ -26,54 +26,104 @@
         }
 
         /* PLAYING CARD TABS (CARD-LIKE) */
-        .rank-tab {
-            position: relative;
-            display: inline-flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            width: 82px;
-            height: 112px;
-            background: #fef7e8;
-            background-image: radial-gradient(circle at 35% 30%, rgba(218, 165, 32, 0.08) 1.5px, transparent 1.5px);
-            background-size: 14px 14px;
-            border-radius: 14px;
-            margin: 0 6px;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            box-shadow: 0 8px 14px -6px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,240,0.6);
-            border: 1px solid #d4c5a3;
-            font-family: 'Veteran Typewriter', 'Courier Prime', monospace;
-            padding: 12px 6px 10px 6px;
-            backdrop-filter: blur(1px);
-        }
-        .rank-tab .tab-rank-number {
-            font-size: 2.1rem;
-            font-weight: 800;
-            line-height: 1;
-            color: #1a1a1a;
-            text-shadow: 1px 1px 0 rgba(255,215,0,0.3);
-            align-self: flex-start;
-            margin-left: 4px;
-        }
-        .rank-tab .tab-suit-symbol {
-            font-size: 1.65rem;
-            align-self: flex-end;
-            margin-right: 4px;
-            margin-bottom: 2px;
-            color: #b02b2b;
-            text-shadow: 0 0 2px #ffcd94;
-        }
-        .rank-tab .tab-suit-symbol.black-suit { color: #1f1f1f; }
-        .rank-tab.active {
-            box-shadow: 0 0 0 2px #f7b32b, 0 12px 20px -8px black;
-            transform: translateY(-3px) scale(1.02);
-            background: #fff6e6;
-            border-color: #e4b363;
-        }
-        .rank-tab.active .tab-rank-number { color: #b97f10; text-shadow: 0 0 3px #ffdd88; }
-        .rank-tab:hover { transform: translateY(-4px); background: #fff3e0; }
+       /* ── RANK TABS ───────────────────────────────────────────────── */
+.tabs-container {
+    margin-bottom: 2rem;
+}
 
+#rankTabsWrapper {
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 0;
+}
+
+/* Main tab styling - mimicking real playing cards */
+.rank-tab {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: clamp(58px, 7.2vw, 88px);
+    height: clamp(82px, 10.5vw, 122px);
+    background: #fdfaf0;
+    border: 2px solid #2c2c2c;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+    box-shadow: 
+        0 10px 15px -3px rgba(0, 0, 0, 0.4),
+        0 4px 6px -2px rgba(0, 0, 0, 0.3),
+        inset 0 3px 0 rgba(255,255,255,0.7),
+        inset 0 -3px 0 rgba(0,0,0,0.2);
+    overflow: hidden;
+    font-family: 'Veteran Typewriter', 'Courier Prime', monospace;
+    padding: 6px 5px;
+}
+
+/* Subtle card texture */
+.rank-tab::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+        radial-gradient(circle at 25% 25%, rgba(0,0,0,0.03) 1px, transparent 1px),
+        radial-gradient(circle at 75% 75%, rgba(0,0,0,0.03) 1px, transparent 1px);
+    background-size: 12px 12px;
+    pointer-events: none;
+}
+
+/* Rank number (top left) */
+.rank-tab .tab-rank-number {
+    font-size: clamp(1.35rem, 3.2vw, 2.4rem);
+    font-weight: 900;
+    line-height: 1;
+    color: #1c1c1c;
+    align-self: flex-start;
+    margin-left: 4px;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+/* Suit symbol (bottom right) */
+.rank-tab .tab-suit-symbol {
+    font-size: clamp(1.25rem, 2.8vw, 2.1rem);
+    align-self: flex-end;
+    margin-right: 4px;
+    margin-bottom: 3px;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+/* Red suits */
+.rank-tab .tab-suit-symbol.red-suit { 
+    color: #c8102e; 
+}
+
+/* Black suits */
+.rank-tab .tab-suit-symbol.black-suit { 
+    color: #111111; 
+}
+
+/* Active state - like the King of Hearts being pulled forward */
+.rank-tab.active {
+    transform: translateY(-8px) scale(1.08) rotate(2deg);
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.5),
+        0 0 0 4px #facc15,
+        inset 0 4px 0 rgba(255,255,255,0.9);
+    z-index: 10;
+    border-color: #d4af37;
+    background: #fffef5;
+}
+
+/* Hover effect */
+.rank-tab:hover:not(.active) {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 
+        0 15px 20px -5px rgba(0, 0, 0, 0.45),
+        inset 0 3px 0 rgba(255,255,255,0.8);
+}
         /* Scrollable prophecies area */
         .prophecy-scroll-area {
             max-height: 540px;
@@ -88,57 +138,285 @@
         .prophecy-scroll-area::-webkit-scrollbar-thumb { background: #facc15; border-radius: 12px; }
 
         /* Card styles */
-        .card { 
-            perspective: 1500px; 
-            aspect-ratio: 5/8.8; 
-            cursor: pointer; 
-            transition: transform 0.2s; 
-            width: 100%; 
-            max-width: 215px; 
-            margin: 0 auto; 
-            background: #f8f1e3; 
-            border-radius: 24px; 
-            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.6); 
-        }
-        .card:hover { transform: translateY(-8px); }
-        .card-inner { 
-            width: 100%; height: 100%; 
-            transition: transform 0.65s cubic-bezier(0.23,1,0.32,1); 
-            transform-style: preserve-3d; 
-            position: relative; 
-            border-radius: 24px; 
-        }
-        .card.flipped .card-inner { transform: rotateY(180deg); }
-        .card-face { 
-            position: absolute; width: 100%; height: 100%; 
-            border-radius: 24px; backface-visibility: hidden; 
-            overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.4); 
-        }
-        .card-front { 
-            background: #f8f1e3; 
-            color: #111; 
-            padding: 16px 12px; 
-            display: flex; 
-            flex-direction: column; 
-            justify-content: space-between; 
-            border: 3px solid #1c1c1c;
-        }
+       /* ── PLAYING CARDS — 3D FLIP ─────────────────────────────────── */
+.card {
+    perspective: 1200px;
+    width: 100%;
+    max-width: 220px;           /* Slightly wider too */
+    height: 310px;              /* Increased from ~ aspect-ratio */
+    cursor: pointer;
+    transition: transform 0.15s ease;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 18px;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+/* Both faces */
+.card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+/* FRONT FACE - MAIN FIX HERE */
+.card-front {
+    background: #ffffff;
+    color: #111;
+    border: 3px solid #1c1c1c;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+    padding: 14px 12px;           /* Increased padding */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+/* Top rank & suit */
+.rank-suit {
+    font-size: 2.1rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+/* Middle content area - This was the main problem */
+.card-front > div:nth-child(2) {     /* The middle flex div */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    padding: 8px 0;
+    min-height: 0;                   /* Important for flex */
+}
+
+/* Text inside the card */
+.card-front .gold {
+    font-size: 2.8rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.card-front div[style*="font-weight:bold"] {
+    font-size: 0.95rem;
+    line-height: 1.15;
+    margin-bottom: 8px;
+}
+
+.card-front .text-xs {
+    font-size: 0.73rem;
+    line-height: 1.25;
+    color: #444;
+}
+
+/* Bottom rank & suit (upside down) */
+.card-front > div:last-child {
+    transform: rotate(180deg);
+    margin-top: auto;
+}
+
+/* Make sure text doesn't get cut off */
+.card-front * {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+}
         .rank-suit { font-size: 3rem; font-weight: 700; line-height: 1; }
         .suit-red { color: #c8102e; }
         .suit-black { color: #111; }
-        .card-back { 
-            transform: rotateY(180deg); 
-            background-image: url('card-back.jpg'); 
-            background-size: cover; 
-            background-position: center;
-            position: relative;
+        .card-back {
+    transform: rotateY(180deg);           /* Must be rotated */
+    background: linear-gradient(135deg, #1a0800, #3c1f0f);
+    background-image: url('card-back.jpg');   /* Make sure this file exists */
+    background-size: cover;
+    background-position: center;
+    border: 3px solid #1c1c1c;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #facc15;
+    text-align: center;
+    font-family: 'Veteran Typewriter', monospace;
+}
+
+/* Optional nice touch on back */
+.card-back::after {
+    content: "✝ 54 CARDS OF HOPE ✝";
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    opacity: 0.9;
+}
+ /* ADDITIONAL STYLES - DECREASED GAP BETWEEN JOKERS CARDS */
+        /* 1. For the interactive flip jokers (actual playing-card style jokers) */
+        #joker-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px !important;      /* REDUCED from 24px/18px to 12px */
+            margin-top: 2rem;
         }
-        .card-back::after { 
-            content: "✝ 54 CARDS OF HOPE ✝"; 
-            position: absolute; bottom: 24px; left: 0; right: 0; 
-            text-align: center; color: #facc15; font-size: 0.68rem; 
-            letter-spacing: 3px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8); 
+
+        /* 2. For the textual Joker info cards (SCREWTAPE & MI7 description boxes) */
+        #jokers .grid.md\:grid-cols-2 {
+            gap: 1rem !important;       /* REDUCED from gap-8 (2rem) to 1rem (16px) */
         }
+
+        /* Optional: make joker cards slightly more compact on very narrow screens */
+        @media (max-width: 640px) {
+            #joker-cards-container {
+                gap: 8px !important;
+            }
+            #jokers .grid.md\:grid-cols-2 {
+                gap: 0.75rem !important;
+            }
+        }
+
+        /* Ensure no extra margins ruining the tight layout */
+        .joker-card {
+            margin: 0;                 /* remove any auto-margin that could add extra space */
+            height: auto;              /* allow height to adjust based on content */
+        }
+
+        /* The existing style uses max-width & auto margin – we override margin to 0 */
+        .joker-card {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        /* Additional safety: keep the 2-card row from spreading */
+        #joker-cards-container > * {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        /* Maintain card aesthetics but bring them closer */
+        .joker-card {
+            max-width: 225px;
+            width: 100%;
+        }
+/* ── JOKER CARDS ─────────────────────────────────────────────── */
+.joker-card {
+    perspective: 1500px;
+    width: 100%;
+    max-width: 225px;
+    height: 360px; */
+    cursor: pointer;
+    margin: 0 auto;
+}
+
+.joker-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.6);
+}
+
+.joker-card.flipped .joker-card-inner {
+    transform: rotateY(180deg);
+}
+
+.joker-card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 18px;
+    overflow: hidden;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border: 3px solid #1c1c1c;
+}
+
+/* Joker Cards Container - Reduced Gap */
+#joker-cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;           /* ← Change this value */
+    margin-top: 2rem;
+}
+
+/* You can make it even tighter */
+#joker-cards-container {
+    gap: 18px;           /* Try 18px, 20px, or 15px */
+}
+
+/* Joker FRONT */
+.joker-front {
+    background: linear-gradient(135deg, #1a1a1a, #2c2c2c);
+    color: #facc15;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px 15px;
+    font-family: 'Veteran Typewriter', monospace;
+}
+
+.joker-front .joker-symbol {
+    font-size: 4.5rem;
+    margin-bottom: 12px;
+    filter: drop-shadow(0 0 8px #facc15);
+}
+
+.joker-front h3 {
+    font-size: 1.35rem;
+    color: #facc15;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+}
+
+.joker-front p {
+    font-size: 0.95rem;
+    line-height: 1.35;
+    color: #ddd;
+    max-width: 85%;
+}
+
+/* Joker BACK */
+.joker-back {
+    transform: rotateY(180deg);
+    background: linear-gradient(135deg, #3c1f0f, #1a0800);
+    background-image: url('card-back.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #facc15;
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 20px;
+}
+
+.joker-back::after {
+    content: "🃏 JOKER 🃏";
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+}
 
         .glass-nav { background: rgba(10, 10, 10, 0.85); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(250,204,21,0.25); }
         .section-title { font-family: 'Pirata One', cursive; font-size: 2.5rem; background: linear-gradient(135deg, #f5e6b0, #e4c580); -webkit-background-clip: text; background-clip: text; color: transparent; letter-spacing: 3px; }
@@ -158,4 +436,35 @@
             .rank-tab .tab-rank-number { font-size: 1.7rem; }
             .rank-tab .tab-suit-symbol { font-size: 1.4rem; }
         }
+
+         /* .memo-stamp {
+    position: absolute;
+    top: 20px;
+    right: -15px;
+    transform: rotate(18deg);
+    z-index: 2;
+    padding: 6px;
+    background: transparent;
+    border: none;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+} */
+
+.declassified-stamp {
+    width: 140px;           /* You can adjust size here */
+    height: auto;
+    display: block;
+    /* filter: drop-shadow(3px 5px 8px rgba(0, 0, 0, 0.6)); */
+    opacity: 1;           
+}
+
+/* Optional hover effect */
+/* .memo-stamp:hover {
+    transform: rotate(18deg) scale(1.03);
+    transition: transform 0.3s ease;
+}  */
+
+/* Optional: Make it more red/intense like a real stamp */
+.memo-stamp img {
+    opacity: 0.95;
+} 
    
