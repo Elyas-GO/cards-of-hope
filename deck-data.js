@@ -6,6 +6,7 @@ window.deckData = {
             category: "ancestor",
             main: "descended from Abraham",
             ref: "Gen 12:3 / 22:18",
+            date: "1440–1405 BC",
             text: "I will bless those who bless you… all peoples blessed."
         }, {
             suit: "♣",
@@ -13,6 +14,7 @@ window.deckData = {
             category: "ancestor",
             main: "descended from Isaac",
             ref: "Gen 17:19 / 21:12",
+            date: "1440–1405 BC",
             text: "Sarah will bear you a son, Isaac… covenant."
         }, {
             suit: "♠",
@@ -20,6 +22,7 @@ window.deckData = {
             category: "ancestor",
             main: "descended from Jacob",
             ref: "Num 24:17",
+            date: "1440–1405 BC",
             text: "A star will come out of Jacob; a scepter out of Israel."
         }, {
             suit: "♥",
@@ -27,6 +30,7 @@ window.deckData = {
             category: "ancestor",
             main: "descended from Judah / King",
             ref: "Gen 49:10",
+            date: "1440–1405 BC",
             text: "The scepter not depart from Judah until Shiloh comes."
         }],
         3: [{
@@ -35,6 +39,7 @@ window.deckData = {
             category: "ancestor",
             main: "heir to David's throne",
             ref: "2Sam 7:12-13 / Isa 9:7",
+            date: "1010–970 BC",
             text: "I will establish his kingdom forever."
         }, {
             suit: "♣",
@@ -42,6 +47,7 @@ window.deckData = {
             category: "mother",
             main: "born of a virgin · Immanuel",
             ref: "Isa 7:14",
+            date: "740–680 BC",
             text: "The virgin will be with child… Immanuel."
         }, {
             suit: "♠",
@@ -49,6 +55,7 @@ window.deckData = {
             category: "birthplace",
             main: "born in Bethlehem",
             ref: "Mic 5:2",
+            date: "735–700 BC",
             text: "Bethlehem Ephrathah, out of you will come forth a ruler."
         }, {
             suit: "♥",
@@ -56,6 +63,7 @@ window.deckData = {
             category: "early years",
             main: "spent time in Egypt",
             ref: "Hos 11:1",
+            date: "755–710 BC",
             text: "Out of Egypt I called My son."
         }],
         4: [{
@@ -64,6 +72,7 @@ window.deckData = {
             category: "home town",
             main: "called a Nazarene",
             ref: "Isa 11:1",
+            date: "740–680 BC",
             text: "A shoot from the stump of Jesse."
         }, {
             suit: "♣",
@@ -71,6 +80,7 @@ window.deckData = {
             category: "spiritual vanguard",
             main: "messenger prepares the way",
             ref: "Isa 40:3-5",
+            date: "740–680 BC",
             text: "A voice calling: 'Prepare the way for the LORD.'"
         }, {
             suit: "♠",
@@ -78,6 +88,7 @@ window.deckData = {
             category: "to be heralded",
             main: "Elijah-style prophet",
             ref: "Mal 4:5-6",
+            date: "460–430 BC",
             text: "I will send you Elijah the prophet."
         }, {
             suit: "♥",
@@ -85,6 +96,7 @@ window.deckData = {
             category: "mission",
             main: "prophet like Moses",
             ref: "Deut 18:15",
+            date: "1406 BC",
             text: "The LORD will raise up a prophet like me."
         }],
         5: [{
@@ -93,6 +105,7 @@ window.deckData = {
             category: "mission",
             main: "light to Galilee",
             ref: "Isa 9:1-2",
+            date: "740–680 BC",
             text: "People walking in darkness have seen a great light."
         }, {
             suit: "♣",
@@ -100,6 +113,7 @@ window.deckData = {
             category: "mission",
             main: "heal brokenhearted",
             ref: "Isa 61:1-2",
+            date: "740–680 BC",
             text: "Bind up the brokenhearted, proclaim liberty."
         }, {
             suit: "♠",
@@ -107,6 +121,7 @@ window.deckData = {
             category: "mission",
             main: "priest Melchizedek",
             ref: "Ps 110:4",
+            date: "1000–960 BC",
             text: "You are a priest forever in the order of Melchizedek."
         }, {
             suit: "♥",
@@ -114,6 +129,7 @@ window.deckData = {
             category: "mission",
             main: "temple cleaner",
             ref: "Ps 69:9",
+            date: "1000–960 BC",
             text: "Zeal for Your house has consumed me."
         }],
         6: [{
@@ -122,6 +138,7 @@ window.deckData = {
             category: "communicator",
             main: "speak in parables",
             ref: "Ps 78:2-4",
+            date: "1000–960 BC",
             text: "I will open my mouth in parables."
         }, {
             suit: "♣",
@@ -129,6 +146,7 @@ window.deckData = {
             category: "role",
             main: "declared Son of God",
             ref: "Ps 2:7",
+            date: "1000–960 BC",
             text: "You are My Son; today I have become Your Father."
         }, {
             suit: "♠",
@@ -136,6 +154,7 @@ window.deckData = {
             category: "role",
             main: "humble king on donkey",
             ref: "Zech 9:9",
+            date: "480-470 BC",
             text: "Your King comes… riding on a donkey."
         }, {
             suit: "♥",
@@ -143,6 +162,7 @@ window.deckData = {
             category: "role",
             main: "eternal King",
             ref: "Dan 2:44",
+            date: "605-530 BC",
             text: "God of heaven will set up a kingdom never destroyed."
         }],
         7: [{
@@ -151,6 +171,7 @@ window.deckData = {
             category: "role",
             main: "King over nations",
             ref: "Num 24:17",
+            date: "1446–1406 BC",
             text: "A star out of Jacob, a scepter out of Israel."
         }, {
             suit: "♣",
@@ -158,6 +179,7 @@ window.deckData = {
             category: "who accepted him",
             main: "children praised him",
             ref: "Ps 8:2",
+            date: "1000–960 BC",
             text: "From mouths of children You ordered praise."
         }, {
             suit: "♠",
@@ -165,6 +187,7 @@ window.deckData = {
             category: "betrayal",
             main: "hated without cause",
             ref: "Ps 35:19 / 69:4",
+            date: "1015–1010 BC",
             text: "Those who hate me without cause outnumber my hairs."
         }, {
             suit: "♥",
@@ -172,6 +195,7 @@ window.deckData = {
             category: "rejection",
             main: "rejected by his own",
             ref: "Ps 69:8 / Isa 53:3",
+            date: "1010–970 BC",
             text: "Stranger to my brothers… despised and rejected."
         }],
         8: [{
@@ -180,6 +204,7 @@ window.deckData = {
             category: "betrayal",
             main: "betrayed by a friend",
             ref: "Ps 41:9 / Zech 11:12-13",
+            date: "1010–970 BC",
             text: "My close friend lifted heel against me. Thirty silver."
         }, {
             suit: "♣",
@@ -187,6 +212,7 @@ window.deckData = {
             category: "betrayal",
             main: "30 silver → potter's field",
             ref: "Zech 11:12-13",
+            date: "480-470 BC",
             text: "Thirty pieces of silver… throw to potter."
         }, {
             suit: "♠",
@@ -194,6 +220,7 @@ window.deckData = {
             category: "betrayal",
             main: "falsely accused",
             ref: "Ps 35:11",
+            date: "1015–1010 BC",
             text: "Malicious witnesses rise up."
         }, {
             suit: "♥",
@@ -201,6 +228,7 @@ window.deckData = {
             category: "trial",
             main: "silent before accusers",
             ref: "Isa 53:7",
+            date: "710–680 BC",
             text: "He did not open His mouth."
         }],
         9: [{
@@ -209,6 +237,7 @@ window.deckData = {
             category: "crucifixion",
             main: "spat upon, struck, beard torn",
             ref: "Isa 50:6",
+            date: "545–539 BC",
             text: "I offered My back to those who struck Me."
         }, {
             suit: "♣",
@@ -216,6 +245,7 @@ window.deckData = {
             category: "crucifixion",
             main: "mocked and ridiculed",
             ref: "Ps 22:7-8",
+            date: "1010–970 BC",
             text: "All who see me mock me; they sneer."
         }, {
             suit: "♠",
@@ -223,6 +253,7 @@ window.deckData = {
             category: "crucifixion",
             main: "hands & feet pierced",
             ref: "Ps 22:16 / Zech 12:10",
+            date: "1010–970 BC",
             text: "They have pierced my hands and my feet."
         }, {
             suit: "♥",
@@ -230,6 +261,7 @@ window.deckData = {
             category: "crucifixion",
             main: "gamble for clothes",
             ref: "Ps 22:18",
+            date: "1010–970 BC",
             text: "They divide my garments and cast lots."
         }],
         10: [{
@@ -238,6 +270,7 @@ window.deckData = {
             category: "crucifixion",
             main: "vinegar to drink",
             ref: "Ps 69:21",
+            date: "1010–970 BC",
             text: "They gave me vinegar for my thirst."
         }, {
             suit: "♣",
@@ -245,6 +278,7 @@ window.deckData = {
             category: "crucifixion",
             main: "forsaken by God",
             ref: "Ps 22:1",
+            date: "1010–970 BC",
             text: "My God, my God, why have You forsaken me?"
         }, {
             suit: "♠",
@@ -252,6 +286,7 @@ window.deckData = {
             category: "crucifixion",
             main: "no bone broken",
             ref: "Ex 12:46 / Ps 34:20",
+            date: "1440–1405 BC",
             text: "Not one of His bones will be broken."
         }, {
             suit: "♥",
@@ -259,6 +294,7 @@ window.deckData = {
             category: "forgiveness",
             main: "prayed for enemies",
             ref: "Ps 109:4",
+            date: "1015–1010 BC",
             text: "I am a man of prayer."
         }],
         J: [{
@@ -267,6 +303,7 @@ window.deckData = {
             category: "crucifixion",
             main: "pierced for transgressions",
             ref: "Isa 53:5",
+            date: "710–680 BC",
             text: "He was pierced for our transgressions."
         }, {
             suit: "♣",
@@ -274,6 +311,7 @@ window.deckData = {
             category: "crucifixion",
             main: "pierced side",
             ref: "Zech 12:10 / Ps 22:16",
+            date: "480–470 BC",
             text: "They will look on Me, the One they have pierced."
         }, {
             suit: "♠",
@@ -281,6 +319,7 @@ window.deckData = {
             category: "burial",
             main: "buried with the rich",
             ref: "Isa 53:9",
+            date: "710–680 BC",
             text: "With a rich man in His death."
         }, {
             suit: "♥",
@@ -288,6 +327,7 @@ window.deckData = {
             category: "resurrection",
             main: "rise from the dead",
             ref: "John 2:19",
+            date: "AD 85–95",
             text: "Destroy this temple, in three days I will raise it."
         }],
         Q: [{
@@ -296,6 +336,7 @@ window.deckData = {
             category: "resurrection",
             main: "third day He will raise us",
             ref: "Hos 6:2",
+            date: "750–725 BC",
             text: "On the third day He will raise us up."
         }, {
             suit: "♣",
@@ -303,6 +344,7 @@ window.deckData = {
             category: "resurrection",
             main: "not see decay",
             ref: "Ps 16:10 / Isa 53:10-11",
+            date: "1000–970 BC",
             text: "You will not abandon my soul to Sheol."
         }, {
             suit: "♠",
@@ -310,6 +352,7 @@ window.deckData = {
             category: "resurrection",
             main: "seated at God's right hand",
             ref: "Ps 68:18 / 110:1",
+            date: "1000–970 BC",
             text: "Sit at My right hand."
         }, {
             suit: "♥",
@@ -317,6 +360,7 @@ window.deckData = {
             category: "mission success",
             main: "bore sin of many",
             ref: "Isa 53:12",
+            date: "710–680 BC",
             text: "He bore the sin of many."
         }],
         K: [{
@@ -368,6 +412,7 @@ window.deckData = {
             category: "rock evidence",
             main: "Synagogue at Capernaum",
             ref: "1st cent. basalt",
+            date: "AD 1-100",
             text: "First-century synagogue where Jesus taught."
         }, {
             suit: "♥",
@@ -375,6 +420,7 @@ window.deckData = {
             category: "rock evidence",
             main: "Pool of Siloam",
             ref: "Hezekiah / Herodian",
+            date: "715–687 BC",
             text: "Discovered 2004; steps where Jesus healed blind man."
         }]
     },
