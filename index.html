@@ -10,12 +10,13 @@
     <script src="https://cdn.jsdelivr.net/npm/qrcode-svg@1.1.0/lib/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:opsz,wght@14..32,400;14..32,700&family=Courier+Prime:wght@400;700&family=Pirata+One&display=swap" rel="stylesheet">
     <style>
-        /* ---------- VETERAN TYPEWRITER & CARD STYLES (merged & refined) ---------- */
+        /* ---------- VETERAN TYPEWRITER & CARD STYLES ---------- */
         @font-face {
             font-family: 'Veteran Typewriter';
             src: url('veteran-typewriter.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
+            font-display: swap;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -40,7 +41,6 @@
         }
         .rank-tab::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 25% 25%, rgba(0,0,0,0.03) 1px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 12px 12px; pointer-events: none; }
 
-        /* FIX (b): Veteran font for rank tab numbers */
         .rank-tab .tab-rank-number {
             font-family: 'Veteran Typewriter', 'Special Elite', 'Courier Prime', monospace !important;
             font-size: clamp(1.35rem, 3.2vw, 2.4rem);
@@ -67,7 +67,6 @@
         .card.flipped .card-inner { transform: rotateY(180deg); }
         .card-face { position: absolute; inset: 0; border-radius: 18px; overflow: hidden; backface-visibility: hidden; }
 
-        /* FIX (c): Card front — ensure text doesn't overflow, add proper overflow handling */
         .card-front {
             background: #ffffff;
             color: #111;
@@ -84,6 +83,7 @@
         .card-front .card-bottom-row {
             display: flex;
             justify-content: space-between;
+            align-items: flex-start;
             flex-shrink: 0;
         }
         .card-front .card-bottom-row {
@@ -112,7 +112,6 @@
             line-height: 1.15;
             margin-bottom: 4px;
             overflow: hidden;
-            /* allow up to 3 lines before truncating */
             display: -webkit-box;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
@@ -131,13 +130,21 @@
             -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
         }
-        .rank-suit {
+
+        /* CARD RANK NUMBER (corner value) — Veteran Typewriter, same look as the rank tabs.
+           Dedicated class + high specificity so nothing else can override the font. */
+        .card-front .card-top-row .card-rank,
+        .card-front .card-bottom-row .card-rank {
             font-family: 'Veteran Typewriter', 'Special Elite', 'Courier Prime', monospace !important;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #b8860b;
+            font-size: 2.1rem;
+            font-weight: 900;
+            line-height: 1;
+            color: #1c1c1c;
+            text-shadow: 1px 1px 0 #fff;
+            letter-spacing: -1px;
         }
-        /* Suit symbols on card faces: large (matches the rank-tab symbols), font-independent, red/black set explicitly */
+
+        /* Suit symbols on card faces: large, font-independent, red/black set explicitly */
         .card-front .card-suit {
             font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols 2', 'DejaVu Sans', Arial, sans-serif !important;
             font-size: 2.6rem;
@@ -146,7 +153,6 @@
         }
         .card-front .card-suit.suit-red   { color: #c8102e !important; }
         .card-front .card-suit.suit-black { color: #111111 !important; }
-        /* Prophecy date, sits under the scripture statement */
         .card-front .card-date {
             font-size: 0.78rem;
             letter-spacing: 1px;
@@ -155,7 +161,6 @@
             flex-shrink: 0;
         }
 
-        /* FIX (c): Remove the ::after banner on card-back entirely */
         .card-back {
             transform: rotateY(180deg);
             background: linear-gradient(135deg, #1a0800, #3c1f0f);
@@ -169,7 +174,6 @@
             color: #facc15;
             text-align: center;
         }
-        /* NO ::after on .card-back — removed per request */
 
         .joker-card { perspective: 1500px; width: 100%; max-width: 280px; height: 400px; cursor: pointer; margin: 0; }
         .joker-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); border-radius: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.6); }
@@ -207,7 +211,6 @@
         .btn-mobile:hover { transform: scale(0.97); }
         #joker-cards-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin-top: 2rem; }
         .joker-qr { margin-top: 15px; display: flex; flex-direction: column; align-items: center; }
-        /* FIX (d): SVG QR wrapper — vector not raster */
         .qr-code-wrapper { background: white; padding: 6px; border-radius: 12px; display: inline-block; line-height: 0; }
         .qr-code-wrapper svg { display: block; width: 90px; height: 90px; }
         .memo-button { background: #6b2e2e; border: none; color: #facc15; padding: 8px 16px; border-radius: 40px; font-family: monospace; font-size: 0.75rem; cursor: pointer; transition: 0.2s; margin-top: 12px; }
@@ -255,7 +258,6 @@
 <section id="prophecies" class="py-20 px-4 section-dark">
     <div class="container mx-auto text-center">
         <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">☠️ THE DECK ☠️</span>
-        <!-- FIX (a): Updated subtitle — 48 PROPHECIES + 4 ROCK EVIDENCE + 2 JOKERS -->
         <h2 class="veteran-uppercase text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent mb-2 tracking-wider">48 PROPHECIES FULFILLED</h2>
         <p class="veteran-uppercase text-lg md:text-xl text-amber-400/80 mb-6 tracking-widest">~ 4 ROCK EVIDENCE ~ 2 JOKERS</p>
         <div class="tabs-container mb-6 overflow-x-auto">
@@ -338,6 +340,22 @@
 
         console.log(`Loaded ${allPropheciesData.length} prophecies from deck-data.js`);
 
+        // Make sure the Veteran font is requested up-front (used by card corner numbers)
+        if (document.fonts && document.fonts.load) {
+            document.fonts.load("900 2.1rem 'Veteran Typewriter'").catch(() => {});
+            document.fonts.load("1rem 'Veteran Typewriter'").catch(() => {});
+        }
+
+        // ---------- HELPER ----------
+        function escapeHtml(str) {
+            if (str === null || str === undefined || str === "") return '';
+            return String(str).replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                return '&gt;';
+            });
+        }
+
         // ---------- CARD RENDERING ----------
         function renderCard(cardData) {
             const div = document.createElement("div");
@@ -349,7 +367,7 @@
               <div class="card-inner">
                 <div class="card-face card-front">
                   <div class="card-top-row">
-                    <span class="rank-suit">${cardData.val}</span>
+                    <span class="card-rank">${cardData.val}</span>
                     <span class="card-suit ${suitClass}">${cardData.suit}&#xFE0E;</span>
                   </div>
                   <div class="card-middle">
@@ -360,7 +378,7 @@
                     ${cardData.date ? `<div class="card-date">${cardData.date}</div>` : ''}
                   </div>
                   <div class="card-bottom-row">
-                    <span class="rank-suit">${cardData.val}</span>
+                    <span class="card-rank">${cardData.val}</span>
                     <span class="card-suit ${suitClass}">${cardData.suit}&#xFE0E;</span>
                   </div>
                 </div>
@@ -382,7 +400,7 @@
             });
         }
 
-        // Build rank tabs with Veteran font applied via CSS class
+        // Build rank tabs
         document.querySelectorAll(".rank-tab").forEach(tab => {
             tab.addEventListener("click", () => {
                 document.querySelectorAll(".rank-tab").forEach(t => t.classList.remove("active"));
@@ -421,11 +439,9 @@
                         document.getElementById("full-memo").scrollIntoView({ behavior: "smooth" });
                     });
 
-                    // FIX (d): Generate VECTOR SVG QR code
                     const qrContainer = jDiv.querySelector("#liveQrJoker2");
                     if (qrContainer) {
                         try {
-                            // qrcode-svg library: generate SVG string
                             const qr = new QRCode({
                                 content: JOURNEY_QR_URL,
                                 width: 90,
@@ -433,7 +449,7 @@
                                 color: "#000000",
                                 background: "#ffffff",
                                 ecl: "M",
-                                join: true,        // joins adjacent modules → clean paths
+                                join: true,
                                 swap: false,
                                 pretty: false,
                                 xmlDeclaration: false,
@@ -457,7 +473,6 @@
                             qrContainer.appendChild(label);
                         } catch(e) {
                             console.warn("SVG QR failed:", e);
-                            // Fallback text
                             qrContainer.innerHTML = `<div class="text-amber-400 text-xs veteran mt-2">${JOURNEY_QR_URL}</div>`;
                         }
                     }
@@ -474,78 +489,49 @@
         }
 
         // ---------- PROPHECIES SEARCH ----------
-        const listArea = document.getElementById("all-prophecies-list");
-//         function renderProphecies(term = "") {
-//             const lowerTerm = term.toLowerCase();
-//             const filtered = allPropheciesData.filter(p =>
-//                 (p.prophecy).toLowerCase().includes(term) ||
-// (p.description).toLowerCase().includes(term) ||
-// (p.fulfillment1Text || "").toLowerCase().includes(term) ||
-// (p.fulfillment2Text || "").toLowerCase().includes(term)
-//             );
-//             listArea.innerHTML = filtered.map(p => `
-//                 <div class="prophecy-list-item veteran">
-//                     <div class="font-bold text-amber-300">${p.prophecy}</div>
-//                     <div class="text-sm text-gray-300 mt-1">${p.description}</div>
-//                     <div class="text-xs text-amber-400/80 mt-2">✓ ${p.fulfillment1}: ${(p.fulfillment1Text || "").substring(0, 100)}</div>
-//                 </div>
-//             `).join("");
-//             if (!filtered.length) listArea.innerHTML = "<p class='text-gray-400 text-center'>No match</p>";
-//         }
-function renderProphecies(term = "") {
-    const lowerTerm = term.toLowerCase().trim();
-    const listArea = document.getElementById("all-prophecies-list");
-    
-    if (!allPropheciesData || !allPropheciesData.length) {
-        if (listArea) listArea.innerHTML = '<p class="text-gray-400 text-center">⚠️ Loading prophecies...</p>';
-        return;
-    }
+        function renderProphecies(term = "") {
+            const lowerTerm = term.toLowerCase().trim();
+            const listArea = document.getElementById("all-prophecies-list");
 
-    let filtered = allPropheciesData;
-    if (lowerTerm !== "") {
-        filtered = allPropheciesData.filter(p => {
-            // SAFELY convert each field to string (handles null, undefined, arrays, objects)
-            const prophecy = String(p.prophecy || "");
-            const description = String(p.description || "");
-            const fulfill1Text = String(p.fulfillment1Text || "");
-            const fulfill2Text = String(p.fulfillment2Text || "");
-            
-            return prophecy.toLowerCase().includes(lowerTerm) ||
-                   description.toLowerCase().includes(lowerTerm) ||
-                   fulfill1Text.toLowerCase().includes(lowerTerm) ||
-                   fulfill2Text.toLowerCase().includes(lowerTerm);
-        });
-    }
+            if (!allPropheciesData || !allPropheciesData.length) {
+                if (listArea) listArea.innerHTML = '<p class="text-gray-400 text-center">⚠️ Loading prophecies...</p>';
+                return;
+            }
 
-    if (filtered.length === 0) {
-        listArea.innerHTML = `<p class="text-gray-400 text-center col-span-full">🔍 No prophecies match "${escapeHtml(term)}"</p>`;
-        return;
-    }
+            let filtered = allPropheciesData;
+            if (lowerTerm !== "") {
+                filtered = allPropheciesData.filter(p => {
+                    const prophecy = String(p.prophecy || "");
+                    const description = String(p.description || "");
+                    const fulfill1Text = String(p.fulfillment1Text || "");
+                    const fulfill2Text = String(p.fulfillment2Text || "");
 
-    listArea.innerHTML = filtered.map(p => `
-        <div class="prophecy-list-item veteran">
-            <div class="font-bold text-amber-300">${escapeHtml(p.prophecy)}</div>
-            <div class="text-sm text-gray-300 mt-1">${escapeHtml(p.description)}</div>
-            <div class="text-xs text-amber-400/80 mt-2">
-                ✓ ${escapeHtml(p.fulfillment1)}: ${escapeHtml(String(p.fulfillment1Text || "").substring(0, 120))}
-                ${p.fulfillment2 ? `<br>+ ${escapeHtml(p.fulfillment2)}: ${escapeHtml(String(p.fulfillment2Text || "").substring(0, 120))}` : ''}
-            </div>
-        </div>
-    `).join("");
-}
+                    return prophecy.toLowerCase().includes(lowerTerm) ||
+                           description.toLowerCase().includes(lowerTerm) ||
+                           fulfill1Text.toLowerCase().includes(lowerTerm) ||
+                           fulfill2Text.toLowerCase().includes(lowerTerm);
+                });
+            }
 
-// Helper (keep your existing escapeHtml, or add it if missing)
-function escapeHtml(str) {
-    if (!str) return '';
-    return String(str).replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
-}
+            if (filtered.length === 0) {
+                listArea.innerHTML = `<p class="text-gray-400 text-center col-span-full">🔍 No prophecies match "${escapeHtml(term)}"</p>`;
+                return;
+            }
+
+            listArea.innerHTML = filtered.map(p => `
+                <div class="prophecy-list-item veteran">
+                    <div class="font-bold text-amber-300">${escapeHtml(p.prophecy)}</div>
+                    <div class="text-sm text-gray-300 mt-1">${escapeHtml(p.description)}</div>
+                    <div class="text-xs text-amber-400/80 mt-2">
+                        ✓ ${escapeHtml(p.fulfillment1)}: ${escapeHtml(String(p.fulfillment1Text || "").substring(0, 120))}
+                        ${p.fulfillment2 ? `<br>+ ${escapeHtml(p.fulfillment2)}: ${escapeHtml(String(p.fulfillment2Text || "").substring(0, 120))}` : ''}
+                    </div>
+                </div>
+            `).join("");
+        }
+
         renderProphecies();
-        document.getElementById("prophecy-search")?.addEventListener("input", e => renderProphecies(e.target.value.toLowerCase()));
+        document.getElementById("prophecy-search")?.addEventListener("input", e => renderProphecies(e.target.value));
 
         // ---------- PDF EXPORT ----------
         window.exportPropheciesToPDF = async function() {
@@ -599,8 +585,6 @@ function escapeHtml(str) {
                 prophecies = window.deckData.allPropheciesData;
             } else if (window.allPropheciesData && Array.isArray(window.allPropheciesData)) {
                 prophecies = window.allPropheciesData;
-            } else if (typeof allPropheciesData !== 'undefined' && Array.isArray(allPropheciesData)) {
-                prophecies = allPropheciesData;
             }
             if (!prophecies || prophecies.length === 0) { alert("No prophecy data available. Please refresh the page."); return; }
             const { jsPDF } = window.jspdf;
@@ -643,20 +627,11 @@ function escapeHtml(str) {
             const pdfBlob = doc.output("blob");
             const blobUrl = URL.createObjectURL(pdfBlob);
             const printWindow = window.open(blobUrl, "_blank");
+            if (!printWindow) { alert("Please allow pop-ups to print the shorts PDF."); return; }
             printWindow.onload = function () {
                 setTimeout(() => { printWindow.print(); setTimeout(() => URL.revokeObjectURL(blobUrl), 1000); }, 500);
             };
         };
-
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
     });
 </script>
 </body>
