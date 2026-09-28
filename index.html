@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -7,8 +6,8 @@
     <title>54 Cards of Hope · Prophecy Deck · PDF Export</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <!-- QR Code Library for LIVE QR -->
-    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <!-- SVG-based QR Code library (vector output, not raster) -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-svg@1.1.0/lib/qrcode.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Inter:opsz,wght@14..32,400;14..32,700&family=Courier+Prime:wght@400;700&family=Pirata+One&display=swap" rel="stylesheet">
     <style>
         /* ---------- VETERAN TYPEWRITER & CARD STYLES (merged & refined) ---------- */
@@ -40,7 +39,18 @@
             overflow: hidden; padding: 6px 5px;
         }
         .rank-tab::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 25% 25%, rgba(0,0,0,0.03) 1px, transparent 1px), radial-gradient(circle at 75% 75%, rgba(0,0,0,0.03) 1px, transparent 1px); background-size: 12px 12px; pointer-events: none; }
-        .rank-tab .tab-rank-number { font-size: clamp(1.35rem, 3.2vw, 2.4rem); font-weight: 900; line-height: 1; color: #1c1c1c; align-self: flex-start; margin-left: 4px; text-shadow: 1px 1px 0 #fff; }
+
+        /* FIX (b): Veteran font for rank tab numbers */
+        .rank-tab .tab-rank-number {
+            font-family: 'Veteran Typewriter', 'Special Elite', 'Courier Prime', monospace !important;
+            font-size: clamp(1.35rem, 3.2vw, 2.4rem);
+            font-weight: 900;
+            line-height: 1;
+            color: #1c1c1c;
+            align-self: flex-start;
+            margin-left: 4px;
+            text-shadow: 1px 1px 0 #fff;
+        }
         .rank-tab .tab-suit-symbol { font-size: clamp(1.25rem, 2.8vw, 2.1rem); align-self: flex-end; margin-right: 4px; margin-bottom: 3px; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
         .rank-tab .tab-suit-symbol.red-suit { color: #c8102e; }
         .rank-tab .tab-suit-symbol.black-suit { color: #111111; }
@@ -49,81 +59,118 @@
         .prophecy-scroll-area::-webkit-scrollbar { width: 8px; }
         .prophecy-scroll-area::-webkit-scrollbar-track { background: #2c241a; border-radius: 12px; }
         .prophecy-scroll-area::-webkit-scrollbar-thumb { background: #facc15; border-radius: 12px; }
-        .card { perspective: 1200px; width: 100%; max-width: 220px; height: 310px; cursor: pointer; transition: transform 0.15s ease; }
+
+        /* CARD STYLES */
+        .card { perspective: 1200px; width: 100%; max-width: 220px; height: 335px; cursor: pointer; transition: transform 0.15s ease; }
         .card:hover { transform: translateY(-8px); }
         .card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); border-radius: 18px; }
         .card.flipped .card-inner { transform: rotateY(180deg); }
         .card-face { position: absolute; inset: 0; border-radius: 18px; overflow: hidden; backface-visibility: hidden; }
-        /* FRONT FACE - MAIN FIX HERE */
-.card-front {
-    background: #ffffff;
-    color: #111;
-    border: 3px solid #1c1c1c;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.55);
-    padding: 14px 12px;           /* Increased padding */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-}
-       .card-front > div:nth-child(2) {     /* The middle flex div */
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    padding: 8px 0;
-    min-height: 0;                   /* Important for flex */
-}
 
-/* Text inside the card */
-.card-front .gold {
-    font-size: 2.8rem;
-    letter-spacing: 0.5px;
-    margin-bottom: 6px;
-}
+        /* FIX (c): Card front — ensure text doesn't overflow, add proper overflow handling */
+        .card-front {
+            background: #ffffff;
+            color: #111;
+            border: 3px solid #1c1c1c;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.55);
+            padding: 10px 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            overflow: hidden;
+        }
+        .card-front .card-top-row,
+        .card-front .card-bottom-row {
+            display: flex;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        .card-front .card-bottom-row {
+            transform: rotate(180deg);
+        }
+        .card-front .card-middle {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            padding: 4px 0;
+            min-height: 0;
+            overflow: hidden;
+        }
+        .card-front .card-category {
+            font-size: 0.62rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+            color: #b8860b;
+        }
+        .card-front .card-main {
+            font-size: 0.88rem;
+            font-weight: bold;
+            line-height: 1.15;
+            margin-bottom: 4px;
+            overflow: hidden;
+            /* allow up to 3 lines before truncating */
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+        }
+        .card-front .card-ref {
+            font-size: 0.68rem;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        .card-front .card-text {
+            font-size: 0.68rem;
+            line-height: 1.2;
+            color: #444;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+        }
+        .rank-suit {
+            font-family: 'Veteran Typewriter', 'Special Elite', 'Courier Prime', monospace !important;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #b8860b;
+        }
+        /* Suit symbols on card faces: large (matches the rank-tab symbols), font-independent, red/black set explicitly */
+        .card-front .card-suit {
+            font-family: 'Segoe UI Symbol', 'Apple Symbols', 'Noto Sans Symbols 2', 'DejaVu Sans', Arial, sans-serif !important;
+            font-size: 2.6rem;
+            line-height: 1;
+            font-weight: 400;
+        }
+        .card-front .card-suit.suit-red   { color: #c8102e !important; }
+        .card-front .card-suit.suit-black { color: #111111 !important; }
+        /* Prophecy date, sits under the scripture statement */
+        .card-front .card-date {
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            color: #b8860b;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
 
-.card-front div[style*="font-weight:bold"] {
-    font-size: 0.95rem;
-    line-height: 1.15;
-    margin-bottom: 8px;
-}
+        /* FIX (c): Remove the ::after banner on card-back entirely */
+        .card-back {
+            transform: rotateY(180deg);
+            background: linear-gradient(135deg, #1a0800, #3c1f0f);
+            background-image: url('card-back.png');
+            background-size: cover;
+            background-position: center top;
+            border: 3px solid #1c1c1c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #facc15;
+            text-align: center;
+        }
+        /* NO ::after on .card-back — removed per request */
 
-.card-front .text-xs {
-    font-size: 0.73rem;
-    line-height: 1.25;
-    color: #444;
-}
-
-/* Bottom rank & suit (upside down) */
-.card-front > div:last-child {
-    transform: rotate(180deg);
-    margin-top: auto;
-}
-
-/* Make sure text doesn't get cut off */
-.card-front * {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-}
-.card-back { transform: rotateY(180deg); background: linear-gradient(135deg, #1a0800, #3c1f0f); background-image: url('card-back.jpg'); background-size: cover; background-position: center; border: 3px solid #1c1c1c; display: flex; align-items: center; justify-content: center; color: #facc15; text-align: center; }
-        /* .card-back::after { content: "✝ 54 CARDS OF HOPE ✝"; position: absolute; bottom: 20px; left: 0; right: 0; font-size: 0.75rem; letter-spacing: 3px; opacity: 0.9; } */
-        .card-back::after {
-    content: "✝ 54 CARDS OF HOPE ✝";
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    background: rgba(0, 0, 0, 0.5);   /* dark semi-transparent background */
-    color: #facc15;                    /* keep yellow text */
-    font-size: 0.75rem;
-    letter-spacing: 3px;
-    padding: 6px 10px;
-    border-radius: 0;               /* pill shape, or use 0 for rectangle */
-    /* text-align: center; */
-    font-family: 'Veteran Typewriter', monospace;
-    backdrop-filter: blur(2px);        /* optional: soft blur behind text */
-}
         .joker-card { perspective: 1500px; width: 100%; max-width: 280px; height: 400px; cursor: pointer; margin: 0; }
         .joker-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); border-radius: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.6); }
         .joker-card.flipped .joker-card-inner { transform: rotateY(180deg); }
@@ -132,8 +179,7 @@
         .joker-front .joker-symbol { font-size: 4rem; margin-bottom: 6px; filter: drop-shadow(0 0 6px #facc15); }
         .joker-front h3 { font-size: 1.3rem; color: #facc15; margin-bottom: 8px; letter-spacing: 2px; }
         .joker-front p { font-size: 0.85rem; line-height: 1.35; color: #e2dccd; max-width: 95%; margin-bottom: 8px; }
-        .joker-back { transform: rotateY(180deg); background: linear-gradient(135deg, #3c1f0f, #1a0800); background-image: url('card-back.jpg'); background-size: cover; background-position: center; display: flex; align-items: center; justify-content: center; color: #facc15; font-size: 1.1rem; }
-        /* .joker-back::after { content: "🃏 JOKER 🃏"; font-size: 1.4rem; letter-spacing: 4px; text-shadow: 0 2px 6px black; } */
+        .joker-back { transform: rotateY(180deg); background: linear-gradient(135deg, #3c1f0f, #1a0800); background-image: url('card-back.png'); background-size: cover; background-position: center top; display: flex; align-items: center; justify-content: center; color: #facc15; font-size: 1.1rem; }
         .joker-back::after {
             content: "🃏 JOKER 🃏";
             position: absolute;
@@ -161,7 +207,9 @@
         .btn-mobile:hover { transform: scale(0.97); }
         #joker-cards-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin-top: 2rem; }
         .joker-qr { margin-top: 15px; display: flex; flex-direction: column; align-items: center; }
-        .qr-code-wrapper { background: white; padding: 6px; border-radius: 12px; display: inline-block; }
+        /* FIX (d): SVG QR wrapper — vector not raster */
+        .qr-code-wrapper { background: white; padding: 6px; border-radius: 12px; display: inline-block; line-height: 0; }
+        .qr-code-wrapper svg { display: block; width: 90px; height: 90px; }
         .memo-button { background: #6b2e2e; border: none; color: #facc15; padding: 8px 16px; border-radius: 40px; font-family: monospace; font-size: 0.75rem; cursor: pointer; transition: 0.2s; margin-top: 12px; }
         .memo-button:hover { background: #8b3a3a; }
         @media (max-width: 700px) {
@@ -207,8 +255,9 @@
 <section id="prophecies" class="py-20 px-4 section-dark">
     <div class="container mx-auto text-center">
         <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">☠️ THE DECK ☠️</span>
-        <!-- REFINEMENT #6: Capitalized Veteran type, same prominent size -->
-        <h2 class="veteran-uppercase text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent mb-6 tracking-wider">52 PROPHECIES · FULFILLED</h2>
+        <!-- FIX (a): Updated subtitle — 48 PROPHECIES + 4 ROCK EVIDENCE + 2 JOKERS -->
+        <h2 class="veteran-uppercase text-3xl md:text-4xl font-bold bg-gradient-to-r from-amber-300 to-amber-500 bg-clip-text text-transparent mb-2 tracking-wider">48 PROPHECIES FULFILLED</h2>
+        <p class="veteran-uppercase text-lg md:text-xl text-amber-400/80 mb-6 tracking-widest">~ 4 ROCK EVIDENCE ~ 2 JOKERS</p>
         <div class="tabs-container mb-6 overflow-x-auto">
             <div class="flex flex-wrap justify-center gap-2 pb-2" id="rankTabsWrapper">
                 <div class="rank-tab" data-rank="2">2</div><div class="rank-tab" data-rank="3">3</div><div class="rank-tab" data-rank="4">4</div><div class="rank-tab" data-rank="5">5</div><div class="rank-tab" data-rank="6">6</div><div class="rank-tab" data-rank="7">7</div><div class="rank-tab" data-rank="8">8</div><div class="rank-tab" data-rank="9">9</div><div class="rank-tab" data-rank="10">10</div><div class="rank-tab" data-rank="J">J</div><div class="rank-tab" data-rank="Q">Q</div><div class="rank-tab" data-rank="K">K</div><div class="rank-tab" data-rank="A">A</div>
@@ -218,7 +267,7 @@
     </div>
 </section>
 
-<!-- JOKERS (TWO CARDS) with LIVE QR on Joker2 -->
+<!-- JOKERS (TWO CARDS) with LIVE QR (SVG vector) on Joker2 -->
 <section id="jokers" class="py-20 px-4 bg-[#0d0b08]">
     <div class="container mx-auto text-center">
         <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">🃏 THE JOKERS 🃏</span>
@@ -227,7 +276,7 @@
     </div>
 </section>
 
-<!-- TOP SECRET MEMO (with link to landing journey) -->
+<!-- TOP SECRET MEMO -->
 <section id="full-memo" class="py-16 px-4 bg-[#121212]">
     <div class="container mx-auto text-center">
         <span class="text-red-400 text-sm font-mono tracking-widest">🔓 DECLASSIFIED DOCUMENT 🔓</span>
@@ -244,15 +293,13 @@
                 <p><span class="memo-section-label">(TS//ORCON)</span> <strong>EVALUATION:</strong> Cards contain high-fidelity intelligence regarding events from AD 0001.</p>
                 <p><span class="memo-section-label">(S//NF)</span> <strong>DISPOSITION:</strong> Authenticity confirmed. Project "CARDS OF HOPE" activated.</p>
                 <p style="text-align:center; font-weight:bold; margin-top:20px;">BY DIRECTION OF THE CHIEF, DSI</p>
-                <!-- REFINEMENT #8: Link leads to Netify landing journey (same as QR destination) -->
-                <!-- <p class="text-center text-sm mt-6"><a href="https://qrto.to/0b879a6d" target="_blank" id="memoJourneyLink" class="text-amber-800 underline font-bold bg-amber-100 px-3 py-1 rounded-full">➡️ PROCEED TO LANDING PAGE: JOURNEY OF DISCOVERY ⬅️</a></p> -->
             </div>
             <div class="memo-footer"><div class="memo-field"><span class="memo-field-label">DECLASSIFY ON:</span><span class="memo-field-value">20260102</span></div></div>
         </div>
     </div>
 </section>
 
-<!-- ALL OTHER PROPHECIES (350+ total, corrected total entries) -->
+<!-- ALL OTHER PROPHECIES -->
 <section id="other-prophecies" class="py-20 px-4 section-dark">
     <div class="container mx-auto max-w-6xl text-center">
         <span class="text-amber-400 text-sm font-mono tracking-widest pirate-font">📜 THE LOT 📜</span>
@@ -278,15 +325,16 @@
         <p class="text-gray-400 font-mono text-sm mt-2">© 2026 · cardsofhope.live</p>
     </div>
 </footer>
+
 <script src="deck-data.js"></script>
 <script>
     // ============================================================
     // MAIN APP LOGIC – uses data from deck-data.js (external file)
     // ============================================================
     document.addEventListener("DOMContentLoaded", function() {
-        // Data is already loaded from deck-data.js into window.deckData
         const { deckByRank, jokerCards, allPropheciesData } = window.deckData;
         const JOURNEY_QR_URL = "https://qrto.to/0b879a6d";
+        const DECLASSIFIED_LETTER_URL = "declassified-letter.pdf"; // <-- set to the real PDF filename
 
         console.log(`Loaded ${allPropheciesData.length} prophecies from deck-data.js`);
 
@@ -295,7 +343,30 @@
             const div = document.createElement("div");
             div.className = "card";
             const isRed = cardData.suit === "♥" || cardData.suit === "♦";
-            div.innerHTML = `<div class="card-inner"><div class="card-face card-front"><div style="display:flex;justify-content:space-between;"><span class="gold rank-suit">${cardData.val}</span><span class="${isRed ? 'suit-red' : 'suit-black'} rank-suit">${cardData.suit}</span></div><div style="flex:1;display:flex;flex-direction:column;justify-content:center;text-align:center;padding:10px 0;"><div class="gold text-xs uppercase tracking-widest mb-3">${cardData.category}</div><div style="font-weight:bold; font-size:0.96rem;">${cardData.main}</div><div class="text-xs text-gray-600 mt-4">${cardData.ref}</div><div style="margin-top:12px; font-size:0.74rem;">${cardData.text}</div></div><div style="display:flex;justify-content:space-between;transform:rotate(180deg);"><span class="gold rank-suit">${cardData.val}</span><span class="${isRed ? 'suit-red' : 'suit-black'} rank-suit">${cardData.suit}</span></div></div><div class="card-face card-back"></div></div>`;
+            const suitClass = isRed ? 'suit-red' : 'suit-black';
+
+            div.innerHTML = `
+              <div class="card-inner">
+                <div class="card-face card-front">
+                  <div class="card-top-row">
+                    <span class="rank-suit">${cardData.val}</span>
+                    <span class="card-suit ${suitClass}">${cardData.suit}&#xFE0E;</span>
+                  </div>
+                  <div class="card-middle">
+                    <div class="card-category">${cardData.category || ''}</div>
+                    <div class="card-main">${cardData.main || ''}</div>
+                    <div class="card-ref">${cardData.ref || ''}</div>
+                    <div class="card-text">${cardData.text || ''}</div>
+                    ${cardData.date ? `<div class="card-date">${cardData.date}</div>` : ''}
+                  </div>
+                  <div class="card-bottom-row">
+                    <span class="rank-suit">${cardData.val}</span>
+                    <span class="card-suit ${suitClass}">${cardData.suit}&#xFE0E;</span>
+                  </div>
+                </div>
+                <div class="card-face card-back"></div>
+              </div>`;
+
             div.addEventListener("click", () => div.classList.toggle("flipped"));
             return div;
         }
@@ -304,28 +375,28 @@
         function showRank(rank) {
             let cards = deckByRank[rank];
             if (!cards) return;
-            container.innerHTML = `<div class="grid grid-cols-2 md:grid-cols-4 gap-6">${["♦", "♣", "♠", "♥"].map((s, i) => `<div id="card-${rank}-${i}"></div>`).join("")}</div>`;
-            ["♦", "♣", "♠", "♥"].forEach((suit, i) => {
+            container.innerHTML = `<div class="grid grid-cols-2 md:grid-cols-4 gap-6">${["♦","♣","♠","♥"].map((s,i)=>`<div id="card-${rank}-${i}"></div>`).join("")}</div>`;
+            ["♦","♣","♠","♥"].forEach((suit, i) => {
                 let card = cards.find(c => c.suit === suit);
                 if (card) document.getElementById(`card-${rank}-${i}`).appendChild(renderCard(card));
             });
         }
 
-        // Build rank tabs
+        // Build rank tabs with Veteran font applied via CSS class
         document.querySelectorAll(".rank-tab").forEach(tab => {
             tab.addEventListener("click", () => {
                 document.querySelectorAll(".rank-tab").forEach(t => t.classList.remove("active"));
                 tab.classList.add("active");
                 showRank(tab.dataset.rank);
             });
-            const rSuit = ["♦", "♣", "♠", "♥"][Math.floor(Math.random() * 4)];
+            const rSuit = ["♦","♣","♠","♥"][Math.floor(Math.random() * 4)];
             const isRedSuit = rSuit === "♦" || rSuit === "♥";
             tab.innerHTML = `<div class="tab-rank-number">${tab.dataset.rank}</div><div class="tab-suit-symbol ${isRedSuit ? 'red-suit' : 'black-suit'}">${rSuit}</div>`;
         });
         document.querySelector('.rank-tab[data-rank="2"]')?.classList.add("active");
         showRank("2");
 
-        // ---------- JOKERS with QR ----------
+        // ---------- JOKERS with VECTOR SVG QR ----------
         const jokerZone = document.getElementById("joker-cards-container");
         if (jokerZone && jokerCards.length >= 2) {
             jokerZone.innerHTML = "";
@@ -334,24 +405,65 @@
                 const isScrew = idx === 0;
                 const jDiv = document.createElement("div");
                 jDiv.className = "joker-card";
-                let extra = !isScrew ? `<button class="memo-button" id="scrollToMemoBtn">📜 VIEW TOP SECRET LETTER</button><div id="liveQrJoker2" class="joker-qr"></div>` : `<a href="Screwtape_to_Nightshade.pdf" target="_blank" class="text-amber-300 underline text-sm mt-3 block veteran">📄 READ FULL LETTER (PDF)</a>`;
+
+                let extra = !isScrew
+                    ? `<button class="memo-button" id="scrollToMemoBtn">📜 VIEW TOP SECRET LETTER</button><div id="liveQrJoker2" class="joker-qr"></div>`
+                    : `<a href="Screwtape to Nightshade letter.pdf" target="_blank" class="text-amber-300 underline text-sm mt-3 block veteran">📄 READ FULL LETTER (PDF)</a>`;
+
                 jDiv.innerHTML = `<div class="joker-card-inner"><div class="joker-card-face joker-front"><div class="joker-symbol">🃏</div><h3>${j.main}</h3><p>${j.text}</p>${extra}</div><div class="joker-card-face joker-back"></div></div>`;
                 jokerZone.appendChild(jDiv);
                 jokersDom.push(jDiv);
+
                 if (!isScrew) {
                     const btn = jDiv.querySelector("#scrollToMemoBtn");
-                    if (btn) btn.addEventListener("click", (e) => { e.stopPropagation(); document.getElementById("full-memo").scrollIntoView({ behavior: "smooth" }); });
-                    const qrDiv = jDiv.querySelector("#liveQrJoker2");
-                    if (qrDiv && typeof QRCode !== 'undefined') {
-                        qrDiv.innerHTML = "";
-                        new QRCode(qrDiv, { text: JOURNEY_QR_URL, width: 90, height: 90, colorDark: "#000", colorLight: "#fff" });
-                        let label = document.createElement("div");
-                        label.className = "text-[10px] text-amber-400/80 mt-1 veteran";
-                        label.innerText = "SCAN → JOURNEY";
-                        qrDiv.appendChild(label);
+                    if (btn) btn.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        document.getElementById("full-memo").scrollIntoView({ behavior: "smooth" });
+                    });
+
+                    // FIX (d): Generate VECTOR SVG QR code
+                    const qrContainer = jDiv.querySelector("#liveQrJoker2");
+                    if (qrContainer) {
+                        try {
+                            // qrcode-svg library: generate SVG string
+                            const qr = new QRCode({
+                                content: JOURNEY_QR_URL,
+                                width: 90,
+                                height: 90,
+                                color: "#000000",
+                                background: "#ffffff",
+                                ecl: "M",
+                                join: true,        // joins adjacent modules → clean paths
+                                swap: false,
+                                pretty: false,
+                                xmlDeclaration: false,
+                                container: "svg-viewbox"
+                            });
+                            const svgString = qr.svg();
+                            const wrapper = document.createElement("div");
+                            wrapper.className = "qr-code-wrapper";
+                            wrapper.innerHTML = svgString;
+                            const qrLink = document.createElement("a");
+                            qrLink.href = DECLASSIFIED_LETTER_URL;
+                            qrLink.target = "_blank";
+                            qrLink.rel = "noopener";
+                            qrLink.setAttribute("aria-label", "Open the declassified letter (PDF)");
+                            qrLink.appendChild(wrapper);
+                            qrContainer.appendChild(qrLink);
+
+                            const label = document.createElement("div");
+                            label.className = "text-[10px] text-amber-400/80 mt-1 veteran";
+                            label.innerText = "SCAN → JOURNEY";
+                            qrContainer.appendChild(label);
+                        } catch(e) {
+                            console.warn("SVG QR failed:", e);
+                            // Fallback text
+                            qrContainer.innerHTML = `<div class="text-amber-400 text-xs veteran mt-2">${JOURNEY_QR_URL}</div>`;
+                        }
                     }
                 }
             });
+
             jokersDom.forEach((card, i) => {
                 const other = jokersDom[i === 0 ? 1 : 0];
                 card.addEventListener("click", (e) => {
@@ -363,238 +475,188 @@
 
         // ---------- PROPHECIES SEARCH ----------
         const listArea = document.getElementById("all-prophecies-list");
-        function renderProphecies(term = "") {
-            const lowerTerm = term.toLowerCase();
-            const filtered = allPropheciesData.filter(p =>
-                (p.prophecy || "").toLowerCase().includes(lowerTerm) ||
-                (p.description || "").toLowerCase().includes(lowerTerm)
-            );
-            listArea.innerHTML = filtered.map(p => `
-                <div class="prophecy-list-item veteran">
-                    <div class="font-bold text-amber-300">${p.prophecy}</div>
-                    <div class="text-sm text-gray-300 mt-1">${p.description}</div>
-                    <div class="text-xs text-amber-400/80 mt-2">✓ ${p.fulfillment1}: ${(p.fulfillment1Text || "").substring(0, 100)}</div>
-                </div>
-            `).join("");
-            if (!filtered.length) listArea.innerHTML = "<p class='text-gray-400 text-center'>No match</p>";
-        }
+//         function renderProphecies(term = "") {
+//             const lowerTerm = term.toLowerCase();
+//             const filtered = allPropheciesData.filter(p =>
+//                 (p.prophecy).toLowerCase().includes(term) ||
+// (p.description).toLowerCase().includes(term) ||
+// (p.fulfillment1Text || "").toLowerCase().includes(term) ||
+// (p.fulfillment2Text || "").toLowerCase().includes(term)
+//             );
+//             listArea.innerHTML = filtered.map(p => `
+//                 <div class="prophecy-list-item veteran">
+//                     <div class="font-bold text-amber-300">${p.prophecy}</div>
+//                     <div class="text-sm text-gray-300 mt-1">${p.description}</div>
+//                     <div class="text-xs text-amber-400/80 mt-2">✓ ${p.fulfillment1}: ${(p.fulfillment1Text || "").substring(0, 100)}</div>
+//                 </div>
+//             `).join("");
+//             if (!filtered.length) listArea.innerHTML = "<p class='text-gray-400 text-center'>No match</p>";
+//         }
+function renderProphecies(term = "") {
+    const lowerTerm = term.toLowerCase().trim();
+    const listArea = document.getElementById("all-prophecies-list");
+    
+    if (!allPropheciesData || !allPropheciesData.length) {
+        if (listArea) listArea.innerHTML = '<p class="text-gray-400 text-center">⚠️ Loading prophecies...</p>';
+        return;
+    }
+
+    let filtered = allPropheciesData;
+    if (lowerTerm !== "") {
+        filtered = allPropheciesData.filter(p => {
+            // SAFELY convert each field to string (handles null, undefined, arrays, objects)
+            const prophecy = String(p.prophecy || "");
+            const description = String(p.description || "");
+            const fulfill1Text = String(p.fulfillment1Text || "");
+            const fulfill2Text = String(p.fulfillment2Text || "");
+            
+            return prophecy.toLowerCase().includes(lowerTerm) ||
+                   description.toLowerCase().includes(lowerTerm) ||
+                   fulfill1Text.toLowerCase().includes(lowerTerm) ||
+                   fulfill2Text.toLowerCase().includes(lowerTerm);
+        });
+    }
+
+    if (filtered.length === 0) {
+        listArea.innerHTML = `<p class="text-gray-400 text-center col-span-full">🔍 No prophecies match "${escapeHtml(term)}"</p>`;
+        return;
+    }
+
+    listArea.innerHTML = filtered.map(p => `
+        <div class="prophecy-list-item veteran">
+            <div class="font-bold text-amber-300">${escapeHtml(p.prophecy)}</div>
+            <div class="text-sm text-gray-300 mt-1">${escapeHtml(p.description)}</div>
+            <div class="text-xs text-amber-400/80 mt-2">
+                ✓ ${escapeHtml(p.fulfillment1)}: ${escapeHtml(String(p.fulfillment1Text || "").substring(0, 120))}
+                ${p.fulfillment2 ? `<br>+ ${escapeHtml(p.fulfillment2)}: ${escapeHtml(String(p.fulfillment2Text || "").substring(0, 120))}` : ''}
+            </div>
+        </div>
+    `).join("");
+}
+
+// Helper (keep your existing escapeHtml, or add it if missing)
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
         renderProphecies();
         document.getElementById("prophecy-search")?.addEventListener("input", e => renderProphecies(e.target.value.toLowerCase()));
 
-        // ---------- PDF EXPORT (FIXED) ----------
+        // ---------- PDF EXPORT ----------
         window.exportPropheciesToPDF = async function() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
             const pageWidth = doc.internal.pageSize.getWidth();
             const margin = 15;
             let y = 20;
-
-            // Use the real data from the external file
             const prophecies = allPropheciesData;
-
-            if (!prophecies || prophecies.length === 0) {
-                alert("No prophecy data available.");
-                return;
-            }
-
-            doc.setFont("courier", "bold");
-            doc.setFontSize(18);
+            if (!prophecies || prophecies.length === 0) { alert("No prophecy data available."); return; }
+            doc.setFont("courier", "bold"); doc.setFontSize(18);
             doc.text("54 CARDS OF HOPE – COMPLETE PROPHECIES (Full Details)", pageWidth / 2, y, { align: "center" });
-            y += 10;
-            doc.setFontSize(10);
+            y += 10; doc.setFontSize(10);
             doc.text(`Total entries: ${prophecies.length} | OT Text + Fulfillment 1 & 2`, pageWidth / 2, y, { align: "center" });
-            y += 12;
-            doc.line(margin, y, pageWidth - margin, y);
-            y += 8;
-
+            y += 12; doc.line(margin, y, pageWidth - margin, y); y += 8;
             for (let i = 0; i < prophecies.length; i++) {
                 const p = prophecies[i];
-                if (y + 50 > doc.internal.pageSize.getHeight() - margin) {
-                    doc.addPage();
-                    y = margin;
-                }
-                doc.setFontSize(11);
-                doc.setFont("courier", "bold");
-                doc.text(`${p.prophecy} – ${p.description}`, margin, y);
-                y += 6;
-                doc.setFontSize(9);
-                doc.setFont("courier", "normal");
+                if (y + 50 > doc.internal.pageSize.getHeight() - margin) { doc.addPage(); y = margin; }
+                doc.setFontSize(11); doc.setFont("courier", "bold");
+                doc.text(`${p.prophecy} – ${p.description}`, margin, y); y += 6;
+                doc.setFontSize(9); doc.setFont("courier", "normal");
                 const otLines = doc.splitTextToSize(`OT: ${p.otText || ""}`, pageWidth - 30);
-                doc.text(otLines, margin + 2, y);
-                y += 4.5 * otLines.length;
+                doc.text(otLines, margin + 2, y); y += 4.5 * otLines.length;
                 doc.setFont("courier", "bold");
-                doc.text(`✓ Fulfillment 1 (${p.fulfillment1}):`, margin, y);
-                y += 4.5;
+                doc.text(`✓ Fulfillment 1 (${p.fulfillment1}):`, margin, y); y += 4.5;
                 doc.setFont("courier", "normal");
                 const f1Lines = doc.splitTextToSize(p.fulfillment1Text || "", pageWidth - 34);
-                doc.text(f1Lines, margin + 4, y);
-                y += 4.5 * f1Lines.length;
+                doc.text(f1Lines, margin + 4, y); y += 4.5 * f1Lines.length;
                 if (p.fulfillment2 && p.fulfillment2.trim() !== "") {
                     doc.setFont("courier", "bold");
-                    doc.text(`+ Fulfillment 2 (${p.fulfillment2}):`, margin, y);
-                    y += 4.5;
+                    doc.text(`+ Fulfillment 2 (${p.fulfillment2}):`, margin, y); y += 4.5;
                     doc.setFont("courier", "normal");
                     const f2Lines = doc.splitTextToSize(p.fulfillment2Text || "", pageWidth - 34);
-                    doc.text(f2Lines, margin + 4, y);
-                    y += 4.5 * f2Lines.length;
+                    doc.text(f2Lines, margin + 4, y); y += 4.5 * f2Lines.length;
                 }
-                y += 3;
-                doc.setDrawColor(180, 150, 80);
-                doc.line(margin, y - 1, pageWidth - margin, y - 1);
-                y += 4;
+                y += 3; doc.setDrawColor(180, 150, 80);
+                doc.line(margin, y - 1, pageWidth - margin, y - 1); y += 4;
             }
-
             const totalPages = doc.internal.getNumberOfPages();
             for (let i = 1; i <= totalPages; i++) {
-                doc.setPage(i);
-                doc.setFontSize(8);
+                doc.setPage(i); doc.setFontSize(8);
                 doc.text(`54 Cards of Hope – Prophecy Archive – Page ${i} of ${totalPages}`, pageWidth / 2, doc.internal.pageSize.getHeight() - 10, { align: "center" });
             }
             doc.save("54_cards_of_hope_complete_prophecies.pdf");
         };
 
         // ---------- "NICK THE LOT" SHORTS PDF ----------
-       window.nickTheLotShorts = function() {
-    const prophecies = allPropheciesData; // already in closure scope
-    if (!prophecies || prophecies.length === 0) {
-        alert("No prophecy data available.");
-        return;
-    }
+        window.nickTheLotShorts = function () {
+            let prophecies = null;
+            if (window.deckData && Array.isArray(window.deckData.allPropheciesData)) {
+                prophecies = window.deckData.allPropheciesData;
+            } else if (window.allPropheciesData && Array.isArray(window.allPropheciesData)) {
+                prophecies = window.allPropheciesData;
+            } else if (typeof allPropheciesData !== 'undefined' && Array.isArray(allPropheciesData)) {
+                prophecies = allPropheciesData;
+            }
+            if (!prophecies || prophecies.length === 0) { alert("No prophecy data available. Please refresh the page."); return; }
+            const { jsPDF } = window.jspdf;
+            if (!jsPDF) { alert("jsPDF library not loaded. Please refresh."); return; }
+            const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const margin = 15;
+            let y = 20;
+            doc.setFont("courier", "bold"); doc.setFontSize(18);
+            doc.text("54 CARDS OF HOPE – 351 PROPHECIES", pageWidth / 2, y, { align: "center" });
+            y += 10; doc.setFontSize(11); doc.setFont("courier", "normal");
+            doc.text("Ancient prophecies and their irrefutable fulfilment", pageWidth / 2, y, { align: "center" });
+            y += 12; doc.setDrawColor(150, 150, 150); doc.line(margin, y, pageWidth - margin, y); y += 8;
+            for (let i = 0; i < prophecies.length; i++) {
+                const p = prophecies[i];
+                const prophecyText = p.prophecy || "";
+                const description = p.description || "";
+                const fulfilment = p.fulfillment1 || "";
+                const descLines = doc.splitTextToSize(description, pageWidth - margin * 2);
+                const fulfilLines = doc.splitTextToSize(`✓ ${fulfilment}`, pageWidth - margin * 2);
+                const neededHeight = 6 + (5 * descLines.length) + (5 * fulfilLines.length) + 10;
+                if (y + neededHeight > pageHeight - margin) { doc.addPage(); y = margin; }
+                doc.setFont("courier", "bold"); doc.setFontSize(11);
+                doc.text(prophecyText, margin, y); y += 6;
+                doc.setFont("courier", "normal"); doc.setFontSize(9);
+                doc.text(descLines, margin, y); y += 5 * descLines.length;
+                doc.setFont("courier", "bold");
+                doc.text(fulfilLines, margin + 3, y); y += 5 * fulfilLines.length + 5;
+                if (i < prophecies.length - 1) {
+                    doc.setDrawColor(220, 220, 220);
+                    doc.line(margin + 2, y - 3, pageWidth - margin - 2, y - 3);
+                }
+            }
+            const totalPages = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= totalPages; i++) {
+                doc.setPage(i); doc.setFont("courier", "normal"); doc.setFontSize(8);
+                doc.text(`Page ${i} of ${totalPages}`, pageWidth / 2, pageHeight - 8, { align: "center" });
+            }
+            const pdfBlob = doc.output("blob");
+            const blobUrl = URL.createObjectURL(pdfBlob);
+            const printWindow = window.open(blobUrl, "_blank");
+            printWindow.onload = function () {
+                setTimeout(() => { printWindow.print(); setTimeout(() => URL.revokeObjectURL(blobUrl), 1000); }, 500);
+            };
+        };
 
-    const win = window.open("", "_blank");
-    if (!win) {
-        alert("Please allow pop-ups for this site.");
-        return;
-    }
-
-    // Build HTML content
-    let html = `<!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>351 Short Prophecies – 54 Cards of Hope</title>
-        <style>
-            * { margin: 0; padding: 0; box-sizing: border-box; }
-            body {
-                font-family: 'Courier New', 'Special Elite', monospace;
-                background: #fef9e8;
-                padding: 20px;
-                color: #1e1a12;
-            }
-            h1 {
-                text-align: center;
-                font-size: 1.8rem;
-                margin-bottom: 8px;
-                letter-spacing: 2px;
-                border-bottom: 2px solid #c99b2e;
-                display: inline-block;
-                width: auto;
-                padding-bottom: 6px;
-            }
-            .header {
-                text-align: center;
-                margin-bottom: 30px;
-            }
-            .prophecy-item {
-                background: #fffef7;
-                border-left: 5px solid #d4af37;
-                padding: 12px 16px;
-                margin-bottom: 16px;
-                page-break-inside: avoid;
-                break-inside: avoid;
-                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            }
-            .prophecy-title {
-                font-weight: bold;
-                font-size: 1.1rem;
-                color: #a0522d;
-            }
-            .description {
-                margin: 6px 0 4px;
-                font-size: 0.9rem;
-            }
-            .ot-text {
-                font-size: 0.8rem;
-                background: #f3efdf;
-                padding: 4px 8px;
-                border-radius: 12px;
-                margin: 8px 0;
-                color: #3b2a1f;
-            }
-            .fulfillment {
-                font-size: 0.85rem;
-                color: #2c5e2e;
-                margin-top: 6px;
-                font-style: italic;
-            }
-            hr {
-                margin: 20px 0;
-                border: 0;
-                height: 1px;
-                background: #e0cba0;
-            }
-            .footer {
-                text-align: center;
-                margin-top: 30px;
-                font-size: 0.7rem;
-                color: #5c4b2a;
-            }
-            @media print {
-                body { background: white; padding: 10px; }
-                .prophecy-item { break-inside: avoid; box-shadow: none; border-left-width: 3px; }
-            }
-        </style>
-    </head>
-    <body>
-        <div class="header">
-            <h1>✝ 54 CARDS OF HOPE · 351 SHORT PROPHECIES ✝</h1>
-            <p style="margin-top: 6px;">Complete list of all prophecies, OT references, and fulfillments</p>
-        </div>
-        <div id="prophecies-container">`;
-
-    // Add each prophecy
-    for (let i = 0; i < prophecies.length; i++) {
-        const p = prophecies[i];
-        html += `
-        <div class="prophecy-item">
-            <div class="prophecy-title">${escapeHtml(p.prophecy || '')} – ${escapeHtml(p.description || '')}</div>
-            <div class="ot-text">📖 OT: ${escapeHtml(p.otText || '')}</div>
-            <div class="fulfillment">✓ ${escapeHtml(p.fulfillment1 || '')}: ${escapeHtml((p.fulfillment1Text || '').substring(0, 200))}${(p.fulfillment1Text && p.fulfillment1Text.length > 200) ? '…' : ''}</div>`;
-        if (p.fulfillment2 && p.fulfillment2.trim() !== "") {
-            html += `<div class="fulfillment" style="margin-top: 4px;">+ ${escapeHtml(p.fulfillment2)}: ${escapeHtml((p.fulfillment2Text || '').substring(0, 200))}${(p.fulfillment2Text && p.fulfillment2Text.length > 200) ? '…' : ''}</div>`;
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/[&<>]/g, function(m) {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
         }
-        html += `</div>`;
-    }
-
-    html += `
-        </div>
-        <div class="footer">
-            <hr>
-            <p>Source: 54 Cards of Hope · Total prophecies: ${prophecies.length}<br>Generated for personal reference · cardsofhope.live</p>
-        </div>
-        <script>
-            // Auto-trigger print after page fully loads
-            window.onload = function() { setTimeout(() => window.print(), 300); };
-        <\/script>
-    </body>
-    </html>`;
-
-    win.document.write(html);
-    win.document.close();
-};
-
-// Helper: prevent XSS / broken characters
-function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-        return c;
-    });
-}
     });
 </script>
 </body>
