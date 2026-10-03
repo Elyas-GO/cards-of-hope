@@ -2,7 +2,7 @@
 <html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>54 Cards of Hope · Prophecy Deck · PDF Export</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -61,7 +61,7 @@
         .prophecy-scroll-area::-webkit-scrollbar-thumb { background: #facc15; border-radius: 12px; }
 
         /* CARD STYLES */
-        .card { perspective: 1200px; width: 100%; max-width: 220px; height: 335px; cursor: pointer; transition: transform 0.15s ease; }
+        .card { perspective: 1200px; width: 100%; max-width: 220px; aspect-ratio: 1004 / 1567; height: auto; cursor: pointer; transition: transform 0.15s ease; }
         .card:hover { transform: translateY(-8px); }
         .card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); border-radius: 18px; }
         .card.flipped .card-inner { transform: rotateY(180deg); }
@@ -165,8 +165,8 @@
             transform: rotateY(180deg);
             background: linear-gradient(135deg, #1a0800, #3c1f0f);
             background-image: url('card-back.png');
-            background-size: cover;
-            background-position: center top;
+            background-size: 100% 100%;
+            background-position: center;
             border: 3px solid #1c1c1c;
             display: flex;
             align-items: center;
@@ -175,7 +175,7 @@
             text-align: center;
         }
 
-        .joker-card { perspective: 1500px; width: 100%; max-width: 280px; height: 400px; cursor: pointer; margin: 0; }
+        .joker-card { perspective: 1500px; width: 100%; max-width: 280px; height: auto; cursor: pointer; margin: 0; }
         .joker-card-inner { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); border-radius: 18px; box-shadow: 0 12px 35px rgba(0,0,0,0.6); }
         .joker-card.flipped .joker-card-inner { transform: rotateY(180deg); }
         .joker-card-face { position: absolute; inset: 0; border-radius: 18px; overflow: hidden; backface-visibility: hidden; border: 3px solid #1c1c1c; }
@@ -183,7 +183,7 @@
         .joker-front .joker-symbol { font-size: 4rem; margin-bottom: 6px; filter: drop-shadow(0 0 6px #facc15); }
         .joker-front h3 { font-size: 1.3rem; color: #facc15; margin-bottom: 8px; letter-spacing: 2px; }
         .joker-front p { font-size: 0.85rem; line-height: 1.35; color: #e2dccd; max-width: 95%; margin-bottom: 8px; }
-        .joker-back { transform: rotateY(180deg); background: linear-gradient(135deg, #3c1f0f, #1a0800); background-image: url('card-back.png'); background-size: cover; background-position: center top; display: flex; align-items: center; justify-content: center; color: #facc15; font-size: 1.1rem; }
+        .joker-back { transform: rotateY(180deg); background: linear-gradient(135deg, #3c1f0f, #1a0800); background-image: url('card-back.png'); background-size: 100% 100%; background-position: center; display: flex; align-items: center; justify-content: center; color: #facc15; font-size: 1.1rem; }
         .joker-back::after {
             content: "🃏 JOKER 🃏";
             position: absolute;
@@ -209,7 +209,7 @@
         .declassified-stamp { width: 140px; height: auto; display: block; opacity: 0.95; }
         .btn-mobile { transition: all 0.2s ease; font-weight: bold; padding: 12px 28px; border-radius: 0; display: inline-block; text-align: center; }
         .btn-mobile:hover { transform: scale(0.97); }
-        #joker-cards-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin-top: 2rem; }
+        #joker-cards-container { display: flex; flex-wrap: wrap; justify-content: center; gap: 32px; margin-top: 2rem; padding: 0 12px; }
         .joker-qr { margin-top: 15px; display: flex; flex-direction: column; align-items: center; }
         .qr-code-wrapper { background: white; padding: 6px; border-radius: 12px; display: inline-block; line-height: 0; }
         .qr-code-wrapper svg { display: block; width: 90px; height: 90px; }
@@ -217,7 +217,7 @@
         .memo-button:hover { background: #8b3a3a; }
         @media (max-width: 700px) {
             .rank-tab { width: 68px; height: 96px; margin: 0 4px; padding: 8px 3px; }
-            .joker-card { max-width: 260px; height: 420px; }
+            .joker-card { max-width: 260px; height: auto; }
         }
         .veteran-uppercase { font-family: 'Veteran Typewriter', monospace; text-transform: uppercase; letter-spacing: 1px; }
     </style>
