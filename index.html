@@ -327,13 +327,70 @@
 
 <footer class="py-16 text-center border-t border-amber-900/50 bg-[#020202]">
     <div class="container mx-auto px-4">
-        <div class="mb-8 flex flex-wrap justify-center gap-4">
-            <a href="https://54cardsofhopes-shop.bigcartel.com/" target="_blank" class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-10">🃟 BUY THE DECK</a>
-            <a href="mailto:54cardsofhope@gmail.com" class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-10">📧 CONTACT THE CREW</a>
-        </div>
+        <div class="mb-8 flex flex-col items-center gap-4">
+    <div class="flex flex-wrap justify-center gap-4">
+        <a href="https://54cardsofhopes-shop.bigcartel.com/"
+           target="_blank"
+           rel="noopener"
+           class="btn-mobile bg-amber-500 hover:bg-amber-400 text-black px-10">
+            🃟 BUY THE DECK
+        </a>
+
+        <a href="mailto:54cardsofhope@gmail.com"
+           class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-10">
+            📧 CONTACT THE CREW
+        </a>
+    </div>
+
+    <button
+        type="button"
+        onclick="document.getElementById('thankYouPopup').classList.remove('hidden')"
+        class="btn-mobile border-2 border-amber-500/60 hover:bg-amber-500/20 text-amber-300 px-10">
+        ♥ THANK YOU
+    </button>
+</div>
         <p class="text-gray-400 font-mono text-sm mt-2">© 2026 · cardsofhope.live</p>
     </div>
 </footer>
+
+<!-- THANK YOU POPUP -->
+<div id="thankYouPopup"
+     class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-4"
+     onclick="if (event.target === this) this.classList.add('hidden')">
+
+    <div class="relative w-full max-w-xl border border-amber-500/60 bg-[#080706] p-8 text-center shadow-2xl">
+
+        <button
+            type="button"
+            onclick="document.getElementById('thankYouPopup').classList.add('hidden')"
+            class="absolute right-4 top-3 text-amber-400 hover:text-white text-2xl"
+            aria-label="Close thank you popup">
+            &times;
+        </button>
+
+        <p class="mb-4 text-sm tracking-[0.3em] text-amber-500">
+            ACKNOWLEDGEMENTS
+        </p>
+
+        <h2 class="mb-6 text-2xl font-bold text-amber-300">
+            THANK YOU
+        </h2>
+
+        <p class="font-mono text-sm leading-7 text-gray-200">
+            Gratitude to Berean Standard Bible translators and unknown
+            philologists and epigraphers whose collective study of Ancient
+            Greek and Hebrew deciphered mysterious prophetic texts.
+        </p>
+
+        <button
+            type="button"
+            onclick="document.getElementById('thankYouPopup').classList.add('hidden')"
+            class="mt-8 border border-amber-500/60 px-6 py-2 text-sm text-amber-300 hover:bg-amber-500/20">
+            CLOSE
+        </button>
+
+    </div>
+</div>
 
 <script src="deck-data.js"></script>
 <script>
@@ -342,8 +399,8 @@
     // ============================================================
     document.addEventListener("DOMContentLoaded", function() {
         const { deckByRank, jokerCards, allPropheciesData } = window.deckData;
-        const JOURNEY_QR_URL = "https://qrto.to/0b879a6d";
-        const DECLASSIFIED_LETTER_URL = "declassified-letter.pdf"; // <-- set to the real PDF filename
+        const JOURNEY_QR_URL = "https://www.cardsofhope.live/declassified-letter.pdf";
+const DECLASSIFIED_LETTER_URL = "https://www.cardsofhope.live/declassified-letter.pdf";
 
         console.log(`Loaded ${allPropheciesData.length} prophecies from deck-data.js`);
 
